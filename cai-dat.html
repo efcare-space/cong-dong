@@ -35,6 +35,19 @@ summary{cursor:pointer;min-height:52px;display:flex;align-items:center;font-weig
 summary::-webkit-details-marker{display:none}
 details p{padding:0 0 14px;color:var(--mut);font-size:16px}
 .panel{display:none}.panel.on{display:block}
+
+.linkbox{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px;margin-top:16px;text-align:center}
+.linkbox h2{margin:0 0 10px;font-size:18px}
+.lrow{display:flex;gap:8px}
+.lrow input{flex:1;min-width:0;font:inherit;font-size:15.5px;padding:12px;border:1.5px solid #c5d1e6;border-radius:12px;background:#f7f9fc;color:var(--ink)}
+.lrow button{border:0;border-radius:12px;background:var(--blue);color:#fff;font:inherit;font-weight:800;font-size:16px;padding:0 16px;min-height:50px;cursor:pointer;white-space:nowrap}
+.qrsw{display:flex;gap:6px;justify-content:center;margin:14px 0 10px}
+.qrsw button{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:8px 14px;font:inherit;font-size:15px;font-weight:700;color:var(--mut);cursor:pointer;min-height:44px}
+.qrsw button[aria-pressed="true"]{background:var(--navy);border-color:var(--navy);color:#fff}
+#qr{width:220px;height:220px;margin:0 auto;padding:10px;background:#fff;border:1px solid var(--line);border-radius:14px;display:flex;align-items:center;justify-content:center}
+#qr img,#qr canvas{width:200px!important;height:200px!important}
+.qrcap{font-size:14.5px;color:var(--mut);margin-top:8px}
+.small{font-size:14.5px;font-weight:700;color:var(--blue);background:none;border:0;cursor:pointer;margin-top:6px;min-height:40px;text-decoration:underline}
 footer{text-align:center;color:var(--mut);font-size:14px;margin-top:24px}
 :focus-visible{outline:3px solid var(--blue);outline-offset:2px}
 </style>
@@ -42,6 +55,15 @@ footer{text-align:center;color:var(--mut);font-size:14px;margin-top:24px}
 <body>
 <header><img src="icon-192.png" alt=""><h1>Đưa EFCommunity ra màn hình chính</h1><p>Mở bằng một chạm như ứng dụng. Không cần tải từ kho ứng dụng, không tốn dung lượng.</p></header>
 <div class="wrap">
+ <section class="linkbox" aria-labelledby="lk-t">
+  <h2 id="lk-t">Link EFCommunity</h2>
+  <div class="lrow"><input id="lk" readonly aria-label="Link ứng dụng" value=""><button type="button" id="cp">Sao chép</button></div>
+  <p id="cpmsg" role="status" aria-live="polite" class="qrcap"></p>
+  <div class="qrsw" role="group" aria-label="Chọn mã QR"><button type="button" data-q="app" aria-pressed="true">QR mở app</button><button type="button" data-q="hd" aria-pressed="false">QR trang hướng dẫn</button></div>
+  <div id="qr" role="img" aria-label="Mã QR"></div>
+  <p class="qrcap" id="qrcap">Quét bằng camera điện thoại để mở EFCommunity.</p>
+  <button type="button" class="small" id="dl">Tải ảnh QR để in</button>
+ </section>
  <div class="warn" id="inapp"><b>Bạn đang mở trong Zalo hoặc Facebook.</b><br>Trình duyệt bên trong các ứng dụng này không cho thêm ra màn hình chính. Bấm nút <span class="ic">⋯</span> hoặc <span class="ic">⋮</span> ở góc trên bên phải, chọn <b>"Mở bằng trình duyệt"</b> (iPhone: <b>Mở trong Safari</b>), rồi làm theo hướng dẫn dưới đây.</div>
  <div class="seg" role="group" aria-label="Chọn loại điện thoại"><button type="button" data-p="ios" aria-pressed="true">iPhone, iPad</button><button type="button" data-p="and" aria-pressed="false">Android</button></div>
 
@@ -78,8 +100,23 @@ footer{text-align:center;color:var(--mut);font-size:14px;margin-top:24px}
  <details><summary>Cần người hỗ trợ</summary><p>Gọi hotline EFCARE <b>0815 515 456</b> (08:30–17:30) hoặc nhờ điều phối viên tại Trạm.</p></details>
  <footer>EFCommunity · Cộng đồng EFCARE</footer>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
 (function(){
+var base=location.protocol==='https:'?new URL('./',location.href).href:'https://efcare-space.github.io/cong-dong/',APP=base,HD=base+'cai-dat.html',cur='app';
+var lk=document.getElementById('lk');lk.value=APP;
+document.getElementById('cp').onclick=function(){var m=document.getElementById('cpmsg'),v=lk.value;function ok(){m.textContent='Đã sao chép. Dán vào Zalo hoặc tin nhắn để gửi.'}
+ if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(v).then(ok,fb);else fb();
+ function fb(){lk.focus();lk.select();try{document.execCommand('copy');ok()}catch(e){m.textContent='Bấm giữ vào ô link để sao chép.'}}};
+function drawQR(){var box=document.getElementById('qr');box.innerHTML='';var url=cur==='app'?APP:HD;
+ document.getElementById('qrcap').textContent=cur==='app'?'Quét bằng camera điện thoại để mở EFCommunity.':'Quét để mở trang hướng dẫn cài đặt này. Hợp để in đặt tại Trạm.';
+ lk.value=url;
+ if(window.QRCode){try{new QRCode(box,{text:url,width:400,height:400,colorDark:'#0b1f3f',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M})}catch(e){box.textContent=url}}else box.textContent='Không tải được mã QR. Dùng link ở trên.'}
+[].forEach.call(document.querySelectorAll('.qrsw button'),function(b){b.onclick=function(){cur=b.dataset.q;[].forEach.call(document.querySelectorAll('.qrsw button'),function(x){x.setAttribute('aria-pressed',x===b)});drawQR()}});
+document.getElementById('dl').onclick=function(){var c=document.querySelector('#qr canvas'),img=document.querySelector('#qr img'),src=c?c.toDataURL('image/png'):(img?img.src:'');if(!src)return;
+ var out=document.createElement('canvas');out.width=520;out.height=640;var g=out.getContext('2d');g.fillStyle='#fff';g.fillRect(0,0,520,640);var im=new Image();im.onload=function(){g.drawImage(im,60,40,400,400);g.fillStyle='#0b1f3f';g.textAlign='center';g.font='800 34px system-ui,sans-serif';g.fillText('EFCommunity',260,500);g.font='22px system-ui,sans-serif';g.fillStyle='#5c6b84';g.fillText(cur==='app'?'Quét để mở ứng dụng':'Quét để xem hướng dẫn cài đặt',260,540);g.font='18px system-ui,sans-serif';g.fillText((cur==='app'?APP:HD).replace(/^https?:\/\//,''),260,580);
+  var a=document.createElement('a');a.href=out.toDataURL('image/png');a.download=cur==='app'?'qr-efcommunity.png':'qr-huong-dan-efcommunity.png';document.body.appendChild(a);a.click();a.remove()};im.src=src};
+drawQR();
 var ua=navigator.userAgent||'',ios=/iphone|ipad|ipod/i.test(ua)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1),inapp=/Zalo|FBAN|FBAV|FB_IAB|Instagram|Line\//i.test(ua);
 if(inapp)document.getElementById('inapp').classList.add('on');
 function show(p){[].forEach.call(document.querySelectorAll('.seg button'),function(b){b.setAttribute('aria-pressed',b.dataset.p===p)});document.getElementById('ios').classList.toggle('on',p==='ios');document.getElementById('and').classList.toggle('on',p==='and')}
