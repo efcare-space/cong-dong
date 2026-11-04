@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b1f3f">
+<title>Cài EFCommunity lên điện thoại</title>
+<meta name="description" content="Hướng dẫn đưa EFCommunity ra màn hình chính trên iPhone và Android, không cần tải từ kho ứng dụng.">
+<link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+:root{--ink:#16233a;--mut:#5c6b84;--line:#dde4ef;--bg:#f3f6fb;--blue:#1d5fd1;--navy:#0b1f3f;--warn:#7a5410;--warnbg:#fcefd2;--ok:#13795b;--okbg:#dcf2e8;color-scheme:light}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);font-size:18px;line-height:1.55}
+.wrap{max-width:560px;margin:0 auto;padding:0 16px 40px}
+header{background:linear-gradient(160deg,#0b1f3f,#143572);color:#fff;padding:18px 16px 20px;text-align:center}
+header img{width:72px;height:72px;border-radius:18px;background:#fff;display:block;margin:0 auto 10px}
+header h1{font-size:23px;line-height:1.25}header p{color:#cfe0ff;font-size:15.5px;margin-top:4px}
+.seg{display:flex;background:#e6ecf6;border-radius:14px;padding:4px;gap:4px;margin:16px 0}
+.seg button{flex:1;border:0;background:none;border-radius:11px;min-height:50px;font:inherit;font-weight:700;font-size:17px;color:var(--mut);cursor:pointer}
+.seg button[aria-pressed="true"]{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.warn{background:var(--warnbg);color:var(--warn);border-radius:14px;padding:14px 16px;margin:14px 0;font-size:16.5px;display:none}
+.warn.on{display:block}
+.steps{list-style:none;display:grid;gap:12px;counter-reset:b}
+.steps li{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px 16px 14px 62px;position:relative;counter-increment:b}
+.steps li::before{content:counter(b);position:absolute;left:14px;top:14px;width:36px;height:36px;border-radius:50%;background:var(--blue);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center}
+.steps li>b{display:block;font-size:18px}
+.steps span{color:var(--mut);font-size:16px}
+.ic{display:inline-flex;align-items:center;justify-content:center;min-width:30px;height:30px;padding:0 6px;border:1.5px solid #9fb2d1;border-radius:8px;font-weight:800;font-size:16px;vertical-align:middle;margin:0 2px;background:#fff}
+.btn{display:flex;align-items:center;justify-content:center;width:100%;min-height:56px;border:0;border-radius:14px;font:inherit;font-weight:800;font-size:18px;background:var(--blue);color:#fff;text-decoration:none;margin-top:16px;cursor:pointer}
+.btn.alt{background:#e8effb;color:var(--blue)}
+.done{background:var(--okbg);color:var(--ok);border-radius:14px;padding:14px 16px;margin-top:16px;font-size:16.5px}
+h2{font-size:19px;margin:24px 0 8px}
+details{background:#fff;border:1px solid var(--line);border-radius:14px;padding:0 16px;margin-top:8px}
+summary{cursor:pointer;min-height:52px;display:flex;align-items:center;font-weight:700;list-style:none}
+summary::-webkit-details-marker{display:none}
+details p{padding:0 0 14px;color:var(--mut);font-size:16px}
+.panel{display:none}.panel.on{display:block}
+footer{text-align:center;color:var(--mut);font-size:14px;margin-top:24px}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+</style>
+</head>
+<body>
+<header><img src="icon-192.png" alt=""><h1>Đưa EFCommunity ra màn hình chính</h1><p>Mở bằng một chạm như ứng dụng. Không cần tải từ kho ứng dụng, không tốn dung lượng.</p></header>
+<div class="wrap">
+ <div class="warn" id="inapp"><b>Bạn đang mở trong Zalo hoặc Facebook.</b><br>Trình duyệt bên trong các ứng dụng này không cho thêm ra màn hình chính. Bấm nút <span class="ic">⋯</span> hoặc <span class="ic">⋮</span> ở góc trên bên phải, chọn <b>"Mở bằng trình duyệt"</b> (iPhone: <b>Mở trong Safari</b>), rồi làm theo hướng dẫn dưới đây.</div>
+ <div class="seg" role="group" aria-label="Chọn loại điện thoại"><button type="button" data-p="ios" aria-pressed="true">iPhone, iPad</button><button type="button" data-p="and" aria-pressed="false">Android</button></div>
+
+ <section class="panel on" id="ios">
+  <ol class="steps">
+   <li><b>Mở bằng Safari</b><span>Mở trang <b>efcare-space.github.io/cong-dong</b> bằng ứng dụng Safari (biểu tượng la bàn xanh).</span></li>
+   <li><b>Bấm nút Chia sẻ</b><span>Nút hình vuông có mũi tên lên <span class="ic">⬆︎</span> ở thanh dưới cùng màn hình. Trên iPad, nút này nằm ở góc trên.</span></li>
+   <li><b>Chọn "Thêm vào MH chính"</b><span>Kéo danh sách lên một chút nếu chưa thấy. Tên có thể là "Thêm vào Màn hình chính".</span></li>
+   <li><b>Bấm "Thêm"</b><span>Ở góc trên bên phải. Tên hiện sẵn là <b>EFCommunity</b>, giữ nguyên.</span></li>
+  </ol>
+  <div class="done">✓ Biểu tượng logo EFCARE tên <b>EFCommunity</b> hiện trên màn hình chính. Từ nay chỉ cần chạm vào đó.</div>
+ </section>
+
+ <section class="panel" id="and">
+  <ol class="steps">
+   <li><b>Mở bằng Chrome</b><span>Mở trang <b>efcare-space.github.io/cong-dong</b> bằng Chrome. Nếu máy hiện dòng <b>"Cài đặt ứng dụng"</b> hoặc <b>"Thêm EFCommunity vào màn hình chính"</b>, bấm vào đó là xong.</span></li>
+   <li><b>Bấm nút ba chấm</b><span>Nút <span class="ic">⋮</span> ở góc trên bên phải của Chrome.</span></li>
+   <li><b>Chọn "Thêm vào màn hình chính"</b><span>Hoặc <b>"Cài đặt ứng dụng"</b>, tuỳ máy.</span></li>
+   <li><b>Bấm "Cài đặt" hoặc "Thêm"</b><span>Một số máy hỏi thêm lần nữa, bấm <b>"Thêm"</b>.</span></li>
+  </ol>
+  <div class="done">✓ Biểu tượng logo EFCARE tên <b>EFCommunity</b> hiện trên màn hình chính hoặc trong danh sách ứng dụng.</div>
+  <details><summary>Máy Samsung dùng trình duyệt Samsung Internet</summary><p>Bấm nút <span class="ic">≡</span> ở góc dưới bên phải → <b>Thêm trang vào</b> → <b>Màn hình chờ</b> → <b>Thêm</b>.</p></details>
+ </section>
+
+ <a class="btn" href="./">Mở EFCommunity</a>
+ <button class="btn alt" type="button" id="share">Gửi hướng dẫn này cho người khác</button>
+ <p id="msg" role="status" aria-live="polite" style="text-align:center;color:var(--mut);font-size:15px;margin-top:8px"></p>
+
+ <h2>Hay gặp</h2>
+ <details><summary>Không thấy "Thêm vào MH chính" trên iPhone</summary><p>Bạn đang mở trong Zalo, Facebook hoặc trình duyệt khác. Mở lại bằng <b>Safari</b> rồi làm từ bước 1. Trên iOS 16.4 trở lên, Chrome trên iPhone cũng có mục này trong nút Chia sẻ.</p></details>
+ <details><summary>Đã thêm rồi nhưng tên hoặc biểu tượng còn cũ</summary><p>Xoá biểu tượng cũ (chạm giữ → Xoá khỏi màn hình chính), rồi thêm lại theo các bước trên.</p></details>
+ <details><summary>Có tốn tiền hay dung lượng không?</summary><p>Không. EFCommunity nhẹ khoảng 200 KB, không qua kho ứng dụng, không thu phí cài đặt.</p></details>
+ <details><summary>Mất sóng có mở được không?</summary><p>Mở được trang đã xem. Việc gửi đi như ghi nhận, xác nhận cần có mạng.</p></details>
+ <details><summary>Cần người hỗ trợ</summary><p>Gọi hotline EFCARE <b>0815 515 456</b> (08:30–17:30) hoặc nhờ điều phối viên tại Trạm.</p></details>
+ <footer>EFCommunity · Cộng đồng EFCARE</footer>
+</div>
+<script>
+(function(){
+var ua=navigator.userAgent||'',ios=/iphone|ipad|ipod/i.test(ua)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1),inapp=/Zalo|FBAN|FBAV|FB_IAB|Instagram|Line\//i.test(ua);
+if(inapp)document.getElementById('inapp').classList.add('on');
+function show(p){[].forEach.call(document.querySelectorAll('.seg button'),function(b){b.setAttribute('aria-pressed',b.dataset.p===p)});document.getElementById('ios').classList.toggle('on',p==='ios');document.getElementById('and').classList.toggle('on',p==='and')}
+[].forEach.call(document.querySelectorAll('.seg button'),function(b){b.onclick=function(){show(b.dataset.p)}});
+show(/android/i.test(ua)?'and':ios?'ios':'ios');
+var link=location.href.split('#')[0],t='Cài EFCommunity lên điện thoại: '+link;
+document.getElementById('share').onclick=function(){var m=document.getElementById('msg');if(navigator.share){navigator.share({text:t}).catch(function(){})}else if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){m.textContent='Đã sao chép link. Dán vào Zalo để gửi.'},function(){m.textContent=link})}else m.textContent=link};
+})();
+</script>
+</body>
+</html>
