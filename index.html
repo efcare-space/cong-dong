@@ -88,7 +88,7 @@ details.demo summary{cursor:pointer;list-style:none;min-height:44px;display:flex
 <div class="sheet" id="sheet" role="dialog" aria-modal="true"><div class="sheet-in" id="sheet-c"></div></div>
 <div class="cel" id="cel" role="dialog" aria-modal="true" aria-labelledby="cel-t"><div class="cel-in"><div class="cel-ic" aria-hidden="true">✓</div><h3 id="cel-t"></h3><p id="cel-p"></p><button class="btn" id="cel-cert" style="display:none;margin-top:14px" data-act="cert">Lưu giấy ghi nhận</button><button class="btn alt" id="cel-x" style="margin-top:10px">Đóng</button></div></div>
 
-<script>window.API_URL=''; /* DAN_URL_MAY_CHU_VAO_DAY */</script>
+<script>window.API_URL='https://script.google.com/macros/s/AKfycbzn27TOjf1DyIwc4S8NCoOPJ2iR9SVnxvgTic_C63yCSVWomWdPpdZgP90cfoh--7rL/exec'; /* DAN_URL_MAY_CHU_VAO_DAY */</script>
 <script>// Mô phỏng Google Apps Script để thử logic Code.gs ngoài Google. KHÔNG dùng làm bản thật.
 (function(g){
  var sheets={};
@@ -183,30 +183,42 @@ var CUA_CU = { giup: 'gop_gio', can_giup: 'de_xuat', hoc: 'cam_nang' };
 /* ---------- lớp truy cập dữ liệu ---------- */
 var CACHE = {};
 function ss_() { return SpreadsheetApp.getActiveSpreadsheet(); }
+var SHEETS = {};
+function chuan_(n) { return String(n).normalize('NFC').toLowerCase().trim(); }
+/** Tìm trang tính theo tên đã chuẩn hoá (getSheetByName không ổn định với tên có dấu). */
+function sheet_(n) {
+  if (SHEETS[n]) return SHEETS[n];
+  var ss = ss_(), s = ss.getSheetByName(n) || ss.getSheetByName(String(n).normalize('NFC'));
+  if (!s && ss.getSheets) { var k = chuan_(n), all = ss.getSheets(); for (var i = 0; i < all.length; i++) if (chuan_(all[i].getName()) === k) { s = all[i]; break; } }
+  if (s) SHEETS[n] = s;
+  return s;
+}
+function taoSheet_(n) { var s = sheet_(n); if (s) return s; try { s = ss_().insertSheet(String(n).normalize('NFC')); } catch (e) { SHEETS = {}; s = sheet_(n); if (!s) throw e; } SHEETS[n] = s; return s; }
+
 function keys_(n) { return TB[n].map(function (x) { return x.split(':')[0]; }); }
 function setup() {
   var ss = ss_();
   Object.keys(TB).forEach(function (n) {
-    var sh = ss.getSheetByName(n) || ss.insertSheet(n);
+    var sh = taoSheet_(n);
     if (sh.getLastRow() === 0) { sh.appendRow(TB[n].map(function (x) { return x.split(':')[1]; })); sh.getRange(2, 1, 3000, TB[n].length).setNumberFormat('@'); }
   });
-  var cfg = ss.getSheetByName('Cấu hình'), have = {};
+  var cfg = sheet_('Cấu hình'), have = {};
   cfg.getDataRange().getValues().forEach(function (r) { have[String(r[0])] = 1; });
   CFG0.forEach(function (c) { if (!have[c[0]]) cfg.appendRow([c[0], c[0] === 'Muoi' ? salt_() : c[1], c[2]]); });
   CACHE = {};
   return 'Đã tạo.';
 }
-function ensure_() { var ss = ss_(); if (Object.keys(TB).some(function (n) { return !ss.getSheetByName(n); })) setup(); }
+function ensure_() { if (Object.keys(TB).some(function (n) { return !sheet_(n); })) setup(); }
 function salt_() { var s = '', k = 'abcdefghijklmnopqrstuvwxyz0123456789'; for (var i = 0; i < 24; i++) s += k.charAt(Math.floor(Math.random() * k.length)); return s; }
 function tb_(n) {
   if (!CACHE[n]) {
-    var v = ss_().getSheetByName(n).getDataRange().getValues(), ks = keys_(n);
-    CACHE[n] = v.slice(1).map(function (r, i) { var o = { _r: i + 2 }; ks.forEach(function (k, j) { o[k] = r[j] === undefined || r[j] === null ? '' : (r[j] instanceof Date ? r[j].toISOString() : r[j]); }); return o; });
+    var v = sheet_(n).getDataRange().getValues(), ks = keys_(n);
+    CACHE[n] = v.slice(1).map(function (r, i) { var o = { _r: i + 2 }; ks.forEach(function (k, j) { var x = r[j] === undefined || r[j] === null ? '' : (r[j] instanceof Date ? r[j].toISOString() : r[j]); o[k] = (k === 'sdt' || k === 'val') ? sdtHien_(x) : x; }); return o; });
   }
   return CACHE[n];
 }
-function add_(n, o) { var ks = keys_(n), t = tb_(n); ss_().getSheetByName(n).appendRow(ks.map(function (k) { return o[k] === undefined ? '' : o[k]; })); var x = { _r: t.length + 2 }; ks.forEach(function (k) { x[k] = o[k] === undefined ? '' : o[k]; }); t.push(x); return x; }
-function set_(n, o, k, v) { var i = keys_(n).indexOf(k); ss_().getSheetByName(n).getRange(o._r, i + 1).setValue(v); o[k] = v; }
+function add_(n, o) { var ks = keys_(n), t = tb_(n); sheet_(n).appendRow(ks.map(function (k) { return o[k] === undefined ? '' : o[k]; })); var x = { _r: t.length + 2 }; ks.forEach(function (k) { x[k] = o[k] === undefined ? '' : o[k]; }); t.push(x); return x; }
+function set_(n, o, k, v) { var i = keys_(n).indexOf(k); sheet_(n).getRange(o._r, i + 1).setValue(v); o[k] = v; }
 function find_(n, f) { var t = tb_(n); for (var i = 0; i < t.length; i++) if (f(t[i])) return t[i]; return null; }
 function where_(n, f) { return tb_(n).filter(f); }
 function code_(n, pre, w) { var c = tb_(n).filter(function (o) { return String(o.ma).indexOf(pre) === 0; }).length + 1; return pre + ('000000' + c).slice(-(w || 4)); }
@@ -217,6 +229,8 @@ function N(v) { return Number(v) || 0; }
 function now_() { return new Date().toISOString(); }
 function day_() { return Utilities.formatDate(new Date(), 'Asia/Ho_Chi_Minh', 'yyMMdd'); }
 function clean_(t, n) { return S(t).replace(/[\u0000-\u001f<>]/g, ' ').trim().slice(0, n || 120); }
+/** Sheet có thể lưu SĐT thành số và bỏ số 0 đầu: trả lại dạng 0xxxxxxxxx. */
+function sdtHien_(v) { if (v === '' || v === null || v === undefined) return ''; var t = String(v); return /^\d{9}$/.test(t) && t.charAt(0) !== '0' ? '0' + t : v; }
 function phone_(s) { var d = S(s).replace(/\D/g, ''); if (d.indexOf('84') === 0 && d.length === 11) d = '0' + d.slice(2); return /^0\d{9}$/.test(d) ? d : ''; }
 function hash_(a, b) { return Utilities.base64Encode(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, cfg_('Muoi') + '|' + a + '|' + b)); }
 function r2_(x) { return Math.round(x * 100) / 100; }
@@ -269,7 +283,7 @@ function idDangKy(p) {
     if (old) { if (!S(old.pin)) return { ok: false, msg: 'Số này đã được người thân tạo hộ. Nhờ điều phối viên kích hoạt để đặt PIN.' }; return { ok: false, msg: 'Số điện thoại này đã có tài khoản. Bấm Đăng nhập.', daCo: true }; }
     var o = taoTV_({ ten: ten, sdt: sdt, namSinh: ns, pin: pin, kenh: p.kenh });
     dongY_(o.efc, 'luu_lien_he', 1); if (p.chiaSe) dongY_(o.efc, 'chia_se_cau_chuyen', 1);
-    if (cfg_('SdtQuanTri') && sdt === cfg_('SdtQuanTri')) ganVai_(o.efc, 'quan_tri', '');
+    if (cfg_('SdtQuanTri') && sdt === sdtHien_(cfg_('SdtQuanTri'))) ganVai_(o.efc, 'quan_tri', '');
     return { ok: true, phien: phienMoi_(o.efc, p.thietBi), efc: o.efc };
   });
 }
