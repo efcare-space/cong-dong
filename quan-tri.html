@@ -85,7 +85,7 @@ tbody tr[data-hs]{cursor:pointer}tbody tr[data-hs]:hover{background:#f4f8ff}
  */
 var VER = '1.2';
 var TB = {
-  'Thành viên': ['efc:EF-ID', 'ten:Tên', 'sdt:Số điện thoại', 'namSinh:Năm sinh', 'khuVuc:Khu vực', 'pin:PIN (băm)', 'sai:Số lần sai', 'trangThai:Trạng thái', 'tao:Tạo lúc', 'muon:Muốn', 'muonThuNhap:Muốn thu nhập', 'hienBang:Hiện hồ sơ', 'xmA:Xác minh A', 'xmB:Xác minh B', 'xmC:Xác minh C', 'chungChi:Chứng chỉ', 'nguoiTao:Người tạo', 'kenh:Kênh đến'],
+  'Thành viên': ['efc:EF-ID', 'ten:Tên', 'sdt:Số điện thoại', 'namSinh:Năm sinh', 'khuVuc:Khu vực', 'pin:PIN (băm)', 'sai:Số lần sai', 'trangThai:Trạng thái', 'tao:Tạo lúc', 'muon:Muốn', 'muonThuNhap:Muốn thu nhập', 'hienBang:Hiện hồ sơ', 'xmA:Xác minh A', 'xmB:Xác minh B', 'xmC:Xác minh C', 'chungChi:Chứng chỉ', 'nguoiTao:Người tạo', 'kenh:Kênh đến', 'viTri:Vị trí gần đúng', 'viTriLuc:Vị trí lúc'],
   'Tổ chức': ['ma:Mã', 'ten:Tên', 'loai:Loại', 'efcDaiDien:Người đại diện', 'trangThai:Trạng thái', 'logo:Logo', 'tao:Tạo lúc'],
   'Vai': ['efc:EF-ID', 'vai:Vai', 'maOrg:Mã tổ chức', 'tu:Từ', 'den:Đến'],
   'Quan hệ': ['a:A', 'loai:Loại', 'b:B', 'ghiChu:Ghi chú', 'tu:Từ', 'den:Đến'],
@@ -96,7 +96,7 @@ var TB = {
   'Sự kiện': ['luc:Lúc', 'efc:EF-ID', 'bac:Bậc', 'loai:Loại', 'ma:Mã liên quan'],
   'Ca': ['ma:Mã ca', 'tao:Tạo lúc', 'efcGiup:Người giúp', 'nguoiNhan:Người được giúp', 'efcNhan:EF-ID người được giúp', 'viec:Việc', 'phut:Phút', 'gio:Giờ', 'khuVuc:Khu vực', 'ghiChu:Ghi chú', 'bam:Mã xác nhận (băm)', 'thu:Số lần thử', 'trangThai:Trạng thái', 'xnLuc:Xác nhận lúc', 'nguoiXN:Người xác nhận', 'quanHe:Quan hệ', 'efcXN:EF-ID người xác nhận', 'ky:Ký trách nhiệm', 'sao:Sao', 'pub:Cho công khai', 'dev:Máy tạo', 'devXN:Máy xác nhận', 'geo:Vị trí tạo', 'geoXN:Vị trí xác nhận', 'anh:Ảnh', 'mucXM:Mức xác minh', 'maNho:Mã nhờ giúp', 'maYC:Mã việc Sàn', 'maCT:Mã chương trình'],
   'Sổ giờ': ['ma:Mã', 'luc:Lúc', 'loai:Loại', 'efc:EF-ID', 'gio:Giờ', 'doiUng:Đối ứng', 'ghiChu:Ghi chú'],
-  'Nhờ giúp': ['ma:Mã', 'tao:Tạo lúc', 'loai:Loại', 'efcDang:Người đăng', 'efcCan:EF-ID người cần', 'nguoiCan:Người cần', 'viec:Việc', 'khuVuc:Khu vực', 'thoiGian:Thời gian', 'moTa:Mô tả', 'trangThai:Trạng thái', 'efcNhan:Người nhận', 'nhanLuc:Nhận lúc', 'maCa:Mã ca', 'xacNhanKN:Đã xác nhận kỹ năng'],
+  'Nhờ giúp': ['ma:Mã', 'tao:Tạo lúc', 'loai:Loại', 'efcDang:Người đăng', 'efcCan:EF-ID người cần', 'nguoiCan:Người cần', 'viec:Việc', 'khuVuc:Khu vực', 'thoiGian:Thời gian', 'moTa:Mô tả', 'trangThai:Trạng thái', 'efcNhan:Người nhận', 'nhanLuc:Nhận lúc', 'maCa:Mã ca', 'xacNhanKN:Đã xác nhận kỹ năng', 'viTri:Vị trí gần đúng', 'efcMoi:Mời riêng'],
   'Việc Sàn': ['ma:Mã', 'tao:Tạo lúc', 'efcDat:Người đặt', 'efcCho:Làm cho (EF-ID)', 'loaiBen:Bên nhận', 'tang:Tầng', 'viec:Việc', 'moTa:Mô tả', 'khuVuc:Khu vực', 'thoiDiem:Thời điểm', 'soGio:Số giờ', 'gia:Giá (đ)', 'hinhThuc:Lối nhận', 'trangThai:Trạng thái', 'efcLam:Người làm', 'nhanLuc:Nhận lúc', 'sao:Sao', 'daTra:Đã trả', 'xnLuc:Xác nhận lúc', 'maCa:Mã ca', 'maGop:Mã góp'],
   'Chương trình bảo trợ': ['ma:Mã', 'maOrg:Nhà tài trợ', 'ten:Tên', 'goi:Gói', 'loai:Loại', 'soGio:Số giờ', 'giaBaoTro:Giá bảo trợ', 'soTien:Số tiền', 'khuVuc:Khu vực', 'nhomViec:Nhóm việc', 'trangThai:Trạng thái', 'tao:Tạo lúc', 'tienVeLuc:Tiền về lúc'],
   'Góp quỹ': ['ma:Mã', 'maYC:Mã việc', 'efc:Người làm', 'soTien:Số tiền', 'trangThai:Trạng thái', 'tao:Tạo lúc', 'veLuc:Tiền về lúc'],
@@ -139,7 +139,7 @@ var DANH_MUC = [
   { id: 'dua-kham', ten: 'Đồng hành đi khám (không cấp cứu)', nhom: 'Di chuyển', mo: false }
 ];
 var TANG = { A: 'Chăm sóc chuyên nghiệp (qua FaCare Life)', B: 'Cố vấn, kèm cặp cho hộ kinh doanh, doanh nghiệp nhỏ', C: 'Việc cộng đồng nhẹ có thù lao' };
-var MUC_DICH = { luu_lien_he: 'Lưu thông tin và để điều phối viên liên hệ', chia_se_cau_chuyen: 'Chia sẻ câu chuyện ẩn danh', tin_nhiem: 'Hiện số việc tử tế đã xác nhận trên hồ sơ Sàn', hien_ho_so: 'Hiện hồ sơ năng lực trên bảng việc' };
+var MUC_DICH = { luu_lien_he: 'Lưu thông tin và để điều phối viên liên hệ', chia_se_cau_chuyen: 'Chia sẻ câu chuyện ẩn danh', tin_nhiem: 'Hiện số việc tử tế đã xác nhận trên hồ sơ Sàn', hien_ho_so: 'Hiện hồ sơ năng lực trên bảng việc', gan_day: 'Cho người gần đây thấy tôi (tên, kỹ năng, khoảng cách ước lượng)' };
 var MAX_THU = 5, PHIEN_NGAY = 30;
 /** 6 cửa của efcare.vn/cong-dong + thu nhập (chốt 04/11). */
 var CUA = ['de_xuat', 'gop_gio', 'cam_nang', 'chia_se_kn', 'cau_chuyen', 'mo_tram', 'thu_nhap'];
@@ -176,7 +176,7 @@ function cache_() { try { return typeof CacheService !== 'undefined' ? CacheServ
 /** Chỉ kiểm tra đủ trang tính một lần mỗi 6 giờ: bỏ 23 lần tìm trang ở mỗi lượt gọi. */
 function ensure_() { var c = cache_(); if (c && c.get('daSetup') === VER) return; if (Object.keys(TB).some(function (n) { return !sheet_(n); })) setup(); if (c) c.put('daSetup', VER, 21600); }
 function nho_(k, giay, fn) { var c = cache_(), d = dv_(); if (c && d) { var v = c.get(k + ':' + d); if (v) return JSON.parse(v); } var r = fn(); if (c && d && r && r.ok) { try { c.put(k + ':' + d, JSON.stringify(r), giay); } catch (e) {} } return r; }
-var DOC_ = ['apiCauHinh', 'apiBangViec', 'idToi', 'viecCuaToi', 'idToiDayDu', 'gttTimCa', 'ttBang', 'dtBang', 'quyBang', 'hvBang', 'dpBang', 'qtBang', 'dataTongQuan', 'dataThanhVien', 'dataHoSo', 'dataViecCanLam', 'dataTram', 'dataNhatKy', 'dataXuat'];
+var DOC_ = ['ganToi', 'apiCauHinh', 'apiBangViec', 'idToi', 'viecCuaToi', 'idToiDayDu', 'gttTimCa', 'ttBang', 'dtBang', 'quyBang', 'hvBang', 'dpBang', 'qtBang', 'dataTongQuan', 'dataThanhVien', 'dataHoSo', 'dataViecCanLam', 'dataTram', 'dataNhatKy', 'dataXuat'];
 function salt_() { var s = '', k = 'abcdefghijklmnopqrstuvwxyz0123456789'; for (var i = 0; i < 24; i++) s += k.charAt(Math.floor(Math.random() * k.length)); return s; }
 /* Bộ nhớ đệm dữ liệu có phiên bản: đọc lấy cả các bảng trong một lượt; mọi lần ghi đổi phiên bản nên không đọc nhầm dữ liệu cũ.
  * Trong khoá ghi (lock_) luôn đọc thẳng từ Sheet. */
@@ -407,7 +407,7 @@ function idToi(t) {
   var dy = {}; Object.keys(MUC_DICH).forEach(function (k) { dy[k] = coDongY_(e, k); });
   var ghiDanh = where_('Ghi danh', function (o) { return S(o.efc) === e; }).map(function (o) { var k = find_('Khoá học', function (x) { return S(x.ma) === S(o.maKH); }); return { ma: S(o.ma), khoa: k ? S(k.ten) : '', trangThai: S(o.trangThai), taiTro: !!S(o.maCT) }; });
   return { ok: true, toi: { efc: e, ten: S(tv.ten), sdt: S(tv.sdt), namSinh: N(tv.namSinh), khuVuc: S(tv.khuVuc), muon: S(tv.muon) ? S(tv.muon).split(',') : [], muonThuNhap: S(tv.muonThuNhap) === '1', xm: { A: S(tv.xmA), B: S(tv.xmB), C: duTangC_(e) ? 'dat' : S(tv.xmC) }, chungChi: S(tv.chungChi) },
-    vai: m.vai, dongY: dy, soDu: soDu_(e), thongKe: st, huyHieu: badges_(st), lichSu: ls, phieu: phieu, giaDinh: gd, thuaKe: tk ? { efc: S(tk.b), ten: ten_(S(tk.b)) } : null, thayMat: thayMat_(e), hoSo: hs, ghiDanh: ghiDanh, giaQuyDoi: quy_().gia,
+    vai: m.vai, dongY: dy, hienGanDay: dy.gan_day && !!S(tv.viTri), soDu: soDu_(e), thongKe: st, huyHieu: badges_(st), lichSu: ls, phieu: phieu, giaDinh: gd, thuaKe: tk ? { efc: S(tk.b), ten: ten_(S(tk.b)) } : null, thayMat: thayMat_(e), hoSo: hs, ghiDanh: ghiDanh, giaQuyDoi: quy_().gia,
     phien: where_('Phiên', function (o) { return S(o.efc) === e && !S(o.thuHoi) && new Date(S(o.het)).getTime() > Date.now(); }).length };
 }
 /** Một lượt gọi thay cho idToi + viecCuaToi khi mở app. */
@@ -422,7 +422,8 @@ function viecCuaToi(t) {
   var ycLam = where_('Việc Sàn', function (o) { return S(o.efcLam) === e; }).map(function (o) { var r = yc(o); var x = tv_(S(o.efcDat)); r.lienHe = x ? S(x.sdt) : ''; r.tenNguoiDat = x ? S(x.ten) : ''; return r; });
   var caCho = where_('Ca', function (o) { return S(o.efcGiup) === e && S(o.trangThai) === 'cho'; }).map(function (o) { return { ma: S(o.ma), nguoiNhan: S(o.nguoiNhan), gio: N(o.gio), tao: S(o.tao) }; });
   var canXacNhan = where_('Ca', function (o) { return S(o.trangThai) === 'cho' && (S(o.efcNhan) === e || tm.indexOf(S(o.efcNhan)) >= 0); }).map(function (o) { var v = viec_(S(o.viec)) || {}; return { ma: S(o.ma), nguoiGiup: ten_(S(o.efcGiup)), nguoiNhan: S(o.nguoiNhan), viec: v.ten || '', phut: N(o.phut) }; });
-  return { ok: true, nhoDang: nhoDang.reverse(), nhoNhan: nhoNhan.reverse(), ycDat: ycDat.reverse(), ycLam: ycLam.reverse(), caCho: caCho.reverse(), canXacNhan: canXacNhan };
+  var loiMoi = where_('Nhờ giúp', function (o) { return S(o.efcMoi) === e && S(o.trangThai) === 'mo'; }).map(function (o) { var r = nh(o); r.tenNguoiMoi = ten_(S(o.efcDang)); return r; });
+  return { ok: true, loiMoi: loiMoi, nhoDang: nhoDang.reverse(), nhoNhan: nhoNhan.reverse(), ycDat: ycDat.reverse(), ycLam: ycLam.reverse(), caCho: caCho.reverse(), canXacNhan: canXacNhan };
 }
 
 /* ---------- gia đình, tặng, thừa kế ---------- */
@@ -439,6 +440,33 @@ function tangGio(t, toEfc, gio, loiNhan) {
     so_('tang_di', m.efc, -gio, toEfc, loiNhan); so_('tang_den', toEfc, gio, m.efc, loiNhan); ev_(m.efc, 'CD6', 'tang_gio', toEfc);
     return { ok: true, nguoiNhan: S(to.ten) };
   });
+}
+
+/* ---------- Gần tôi ----------
+ * Vị trí chỉ lưu dạng ô lưới khoảng 500 m, lấy khi người dùng bấm, hết hạn sau 30 ngày.
+ * Người gần đây: chỉ người tự bật đồng ý "gan_day", có PIN (không phải tài khoản tạo hộ), đang hoạt động.
+ * Không trả số điện thoại, không trả toạ độ; khoảng cách chỉ theo dải. */
+var O_LUOI = 0.005, NGAY_VI_TRI = 30;
+function luoi_(g) { if (!g) return ''; var a = Number(g.lat), b = Number(g.lng); if (!(a >= -90 && a <= 90 && b >= -180 && b <= 180) || (a === 0 && b === 0)) return ''; return (Math.round(a / O_LUOI) * O_LUOI).toFixed(3) + ',' + (Math.round(b / O_LUOI) * O_LUOI).toFixed(3); }
+function dai_(m) { if (m === null || m === undefined) return null; if (m < 1000) return 'Dưới 1 km'; if (m < 3000) return '1–3 km'; if (m < 5000) return '3–5 km'; if (m < 10000) return '5–10 km'; return null; }
+function idViTri(t, geo, bat) {
+  var m = me_(t);
+  if (!bat) { set_('Thành viên', m.tv, 'viTri', ''); set_('Thành viên', m.tv, 'viTriLuc', ''); dongY_(m.efc, 'gan_day', 0); return { ok: true, bat: false }; }
+  var l = luoi_(geo); if (!l) return { ok: false, msg: 'Chưa lấy được vị trí. Bật định vị cho trình duyệt rồi thử lại.' };
+  set_('Thành viên', m.tv, 'viTri', l); set_('Thành viên', m.tv, 'viTriLuc', now_()); if (!coDongY_(m.efc, 'gan_day')) dongY_(m.efc, 'gan_day', 1);
+  return { ok: true, bat: true };
+}
+function ganToi(t, geo) {
+  var m = me_(t), toi = luoi_(geo); if (!toi) return { ok: false, msg: 'Chưa lấy được vị trí. Bật định vị cho trình duyệt rồi thử lại.' };
+  var han = Date.now() - NGAY_VI_TRI * 864e5, tm = thayMat_(m.efc).map(function (x) { return x.efc; });
+  var viec = where_('Nhờ giúp', function (o) { return S(o.trangThai) === 'mo' && S(o.viTri) && S(o.efcDang) !== m.efc; }).map(function (o) { var kc = dist_(toi, S(o.viTri)), d = dai_(kc); if (!d) return null; var v = viec_(S(o.viec)) || {}; return { ma: S(o.ma), loai: S(o.loai), nguoiCan: S(o.nguoiCan), viec: v.ten || '', khuVuc: S(o.khuVuc), thoiGian: S(o.thoiGian), moTa: S(o.moTa), dai: d, _kc: kc }; }).filter(Boolean).sort(function (a, b) { return a._kc - b._kc; }).slice(0, 30);
+  var nguoi = where_('Thành viên', function (o) { return S(o.efc) !== m.efc && tm.indexOf(S(o.efc)) < 0 && S(o.pin) && S(o.trangThai) === 'hoat_dong' && S(o.viTri) && new Date(S(o.viTriLuc)).getTime() > han; }).filter(function (o) { return coDongY_(S(o.efc), 'gan_day'); }).map(function (o) {
+    var e = S(o.efc), kc = dist_(toi, S(o.viTri)), d = dai_(kc); if (!d) return null;
+    var kn = where_('Hồ sơ năng lực', function (h) { return S(h.efc) === e && S(h.kyNang); }).map(function (h) { return { ten: (viec_(S(h.kyNang)) || {}).ten || '', xn: N(h.soXacNhan) >= 2 || S(h.nguon) === 'hoc_vien' }; });
+    return { efc: e, ten: S(o.ten).split(' ').slice(-1)[0], kyNang: kn.slice(0, 3), soViec: viecXong_(e), dat: duTangC_(e), dai: d, _kc: kc };
+  }).filter(Boolean).sort(function (a, b) { return a._kc - b._kc; }).slice(0, 20);
+  viec.forEach(function (x) { delete x._kc; }); nguoi.forEach(function (x) { delete x._kc; });
+  return { ok: true, viec: viec, nguoi: nguoi, toiHien: coDongY_(m.efc, 'gan_day') && !!S(m.tv.viTri) };
 }
 
 /* ---------- Giờ Tử Tế: ca ---------- */
@@ -508,7 +536,8 @@ function gttDangNho(t, p) {
   if (!p.dongY) return { ok: false, msg: 'Cần đồng ý đăng lên bảng việc.' };
   var efcCan = '', nguoiCan = S(m.tv.ten);
   if (p.choEfc) { if (!laThayMat_(m.efc, S(p.choEfc))) return { ok: false, msg: 'Bạn chưa thay mặt người này.' }; efcCan = S(p.choEfc); nguoiCan = ten_(efcCan); }
-  return lock_(function () { var ma = code_('Nhờ giúp', 'NG-' + day_() + '-', 3); add_('Nhờ giúp', { ma: ma, tao: now_(), loai: loai, efcDang: m.efc, efcCan: efcCan, nguoiCan: nguoiCan, viec: v.id, khuVuc: clean_(p.khuVuc, 80), thoiGian: clean_(p.thoiGian, 60), moTa: clean_(p.moTa, 300), trangThai: 'mo', efcNhan: '', nhanLuc: '', maCa: '', xacNhanKN: 0 }); return { ok: true, ma: ma }; });
+  var moi = ''; if (p.efcMoi) { var mt = tv_(S(p.efcMoi)); if (!mt || S(mt.efc) === m.efc || !coDongY_(S(mt.efc), 'gan_day')) return { ok: false, msg: 'Người này hiện không nhận lời mời.' }; moi = S(mt.efc); }
+  return lock_(function () { var ma = code_('Nhờ giúp', 'NG-' + day_() + '-', 3); add_('Nhờ giúp', { ma: ma, tao: now_(), loai: loai, efcDang: m.efc, efcCan: efcCan, nguoiCan: nguoiCan, viec: v.id, khuVuc: clean_(p.khuVuc, 80), thoiGian: clean_(p.thoiGian, 60), moTa: clean_(p.moTa, 300), trangThai: 'mo', efcNhan: '', nhanLuc: '', maCa: '', xacNhanKN: 0, viTri: luoi_(p.geo), efcMoi: moi }); return { ok: true, ma: ma }; });
 }
 function gttNhanViec(t, ma) {
   var m = me_(t);
@@ -829,7 +858,7 @@ function dataCapNhat(t, efc, p) {
 /** Xoá theo yêu cầu: ẩn danh hoá, giữ sổ giờ và việc ở dạng không định danh để báo cáo. Chỉ quản trị. */
 function dataXoaTheoYeuCau(t, efc, canCu) {
   var m = nv_(t, true), tv = tv_(S(efc)); if (!tv) return { ok: false, msg: 'Không tìm thấy thành viên.' }; if (!clean_(canCu, 200)) return { ok: false, msg: 'Ghi căn cứ (ví dụ: yêu cầu trong ứng dụng ngày…).' };
-  ['ten', 'sdt', 'namSinh', 'khuVuc', 'pin', 'chungChi'].forEach(function (k) { set_('Thành viên', tv, k, k === 'ten' ? 'Đã xoá theo yêu cầu' : ''); });
+  ['ten', 'sdt', 'namSinh', 'khuVuc', 'pin', 'chungChi', 'viTri', 'viTriLuc'].forEach(function (k) { set_('Thành viên', tv, k, k === 'ten' ? 'Đã xoá theo yêu cầu' : ''); });
   set_('Thành viên', tv, 'trangThai', 'da_xoa');
   where_('Phiên', function (o) { return S(o.efc) === S(efc) && !S(o.thuHoi); }).forEach(function (o) { set_('Phiên', o, 'thuHoi', now_()); });
   where_('Hồ sơ năng lực', function (o) { return S(o.efc) === S(efc); }).forEach(function (o) { set_('Hồ sơ năng lực', o, 'kyNang', ''); });
@@ -867,9 +896,24 @@ function dataXuat(t, loai) {
 }
 function dataGanVai(t, efc, vai, bo) { var m = nv_(t, true), tv = tv_(S(efc)); if (!tv) return { ok: false, msg: 'Không tìm thấy thành viên.' }; if (['dieu_phoi', 'quan_tri'].indexOf(vai) < 0) return { ok: false, msg: 'Vai không hợp lệ.' }; if (bo) { if (S(efc) === m.efc && vai === 'quan_tri') return { ok: false, msg: 'Không tự bỏ vai quản trị của mình.' }; where_('Vai', function (o) { return S(o.efc) === S(efc) && S(o.vai) === vai && !S(o.den); }).forEach(function (o) { set_('Vai', o, 'den', now_()); }); } else ganVai_(S(efc), vai, ''); nk_(m, bo ? 'bo_vai' : 'gan_vai', S(efc), vai); return { ok: true }; }
 
+/* ---------- Sao lưu hằng đêm (cần quyền Drive và trình kích hoạt: chủ tài khoản chạy caiSaoLuuDem một lần) ---------- */
+function saoLuuDem() {
+  var ten = 'EFC · sao lưu dữ liệu', it = DriveApp.getFoldersByName(ten), tm = it.hasNext() ? it.next() : DriveApp.createFolder(ten);
+  DriveApp.getFileById(ss_().getId()).makeCopy('EFC dữ liệu · ' + Utilities.formatDate(new Date(), 'Asia/Ho_Chi_Minh', 'yyyy-MM-dd HH:mm'), tm);
+  var ds = [], fs = tm.getFiles(); while (fs.hasNext()) ds.push(fs.next());
+  ds.sort(function (a, b) { return b.getDateCreated() - a.getDateCreated(); }).slice(30).forEach(function (f) { f.setTrashed(true); });
+  var hn = sheet_('Hiệu năng'); if (hn && hn.getLastRow() > 3000) hn.deleteRows(2, hn.getLastRow() - 2001);
+  return 'Đã sao lưu. Giữ 30 bản gần nhất trong thư mục "' + ten + '".';
+}
+function caiSaoLuuDem() {
+  ScriptApp.getProjectTriggers().forEach(function (t) { if (t.getHandlerFunction() === 'saoLuuDem') ScriptApp.deleteTrigger(t); });
+  ScriptApp.newTrigger('saoLuuDem').timeBased().everyDays(1).atHour(1).inTimezone('Asia/Ho_Chi_Minh').create();
+  return saoLuuDem() + ' Đã hẹn sao lưu 1:00 sáng mỗi ngày.';
+}
+
 /* ---------- cổng API ---------- */
 var API_FNS = {};
-var FN_ = { apiCauHinh: apiCauHinh, apiBangViec: apiBangViec, idDangKy: idDangKy, idDangNhap: idDangNhap, idDangXuat: idDangXuat, idDoiPin: idDoiPin, idCapNhat: idCapNhat, idDongY: idDongY, idYeuCauXoa: idYeuCauXoa, idXinXacMinh: idXinXacMinh, idThayMat: idThayMat, idToi: idToi, idToiDayDu: idToiDayDu, viecCuaToi: viecCuaToi, gdTao: gdTao, gdVao: gdVao, datThuaKe: datThuaKe, tangGio: tangGio, gttTaoCa: gttTaoCa, gttTimCa: gttTimCa, gttXacNhan: gttXacNhan, gttXacNhanTrongApp: gttXacNhanTrongApp, gttDangNho: gttDangNho, gttNhanViec: gttNhanViec, gttXacNhanKyNang: gttXacNhanKyNang, sanDatViec: sanDatViec, sanNhanViec: sanNhanViec, sanDoiLoi: sanDoiLoi, sanXacNhan: sanXacNhan, uuDaiDoi: uuDaiDoi, hocGhiDanh: hocGhiDanh, ttBang: ttBang, ttTaoBaoTro: ttTaoBaoTro, dtBang: dtBang, dtTaoUuDai: dtTaoUuDai, dtDungPhieu: dtDungPhieu, quyBang: quyBang, quyXacNhanCT: quyXacNhanCT, quyXacNhanGop: quyXacNhanGop, quyTraPhieu: quyTraPhieu, quyTraHocPhi: quyTraHocPhi, quyThamSo: quyThamSo, hvBang: hvBang, hvTaoKhoa: hvTaoKhoa, hvHoanThanh: hvHoanThanh, dpBang: dpBang, dpAn: dpAn, dpXacMinh: dpXacMinh, dpMoKhoa: dpMoKhoa, dpHuyCa: dpHuyCa, dpThuaKe: dpThuaKe, qtBang: qtBang, qtTaoToChuc: qtTaoToChuc, qtGanVai: qtGanVai, qtCauHinh: qtCauHinh, dataTongQuan: dataTongQuan, dataThanhVien: dataThanhVien, dataHoSo: dataHoSo, dataGhiChu: dataGhiChu, dataCapNhat: dataCapNhat, dataXoaTheoYeuCau: dataXoaTheoYeuCau, dataViecCanLam: dataViecCanLam, dataTram: dataTram, dataTaoTram: dataTaoTram, dataNhatKy: dataNhatKy, dataXuat: dataXuat, dataGanVai: dataGanVai };
+var FN_ = { apiCauHinh: apiCauHinh, apiBangViec: apiBangViec, idDangKy: idDangKy, idDangNhap: idDangNhap, idDangXuat: idDangXuat, idDoiPin: idDoiPin, idCapNhat: idCapNhat, idDongY: idDongY, idYeuCauXoa: idYeuCauXoa, idXinXacMinh: idXinXacMinh, idThayMat: idThayMat, idToi: idToi, idToiDayDu: idToiDayDu, idViTri: idViTri, ganToi: ganToi, viecCuaToi: viecCuaToi, gdTao: gdTao, gdVao: gdVao, datThuaKe: datThuaKe, tangGio: tangGio, gttTaoCa: gttTaoCa, gttTimCa: gttTimCa, gttXacNhan: gttXacNhan, gttXacNhanTrongApp: gttXacNhanTrongApp, gttDangNho: gttDangNho, gttNhanViec: gttNhanViec, gttXacNhanKyNang: gttXacNhanKyNang, sanDatViec: sanDatViec, sanNhanViec: sanNhanViec, sanDoiLoi: sanDoiLoi, sanXacNhan: sanXacNhan, uuDaiDoi: uuDaiDoi, hocGhiDanh: hocGhiDanh, ttBang: ttBang, ttTaoBaoTro: ttTaoBaoTro, dtBang: dtBang, dtTaoUuDai: dtTaoUuDai, dtDungPhieu: dtDungPhieu, quyBang: quyBang, quyXacNhanCT: quyXacNhanCT, quyXacNhanGop: quyXacNhanGop, quyTraPhieu: quyTraPhieu, quyTraHocPhi: quyTraHocPhi, quyThamSo: quyThamSo, hvBang: hvBang, hvTaoKhoa: hvTaoKhoa, hvHoanThanh: hvHoanThanh, dpBang: dpBang, dpAn: dpAn, dpXacMinh: dpXacMinh, dpMoKhoa: dpMoKhoa, dpHuyCa: dpHuyCa, dpThuaKe: dpThuaKe, qtBang: qtBang, qtTaoToChuc: qtTaoToChuc, qtGanVai: qtGanVai, qtCauHinh: qtCauHinh, dataTongQuan: dataTongQuan, dataThanhVien: dataThanhVien, dataHoSo: dataHoSo, dataGhiChu: dataGhiChu, dataCapNhat: dataCapNhat, dataXoaTheoYeuCau: dataXoaTheoYeuCau, dataViecCanLam: dataViecCanLam, dataTram: dataTram, dataTaoTram: dataTaoTram, dataNhatKy: dataNhatKy, dataXuat: dataXuat, dataGanVai: dataGanVai };
 Object.keys(FN_).forEach(function (n) {
   API_FNS[n] = function () { CACHE = {}; try { var r = FN_[n].apply(null, arguments); if (SOGHI > GHI_DA_DEM && SOGHI > 0 && DOC_.indexOf(n) < 0) { var l = LockService.getScriptLock(); try { l.waitLock(10000); napSauGhi_(); } catch (e) { doiPhienBan_(); } finally { try { l.releaseLock(); } catch (e) {} } } return r; } catch (e) { return { ok: false, msg: String(e && e.message || e) }; } };
 });
@@ -933,7 +977,8 @@ function seedDemo() {
   // Hà giúp hai việc tử tế
   [['Bác Tư', 'cong-nghe', 60], ['Cô Nga', 'nha-an-toan', 120]].forEach(function (x) { var ca = ok(F.gttTaoCa(T.ha, { viec: x[1], nguoiNhan: x[0], phut: x[2], dongY: true, khuVuc: 'Nghĩa Đô, Cầu Giấy', dev: 'may-ha' }), 'ca ha'); ok(F.gttXacNhan({ ma: ca.ma, otp: ca.otp, dongY: true, ky: true, sao: 5, pub: true, nguoiXN: x[0], dev: 'may-' + x[0] }), 'xn ha'); });
   // Việc đang mở để thử
-  ok(F.gttDangNho(T.lan, { loai: 'giup', viec: 'cong-nghe', choEfc: hanh, khuVuc: 'Dịch Vọng, Cầu Giấy', thoiGian: 'Chiều thứ Bảy', moTa: 'Cài Zalo để bà gọi video cho cháu ở xa', dongY: true }), 'nho mo');
+  ok(F.idViTri(T.ha, { lat: 21.0465, lng: 105.8005 }, true), 'vt ha'); ok(F.idViTri(T.minh, { lat: 21.0368, lng: 105.8019 }, true), 'vt minh');
+  ok(F.gttDangNho(T.lan, { geo: { lat: 21.0312, lng: 105.7881 }, loai: 'giup', viec: 'cong-nghe', choEfc: hanh, khuVuc: 'Dịch Vọng, Cầu Giấy', thoiGian: 'Chiều thứ Bảy', moTa: 'Cài Zalo để bà gọi video cho cháu ở xa', dongY: true }), 'nho mo');
   ok(F.sanDatViec(T.lan, { tang: 'C', viec: 'tro-chuyen', choEfc: hanh, loaiBen: 'ca_nhan', moTa: 'Người Bạn Tuổi Già: trò chuyện, đi dạo cùng bà chiều thứ Ba', khuVuc: 'Dịch Vọng, Cầu Giấy', thoiDiem: 'Thứ Ba 15:00–17:00', soGio: 2, gia: 80000 }), 'yc1');
   ok(F.sanDatViec(T.qt, { tang: 'B', loaiBen: 'to_chuc', moTa: 'Kèm sổ sách cho hộ kinh doanh tạp hoá, 2 buổi', khuVuc: 'Mai Dịch, Cầu Giấy', thoiDiem: 'Tuần sau', soGio: 6, gia: 600000 }), 'yc2');
   ok(F.hocGhiDanh(T.minh, 'KH-001'), 'ghi danh');

@@ -121,7 +121,7 @@ details.demo summary{cursor:pointer;list-style:none;min-height:44px;display:flex
  */
 var VER = '1.2';
 var TB = {
-  'Thành viên': ['efc:EF-ID', 'ten:Tên', 'sdt:Số điện thoại', 'namSinh:Năm sinh', 'khuVuc:Khu vực', 'pin:PIN (băm)', 'sai:Số lần sai', 'trangThai:Trạng thái', 'tao:Tạo lúc', 'muon:Muốn', 'muonThuNhap:Muốn thu nhập', 'hienBang:Hiện hồ sơ', 'xmA:Xác minh A', 'xmB:Xác minh B', 'xmC:Xác minh C', 'chungChi:Chứng chỉ', 'nguoiTao:Người tạo', 'kenh:Kênh đến'],
+  'Thành viên': ['efc:EF-ID', 'ten:Tên', 'sdt:Số điện thoại', 'namSinh:Năm sinh', 'khuVuc:Khu vực', 'pin:PIN (băm)', 'sai:Số lần sai', 'trangThai:Trạng thái', 'tao:Tạo lúc', 'muon:Muốn', 'muonThuNhap:Muốn thu nhập', 'hienBang:Hiện hồ sơ', 'xmA:Xác minh A', 'xmB:Xác minh B', 'xmC:Xác minh C', 'chungChi:Chứng chỉ', 'nguoiTao:Người tạo', 'kenh:Kênh đến', 'viTri:Vị trí gần đúng', 'viTriLuc:Vị trí lúc'],
   'Tổ chức': ['ma:Mã', 'ten:Tên', 'loai:Loại', 'efcDaiDien:Người đại diện', 'trangThai:Trạng thái', 'logo:Logo', 'tao:Tạo lúc'],
   'Vai': ['efc:EF-ID', 'vai:Vai', 'maOrg:Mã tổ chức', 'tu:Từ', 'den:Đến'],
   'Quan hệ': ['a:A', 'loai:Loại', 'b:B', 'ghiChu:Ghi chú', 'tu:Từ', 'den:Đến'],
@@ -132,7 +132,7 @@ var TB = {
   'Sự kiện': ['luc:Lúc', 'efc:EF-ID', 'bac:Bậc', 'loai:Loại', 'ma:Mã liên quan'],
   'Ca': ['ma:Mã ca', 'tao:Tạo lúc', 'efcGiup:Người giúp', 'nguoiNhan:Người được giúp', 'efcNhan:EF-ID người được giúp', 'viec:Việc', 'phut:Phút', 'gio:Giờ', 'khuVuc:Khu vực', 'ghiChu:Ghi chú', 'bam:Mã xác nhận (băm)', 'thu:Số lần thử', 'trangThai:Trạng thái', 'xnLuc:Xác nhận lúc', 'nguoiXN:Người xác nhận', 'quanHe:Quan hệ', 'efcXN:EF-ID người xác nhận', 'ky:Ký trách nhiệm', 'sao:Sao', 'pub:Cho công khai', 'dev:Máy tạo', 'devXN:Máy xác nhận', 'geo:Vị trí tạo', 'geoXN:Vị trí xác nhận', 'anh:Ảnh', 'mucXM:Mức xác minh', 'maNho:Mã nhờ giúp', 'maYC:Mã việc Sàn', 'maCT:Mã chương trình'],
   'Sổ giờ': ['ma:Mã', 'luc:Lúc', 'loai:Loại', 'efc:EF-ID', 'gio:Giờ', 'doiUng:Đối ứng', 'ghiChu:Ghi chú'],
-  'Nhờ giúp': ['ma:Mã', 'tao:Tạo lúc', 'loai:Loại', 'efcDang:Người đăng', 'efcCan:EF-ID người cần', 'nguoiCan:Người cần', 'viec:Việc', 'khuVuc:Khu vực', 'thoiGian:Thời gian', 'moTa:Mô tả', 'trangThai:Trạng thái', 'efcNhan:Người nhận', 'nhanLuc:Nhận lúc', 'maCa:Mã ca', 'xacNhanKN:Đã xác nhận kỹ năng'],
+  'Nhờ giúp': ['ma:Mã', 'tao:Tạo lúc', 'loai:Loại', 'efcDang:Người đăng', 'efcCan:EF-ID người cần', 'nguoiCan:Người cần', 'viec:Việc', 'khuVuc:Khu vực', 'thoiGian:Thời gian', 'moTa:Mô tả', 'trangThai:Trạng thái', 'efcNhan:Người nhận', 'nhanLuc:Nhận lúc', 'maCa:Mã ca', 'xacNhanKN:Đã xác nhận kỹ năng', 'viTri:Vị trí gần đúng', 'efcMoi:Mời riêng'],
   'Việc Sàn': ['ma:Mã', 'tao:Tạo lúc', 'efcDat:Người đặt', 'efcCho:Làm cho (EF-ID)', 'loaiBen:Bên nhận', 'tang:Tầng', 'viec:Việc', 'moTa:Mô tả', 'khuVuc:Khu vực', 'thoiDiem:Thời điểm', 'soGio:Số giờ', 'gia:Giá (đ)', 'hinhThuc:Lối nhận', 'trangThai:Trạng thái', 'efcLam:Người làm', 'nhanLuc:Nhận lúc', 'sao:Sao', 'daTra:Đã trả', 'xnLuc:Xác nhận lúc', 'maCa:Mã ca', 'maGop:Mã góp'],
   'Chương trình bảo trợ': ['ma:Mã', 'maOrg:Nhà tài trợ', 'ten:Tên', 'goi:Gói', 'loai:Loại', 'soGio:Số giờ', 'giaBaoTro:Giá bảo trợ', 'soTien:Số tiền', 'khuVuc:Khu vực', 'nhomViec:Nhóm việc', 'trangThai:Trạng thái', 'tao:Tạo lúc', 'tienVeLuc:Tiền về lúc'],
   'Góp quỹ': ['ma:Mã', 'maYC:Mã việc', 'efc:Người làm', 'soTien:Số tiền', 'trangThai:Trạng thái', 'tao:Tạo lúc', 'veLuc:Tiền về lúc'],
@@ -175,7 +175,7 @@ var DANH_MUC = [
   { id: 'dua-kham', ten: 'Đồng hành đi khám (không cấp cứu)', nhom: 'Di chuyển', mo: false }
 ];
 var TANG = { A: 'Chăm sóc chuyên nghiệp (qua FaCare Life)', B: 'Cố vấn, kèm cặp cho hộ kinh doanh, doanh nghiệp nhỏ', C: 'Việc cộng đồng nhẹ có thù lao' };
-var MUC_DICH = { luu_lien_he: 'Lưu thông tin và để điều phối viên liên hệ', chia_se_cau_chuyen: 'Chia sẻ câu chuyện ẩn danh', tin_nhiem: 'Hiện số việc tử tế đã xác nhận trên hồ sơ Sàn', hien_ho_so: 'Hiện hồ sơ năng lực trên bảng việc' };
+var MUC_DICH = { luu_lien_he: 'Lưu thông tin và để điều phối viên liên hệ', chia_se_cau_chuyen: 'Chia sẻ câu chuyện ẩn danh', tin_nhiem: 'Hiện số việc tử tế đã xác nhận trên hồ sơ Sàn', hien_ho_so: 'Hiện hồ sơ năng lực trên bảng việc', gan_day: 'Cho người gần đây thấy tôi (tên, kỹ năng, khoảng cách ước lượng)' };
 var MAX_THU = 5, PHIEN_NGAY = 30;
 /** 6 cửa của efcare.vn/cong-dong + thu nhập (chốt 04/11). */
 var CUA = ['de_xuat', 'gop_gio', 'cam_nang', 'chia_se_kn', 'cau_chuyen', 'mo_tram', 'thu_nhap'];
@@ -212,7 +212,7 @@ function cache_() { try { return typeof CacheService !== 'undefined' ? CacheServ
 /** Chỉ kiểm tra đủ trang tính một lần mỗi 6 giờ: bỏ 23 lần tìm trang ở mỗi lượt gọi. */
 function ensure_() { var c = cache_(); if (c && c.get('daSetup') === VER) return; if (Object.keys(TB).some(function (n) { return !sheet_(n); })) setup(); if (c) c.put('daSetup', VER, 21600); }
 function nho_(k, giay, fn) { var c = cache_(), d = dv_(); if (c && d) { var v = c.get(k + ':' + d); if (v) return JSON.parse(v); } var r = fn(); if (c && d && r && r.ok) { try { c.put(k + ':' + d, JSON.stringify(r), giay); } catch (e) {} } return r; }
-var DOC_ = ['apiCauHinh', 'apiBangViec', 'idToi', 'viecCuaToi', 'idToiDayDu', 'gttTimCa', 'ttBang', 'dtBang', 'quyBang', 'hvBang', 'dpBang', 'qtBang', 'dataTongQuan', 'dataThanhVien', 'dataHoSo', 'dataViecCanLam', 'dataTram', 'dataNhatKy', 'dataXuat'];
+var DOC_ = ['ganToi', 'apiCauHinh', 'apiBangViec', 'idToi', 'viecCuaToi', 'idToiDayDu', 'gttTimCa', 'ttBang', 'dtBang', 'quyBang', 'hvBang', 'dpBang', 'qtBang', 'dataTongQuan', 'dataThanhVien', 'dataHoSo', 'dataViecCanLam', 'dataTram', 'dataNhatKy', 'dataXuat'];
 function salt_() { var s = '', k = 'abcdefghijklmnopqrstuvwxyz0123456789'; for (var i = 0; i < 24; i++) s += k.charAt(Math.floor(Math.random() * k.length)); return s; }
 /* Bộ nhớ đệm dữ liệu có phiên bản: đọc lấy cả các bảng trong một lượt; mọi lần ghi đổi phiên bản nên không đọc nhầm dữ liệu cũ.
  * Trong khoá ghi (lock_) luôn đọc thẳng từ Sheet. */
@@ -443,7 +443,7 @@ function idToi(t) {
   var dy = {}; Object.keys(MUC_DICH).forEach(function (k) { dy[k] = coDongY_(e, k); });
   var ghiDanh = where_('Ghi danh', function (o) { return S(o.efc) === e; }).map(function (o) { var k = find_('Khoá học', function (x) { return S(x.ma) === S(o.maKH); }); return { ma: S(o.ma), khoa: k ? S(k.ten) : '', trangThai: S(o.trangThai), taiTro: !!S(o.maCT) }; });
   return { ok: true, toi: { efc: e, ten: S(tv.ten), sdt: S(tv.sdt), namSinh: N(tv.namSinh), khuVuc: S(tv.khuVuc), muon: S(tv.muon) ? S(tv.muon).split(',') : [], muonThuNhap: S(tv.muonThuNhap) === '1', xm: { A: S(tv.xmA), B: S(tv.xmB), C: duTangC_(e) ? 'dat' : S(tv.xmC) }, chungChi: S(tv.chungChi) },
-    vai: m.vai, dongY: dy, soDu: soDu_(e), thongKe: st, huyHieu: badges_(st), lichSu: ls, phieu: phieu, giaDinh: gd, thuaKe: tk ? { efc: S(tk.b), ten: ten_(S(tk.b)) } : null, thayMat: thayMat_(e), hoSo: hs, ghiDanh: ghiDanh, giaQuyDoi: quy_().gia,
+    vai: m.vai, dongY: dy, hienGanDay: dy.gan_day && !!S(tv.viTri), soDu: soDu_(e), thongKe: st, huyHieu: badges_(st), lichSu: ls, phieu: phieu, giaDinh: gd, thuaKe: tk ? { efc: S(tk.b), ten: ten_(S(tk.b)) } : null, thayMat: thayMat_(e), hoSo: hs, ghiDanh: ghiDanh, giaQuyDoi: quy_().gia,
     phien: where_('Phiên', function (o) { return S(o.efc) === e && !S(o.thuHoi) && new Date(S(o.het)).getTime() > Date.now(); }).length };
 }
 /** Một lượt gọi thay cho idToi + viecCuaToi khi mở app. */
@@ -458,7 +458,8 @@ function viecCuaToi(t) {
   var ycLam = where_('Việc Sàn', function (o) { return S(o.efcLam) === e; }).map(function (o) { var r = yc(o); var x = tv_(S(o.efcDat)); r.lienHe = x ? S(x.sdt) : ''; r.tenNguoiDat = x ? S(x.ten) : ''; return r; });
   var caCho = where_('Ca', function (o) { return S(o.efcGiup) === e && S(o.trangThai) === 'cho'; }).map(function (o) { return { ma: S(o.ma), nguoiNhan: S(o.nguoiNhan), gio: N(o.gio), tao: S(o.tao) }; });
   var canXacNhan = where_('Ca', function (o) { return S(o.trangThai) === 'cho' && (S(o.efcNhan) === e || tm.indexOf(S(o.efcNhan)) >= 0); }).map(function (o) { var v = viec_(S(o.viec)) || {}; return { ma: S(o.ma), nguoiGiup: ten_(S(o.efcGiup)), nguoiNhan: S(o.nguoiNhan), viec: v.ten || '', phut: N(o.phut) }; });
-  return { ok: true, nhoDang: nhoDang.reverse(), nhoNhan: nhoNhan.reverse(), ycDat: ycDat.reverse(), ycLam: ycLam.reverse(), caCho: caCho.reverse(), canXacNhan: canXacNhan };
+  var loiMoi = where_('Nhờ giúp', function (o) { return S(o.efcMoi) === e && S(o.trangThai) === 'mo'; }).map(function (o) { var r = nh(o); r.tenNguoiMoi = ten_(S(o.efcDang)); return r; });
+  return { ok: true, loiMoi: loiMoi, nhoDang: nhoDang.reverse(), nhoNhan: nhoNhan.reverse(), ycDat: ycDat.reverse(), ycLam: ycLam.reverse(), caCho: caCho.reverse(), canXacNhan: canXacNhan };
 }
 
 /* ---------- gia đình, tặng, thừa kế ---------- */
@@ -475,6 +476,33 @@ function tangGio(t, toEfc, gio, loiNhan) {
     so_('tang_di', m.efc, -gio, toEfc, loiNhan); so_('tang_den', toEfc, gio, m.efc, loiNhan); ev_(m.efc, 'CD6', 'tang_gio', toEfc);
     return { ok: true, nguoiNhan: S(to.ten) };
   });
+}
+
+/* ---------- Gần tôi ----------
+ * Vị trí chỉ lưu dạng ô lưới khoảng 500 m, lấy khi người dùng bấm, hết hạn sau 30 ngày.
+ * Người gần đây: chỉ người tự bật đồng ý "gan_day", có PIN (không phải tài khoản tạo hộ), đang hoạt động.
+ * Không trả số điện thoại, không trả toạ độ; khoảng cách chỉ theo dải. */
+var O_LUOI = 0.005, NGAY_VI_TRI = 30;
+function luoi_(g) { if (!g) return ''; var a = Number(g.lat), b = Number(g.lng); if (!(a >= -90 && a <= 90 && b >= -180 && b <= 180) || (a === 0 && b === 0)) return ''; return (Math.round(a / O_LUOI) * O_LUOI).toFixed(3) + ',' + (Math.round(b / O_LUOI) * O_LUOI).toFixed(3); }
+function dai_(m) { if (m === null || m === undefined) return null; if (m < 1000) return 'Dưới 1 km'; if (m < 3000) return '1–3 km'; if (m < 5000) return '3–5 km'; if (m < 10000) return '5–10 km'; return null; }
+function idViTri(t, geo, bat) {
+  var m = me_(t);
+  if (!bat) { set_('Thành viên', m.tv, 'viTri', ''); set_('Thành viên', m.tv, 'viTriLuc', ''); dongY_(m.efc, 'gan_day', 0); return { ok: true, bat: false }; }
+  var l = luoi_(geo); if (!l) return { ok: false, msg: 'Chưa lấy được vị trí. Bật định vị cho trình duyệt rồi thử lại.' };
+  set_('Thành viên', m.tv, 'viTri', l); set_('Thành viên', m.tv, 'viTriLuc', now_()); if (!coDongY_(m.efc, 'gan_day')) dongY_(m.efc, 'gan_day', 1);
+  return { ok: true, bat: true };
+}
+function ganToi(t, geo) {
+  var m = me_(t), toi = luoi_(geo); if (!toi) return { ok: false, msg: 'Chưa lấy được vị trí. Bật định vị cho trình duyệt rồi thử lại.' };
+  var han = Date.now() - NGAY_VI_TRI * 864e5, tm = thayMat_(m.efc).map(function (x) { return x.efc; });
+  var viec = where_('Nhờ giúp', function (o) { return S(o.trangThai) === 'mo' && S(o.viTri) && S(o.efcDang) !== m.efc; }).map(function (o) { var kc = dist_(toi, S(o.viTri)), d = dai_(kc); if (!d) return null; var v = viec_(S(o.viec)) || {}; return { ma: S(o.ma), loai: S(o.loai), nguoiCan: S(o.nguoiCan), viec: v.ten || '', khuVuc: S(o.khuVuc), thoiGian: S(o.thoiGian), moTa: S(o.moTa), dai: d, _kc: kc }; }).filter(Boolean).sort(function (a, b) { return a._kc - b._kc; }).slice(0, 30);
+  var nguoi = where_('Thành viên', function (o) { return S(o.efc) !== m.efc && tm.indexOf(S(o.efc)) < 0 && S(o.pin) && S(o.trangThai) === 'hoat_dong' && S(o.viTri) && new Date(S(o.viTriLuc)).getTime() > han; }).filter(function (o) { return coDongY_(S(o.efc), 'gan_day'); }).map(function (o) {
+    var e = S(o.efc), kc = dist_(toi, S(o.viTri)), d = dai_(kc); if (!d) return null;
+    var kn = where_('Hồ sơ năng lực', function (h) { return S(h.efc) === e && S(h.kyNang); }).map(function (h) { return { ten: (viec_(S(h.kyNang)) || {}).ten || '', xn: N(h.soXacNhan) >= 2 || S(h.nguon) === 'hoc_vien' }; });
+    return { efc: e, ten: S(o.ten).split(' ').slice(-1)[0], kyNang: kn.slice(0, 3), soViec: viecXong_(e), dat: duTangC_(e), dai: d, _kc: kc };
+  }).filter(Boolean).sort(function (a, b) { return a._kc - b._kc; }).slice(0, 20);
+  viec.forEach(function (x) { delete x._kc; }); nguoi.forEach(function (x) { delete x._kc; });
+  return { ok: true, viec: viec, nguoi: nguoi, toiHien: coDongY_(m.efc, 'gan_day') && !!S(m.tv.viTri) };
 }
 
 /* ---------- Giờ Tử Tế: ca ---------- */
@@ -544,7 +572,8 @@ function gttDangNho(t, p) {
   if (!p.dongY) return { ok: false, msg: 'Cần đồng ý đăng lên bảng việc.' };
   var efcCan = '', nguoiCan = S(m.tv.ten);
   if (p.choEfc) { if (!laThayMat_(m.efc, S(p.choEfc))) return { ok: false, msg: 'Bạn chưa thay mặt người này.' }; efcCan = S(p.choEfc); nguoiCan = ten_(efcCan); }
-  return lock_(function () { var ma = code_('Nhờ giúp', 'NG-' + day_() + '-', 3); add_('Nhờ giúp', { ma: ma, tao: now_(), loai: loai, efcDang: m.efc, efcCan: efcCan, nguoiCan: nguoiCan, viec: v.id, khuVuc: clean_(p.khuVuc, 80), thoiGian: clean_(p.thoiGian, 60), moTa: clean_(p.moTa, 300), trangThai: 'mo', efcNhan: '', nhanLuc: '', maCa: '', xacNhanKN: 0 }); return { ok: true, ma: ma }; });
+  var moi = ''; if (p.efcMoi) { var mt = tv_(S(p.efcMoi)); if (!mt || S(mt.efc) === m.efc || !coDongY_(S(mt.efc), 'gan_day')) return { ok: false, msg: 'Người này hiện không nhận lời mời.' }; moi = S(mt.efc); }
+  return lock_(function () { var ma = code_('Nhờ giúp', 'NG-' + day_() + '-', 3); add_('Nhờ giúp', { ma: ma, tao: now_(), loai: loai, efcDang: m.efc, efcCan: efcCan, nguoiCan: nguoiCan, viec: v.id, khuVuc: clean_(p.khuVuc, 80), thoiGian: clean_(p.thoiGian, 60), moTa: clean_(p.moTa, 300), trangThai: 'mo', efcNhan: '', nhanLuc: '', maCa: '', xacNhanKN: 0, viTri: luoi_(p.geo), efcMoi: moi }); return { ok: true, ma: ma }; });
 }
 function gttNhanViec(t, ma) {
   var m = me_(t);
@@ -865,7 +894,7 @@ function dataCapNhat(t, efc, p) {
 /** Xoá theo yêu cầu: ẩn danh hoá, giữ sổ giờ và việc ở dạng không định danh để báo cáo. Chỉ quản trị. */
 function dataXoaTheoYeuCau(t, efc, canCu) {
   var m = nv_(t, true), tv = tv_(S(efc)); if (!tv) return { ok: false, msg: 'Không tìm thấy thành viên.' }; if (!clean_(canCu, 200)) return { ok: false, msg: 'Ghi căn cứ (ví dụ: yêu cầu trong ứng dụng ngày…).' };
-  ['ten', 'sdt', 'namSinh', 'khuVuc', 'pin', 'chungChi'].forEach(function (k) { set_('Thành viên', tv, k, k === 'ten' ? 'Đã xoá theo yêu cầu' : ''); });
+  ['ten', 'sdt', 'namSinh', 'khuVuc', 'pin', 'chungChi', 'viTri', 'viTriLuc'].forEach(function (k) { set_('Thành viên', tv, k, k === 'ten' ? 'Đã xoá theo yêu cầu' : ''); });
   set_('Thành viên', tv, 'trangThai', 'da_xoa');
   where_('Phiên', function (o) { return S(o.efc) === S(efc) && !S(o.thuHoi); }).forEach(function (o) { set_('Phiên', o, 'thuHoi', now_()); });
   where_('Hồ sơ năng lực', function (o) { return S(o.efc) === S(efc); }).forEach(function (o) { set_('Hồ sơ năng lực', o, 'kyNang', ''); });
@@ -903,9 +932,24 @@ function dataXuat(t, loai) {
 }
 function dataGanVai(t, efc, vai, bo) { var m = nv_(t, true), tv = tv_(S(efc)); if (!tv) return { ok: false, msg: 'Không tìm thấy thành viên.' }; if (['dieu_phoi', 'quan_tri'].indexOf(vai) < 0) return { ok: false, msg: 'Vai không hợp lệ.' }; if (bo) { if (S(efc) === m.efc && vai === 'quan_tri') return { ok: false, msg: 'Không tự bỏ vai quản trị của mình.' }; where_('Vai', function (o) { return S(o.efc) === S(efc) && S(o.vai) === vai && !S(o.den); }).forEach(function (o) { set_('Vai', o, 'den', now_()); }); } else ganVai_(S(efc), vai, ''); nk_(m, bo ? 'bo_vai' : 'gan_vai', S(efc), vai); return { ok: true }; }
 
+/* ---------- Sao lưu hằng đêm (cần quyền Drive và trình kích hoạt: chủ tài khoản chạy caiSaoLuuDem một lần) ---------- */
+function saoLuuDem() {
+  var ten = 'EFC · sao lưu dữ liệu', it = DriveApp.getFoldersByName(ten), tm = it.hasNext() ? it.next() : DriveApp.createFolder(ten);
+  DriveApp.getFileById(ss_().getId()).makeCopy('EFC dữ liệu · ' + Utilities.formatDate(new Date(), 'Asia/Ho_Chi_Minh', 'yyyy-MM-dd HH:mm'), tm);
+  var ds = [], fs = tm.getFiles(); while (fs.hasNext()) ds.push(fs.next());
+  ds.sort(function (a, b) { return b.getDateCreated() - a.getDateCreated(); }).slice(30).forEach(function (f) { f.setTrashed(true); });
+  var hn = sheet_('Hiệu năng'); if (hn && hn.getLastRow() > 3000) hn.deleteRows(2, hn.getLastRow() - 2001);
+  return 'Đã sao lưu. Giữ 30 bản gần nhất trong thư mục "' + ten + '".';
+}
+function caiSaoLuuDem() {
+  ScriptApp.getProjectTriggers().forEach(function (t) { if (t.getHandlerFunction() === 'saoLuuDem') ScriptApp.deleteTrigger(t); });
+  ScriptApp.newTrigger('saoLuuDem').timeBased().everyDays(1).atHour(1).inTimezone('Asia/Ho_Chi_Minh').create();
+  return saoLuuDem() + ' Đã hẹn sao lưu 1:00 sáng mỗi ngày.';
+}
+
 /* ---------- cổng API ---------- */
 var API_FNS = {};
-var FN_ = { apiCauHinh: apiCauHinh, apiBangViec: apiBangViec, idDangKy: idDangKy, idDangNhap: idDangNhap, idDangXuat: idDangXuat, idDoiPin: idDoiPin, idCapNhat: idCapNhat, idDongY: idDongY, idYeuCauXoa: idYeuCauXoa, idXinXacMinh: idXinXacMinh, idThayMat: idThayMat, idToi: idToi, idToiDayDu: idToiDayDu, viecCuaToi: viecCuaToi, gdTao: gdTao, gdVao: gdVao, datThuaKe: datThuaKe, tangGio: tangGio, gttTaoCa: gttTaoCa, gttTimCa: gttTimCa, gttXacNhan: gttXacNhan, gttXacNhanTrongApp: gttXacNhanTrongApp, gttDangNho: gttDangNho, gttNhanViec: gttNhanViec, gttXacNhanKyNang: gttXacNhanKyNang, sanDatViec: sanDatViec, sanNhanViec: sanNhanViec, sanDoiLoi: sanDoiLoi, sanXacNhan: sanXacNhan, uuDaiDoi: uuDaiDoi, hocGhiDanh: hocGhiDanh, ttBang: ttBang, ttTaoBaoTro: ttTaoBaoTro, dtBang: dtBang, dtTaoUuDai: dtTaoUuDai, dtDungPhieu: dtDungPhieu, quyBang: quyBang, quyXacNhanCT: quyXacNhanCT, quyXacNhanGop: quyXacNhanGop, quyTraPhieu: quyTraPhieu, quyTraHocPhi: quyTraHocPhi, quyThamSo: quyThamSo, hvBang: hvBang, hvTaoKhoa: hvTaoKhoa, hvHoanThanh: hvHoanThanh, dpBang: dpBang, dpAn: dpAn, dpXacMinh: dpXacMinh, dpMoKhoa: dpMoKhoa, dpHuyCa: dpHuyCa, dpThuaKe: dpThuaKe, qtBang: qtBang, qtTaoToChuc: qtTaoToChuc, qtGanVai: qtGanVai, qtCauHinh: qtCauHinh, dataTongQuan: dataTongQuan, dataThanhVien: dataThanhVien, dataHoSo: dataHoSo, dataGhiChu: dataGhiChu, dataCapNhat: dataCapNhat, dataXoaTheoYeuCau: dataXoaTheoYeuCau, dataViecCanLam: dataViecCanLam, dataTram: dataTram, dataTaoTram: dataTaoTram, dataNhatKy: dataNhatKy, dataXuat: dataXuat, dataGanVai: dataGanVai };
+var FN_ = { apiCauHinh: apiCauHinh, apiBangViec: apiBangViec, idDangKy: idDangKy, idDangNhap: idDangNhap, idDangXuat: idDangXuat, idDoiPin: idDoiPin, idCapNhat: idCapNhat, idDongY: idDongY, idYeuCauXoa: idYeuCauXoa, idXinXacMinh: idXinXacMinh, idThayMat: idThayMat, idToi: idToi, idToiDayDu: idToiDayDu, idViTri: idViTri, ganToi: ganToi, viecCuaToi: viecCuaToi, gdTao: gdTao, gdVao: gdVao, datThuaKe: datThuaKe, tangGio: tangGio, gttTaoCa: gttTaoCa, gttTimCa: gttTimCa, gttXacNhan: gttXacNhan, gttXacNhanTrongApp: gttXacNhanTrongApp, gttDangNho: gttDangNho, gttNhanViec: gttNhanViec, gttXacNhanKyNang: gttXacNhanKyNang, sanDatViec: sanDatViec, sanNhanViec: sanNhanViec, sanDoiLoi: sanDoiLoi, sanXacNhan: sanXacNhan, uuDaiDoi: uuDaiDoi, hocGhiDanh: hocGhiDanh, ttBang: ttBang, ttTaoBaoTro: ttTaoBaoTro, dtBang: dtBang, dtTaoUuDai: dtTaoUuDai, dtDungPhieu: dtDungPhieu, quyBang: quyBang, quyXacNhanCT: quyXacNhanCT, quyXacNhanGop: quyXacNhanGop, quyTraPhieu: quyTraPhieu, quyTraHocPhi: quyTraHocPhi, quyThamSo: quyThamSo, hvBang: hvBang, hvTaoKhoa: hvTaoKhoa, hvHoanThanh: hvHoanThanh, dpBang: dpBang, dpAn: dpAn, dpXacMinh: dpXacMinh, dpMoKhoa: dpMoKhoa, dpHuyCa: dpHuyCa, dpThuaKe: dpThuaKe, qtBang: qtBang, qtTaoToChuc: qtTaoToChuc, qtGanVai: qtGanVai, qtCauHinh: qtCauHinh, dataTongQuan: dataTongQuan, dataThanhVien: dataThanhVien, dataHoSo: dataHoSo, dataGhiChu: dataGhiChu, dataCapNhat: dataCapNhat, dataXoaTheoYeuCau: dataXoaTheoYeuCau, dataViecCanLam: dataViecCanLam, dataTram: dataTram, dataTaoTram: dataTaoTram, dataNhatKy: dataNhatKy, dataXuat: dataXuat, dataGanVai: dataGanVai };
 Object.keys(FN_).forEach(function (n) {
   API_FNS[n] = function () { CACHE = {}; try { var r = FN_[n].apply(null, arguments); if (SOGHI > GHI_DA_DEM && SOGHI > 0 && DOC_.indexOf(n) < 0) { var l = LockService.getScriptLock(); try { l.waitLock(10000); napSauGhi_(); } catch (e) { doiPhienBan_(); } finally { try { l.releaseLock(); } catch (e) {} } } return r; } catch (e) { return { ok: false, msg: String(e && e.message || e) }; } };
 });
@@ -969,7 +1013,8 @@ function seedDemo() {
   // Hà giúp hai việc tử tế
   [['Bác Tư', 'cong-nghe', 60], ['Cô Nga', 'nha-an-toan', 120]].forEach(function (x) { var ca = ok(F.gttTaoCa(T.ha, { viec: x[1], nguoiNhan: x[0], phut: x[2], dongY: true, khuVuc: 'Nghĩa Đô, Cầu Giấy', dev: 'may-ha' }), 'ca ha'); ok(F.gttXacNhan({ ma: ca.ma, otp: ca.otp, dongY: true, ky: true, sao: 5, pub: true, nguoiXN: x[0], dev: 'may-' + x[0] }), 'xn ha'); });
   // Việc đang mở để thử
-  ok(F.gttDangNho(T.lan, { loai: 'giup', viec: 'cong-nghe', choEfc: hanh, khuVuc: 'Dịch Vọng, Cầu Giấy', thoiGian: 'Chiều thứ Bảy', moTa: 'Cài Zalo để bà gọi video cho cháu ở xa', dongY: true }), 'nho mo');
+  ok(F.idViTri(T.ha, { lat: 21.0465, lng: 105.8005 }, true), 'vt ha'); ok(F.idViTri(T.minh, { lat: 21.0368, lng: 105.8019 }, true), 'vt minh');
+  ok(F.gttDangNho(T.lan, { geo: { lat: 21.0312, lng: 105.7881 }, loai: 'giup', viec: 'cong-nghe', choEfc: hanh, khuVuc: 'Dịch Vọng, Cầu Giấy', thoiGian: 'Chiều thứ Bảy', moTa: 'Cài Zalo để bà gọi video cho cháu ở xa', dongY: true }), 'nho mo');
   ok(F.sanDatViec(T.lan, { tang: 'C', viec: 'tro-chuyen', choEfc: hanh, loaiBen: 'ca_nhan', moTa: 'Người Bạn Tuổi Già: trò chuyện, đi dạo cùng bà chiều thứ Ba', khuVuc: 'Dịch Vọng, Cầu Giấy', thoiDiem: 'Thứ Ba 15:00–17:00', soGio: 2, gia: 80000 }), 'yc1');
   ok(F.sanDatViec(T.qt, { tang: 'B', loaiBen: 'to_chuc', moTa: 'Kèm sổ sách cho hộ kinh doanh tạp hoá, 2 buổi', khuVuc: 'Mai Dịch, Cầu Giấy', thoiDiem: 'Tuần sau', soGio: 6, gia: 600000 }), 'yc2');
   ok(F.hocGhiDanh(T.minh, 'KH-001'), 'ghi danh');
@@ -1130,6 +1175,7 @@ ACT.xnfind = b => run(b, 'gttTimCa', [val('xn-ma'), val('xn-otp')], r => {
   $('xn-ok').onclick = () => send(true, $('xn-ok')); $('xn-no').onclick = () => send(false, $('xn-no'));
 }, $('xn-msg'));
 function stars(id, cb) { const w = $(id); [...w.children].forEach(s => s.onclick = () => { const n = +s.dataset.s; [...w.children].forEach(x => x.classList.toggle('on', +x.dataset.s <= n)); cb(n); }); }
+function geoP() { return new Promise(res => { if (!navigator.geolocation) return res(null); navigator.geolocation.getCurrentPosition(p => res({ lat: p.coords.latitude, lng: p.coords.longitude }), () => res(null), { timeout: 10000, maximumAge: 120000 }); }); }
 function geo(cb) { if (!navigator.geolocation) { toast('Máy không hỗ trợ định vị.'); return; } navigator.geolocation.getCurrentPosition(p => cb({ lat: p.coords.latitude, lng: p.coords.longitude }), () => toast('Chưa lấy được vị trí. Có thể bỏ qua.'), { timeout: 8000, maximumAge: 60000 }); }
 function shrink(file, cb) { const r = new FileReader(); r.onload = () => { const img = new Image(); img.onload = () => { const s = Math.min(1, 320 / Math.max(img.width, img.height)), c = document.createElement('canvas'); c.width = Math.round(img.width * s); c.height = Math.round(img.height * s); c.getContext('2d').drawImage(img, 0, 0, c.width, c.height); let q = .6, d = c.toDataURL('image/jpeg', q); while (d.length > 44000 && q > .2) { q -= .1; d = c.toDataURL('image/jpeg', q); } cb(d.length <= 44000 ? d : ''); }; img.src = r.result; }; r.readAsDataURL(file); }
 
@@ -1137,6 +1183,7 @@ function shrink(file, cb) { const r = new FileReader(); r.onload = () => { const
 const ICON = { 'dau-tien': '🌱', '5-gio': '⏳', '3-nguoi': '🏡', 'hieu-nghia': '💝', 'gieo-quy': '🌳', 'sinh-ke': '💼' };
 function todos() {
   const v = S.viec || {}, out = [];
+  (v.loiMoi || []).forEach(x => out.push(`<div class="todo"><div class="ic">💌</div><div class="tx"><b>${esc(x.tenNguoiMoi)} mời bạn giúp</b>${esc(x.viec)} · ${esc(x.nguoiCan)} · ${esc(x.khuVuc)}</div><button class="btn sm ok" data-act="nhannho" data-ma="${x.ma}">Nhận</button></div>`));
   (v.canXacNhan || []).forEach(x => out.push(`<div class="todo"><div class="ic">✓</div><div class="tx"><b>Xác nhận cho ${esc(x.nguoiNhan)}</b>${esc(x.nguoiGiup)} · ${esc(x.viec)} · ${x.phut} phút</div><button class="btn sm ok" data-act="xnapp" data-ma="${x.ma}">Xác nhận</button></div>`));
   (v.ycDat || []).filter(x => x.trangThai === 'da_nhan').forEach(x => out.push(`<div class="todo"><div class="ic">💼</div><div class="tx"><b>${esc(x.nguoiLam)} đang làm cho ${esc(x.nguoiCan)}</b>${esc(x.moTa)} · ${LOI[x.hinhThuc] ? LOI[x.hinhThuc][1] : ''}${x.lienHe ? ` · <a href="tel:${esc(x.lienHe)}">${esc(x.lienHe)}</a>` : ''}</div><button class="btn sm" data-act="sanxn" data-ma="${x.ma}">Đã xong?</button></div>`));
   (v.nhoNhan || []).filter(x => x.trangThai === 'da_nhan').forEach(x => out.push(`<div class="todo"><div class="ic">${x.loai === 'hoc' ? '📚' : '🤝'}</div><div class="tx"><b>${x.loai === 'hoc' ? 'Dạy' : 'Giúp'} ${esc(x.nguoiCan)}</b>${esc(x.viec)} · ${esc(x.khuVuc)}${x.lienHe ? ` · <a href="tel:${esc(x.lienHe)}">${esc(x.lienHe)}</a>` : ''}</div><button class="btn sm" data-act="ghitu" data-ma="${x.ma}">${x.maCa ? 'Gửi lại mã' : 'Xong rồi'}</button></div>`));
@@ -1177,11 +1224,25 @@ ${mine ? '<p class="note">Việc bạn đăng.</p>' : `<button class="btn${x.ngu
   const mine = [].concat((v.nhoDang || []).map(x => ({ t: (x.loai === 'hoc' ? 'Muốn học: ' : 'Nhờ giúp: ') + x.viec + ' · cho ' + x.nguoiCan, s: x.trangThai, extra: x.nguoiNhan ? 'Người nhận: ' + x.nguoiNhan + (x.lienHe ? ' · ' + x.lienHe : '') : '' })), (v.ycDat || []).map(x => ({ t: 'Có thù lao: ' + x.moTa, s: x.trangThai, extra: x.nguoiLam ? 'Người làm: ' + x.nguoiLam + ' · ' + (LOI[x.hinhThuc] || ['', ''])[1] : '' })));
   const hocKH = seg === 'hoc' ? `<h3>Khoá của Học viện EFCARE</h3><p class="note" style="margin-bottom:8px">Học phí do quỹ tài trợ trả khi còn suất. Học xong, kỹ năng vào hồ sơ của bạn.</p>${(S.cfg.khoaHoc || []).map(k => { const da = S.toi.ghiDanh.some(g => g.khoa === k.ten); return `<div class="job">${pill(k.soBuoi + ' buổi', 'p-hoc')} ${k.tang === 'B' ? pill('Mở việc tầng B', 'p-san') : ''}<h4>${esc(k.ten)}</h4><p style="font-size:15px;margin-bottom:10px">${esc(k.moTa)}</p>${da ? '<p class="note">✓ Bạn đã ghi danh</p>' : `<button class="btn alt" data-act="ghidanh" data-ma="${k.ma}"><span class="sp"></span><span>Ghi danh</span></button>`}</div>`; }).join('')}` : '';
   return `<h2>Việc quanh bạn</h2><div class="seg" role="tablist">${[['giup', 'Cần giúp'], ['hoc', 'Muốn học'], ['san', 'Có thù lao']].map(x => `<button class="${seg === x[0] ? 'on' : ''}" data-act="seg" data-s="${x[0]}" role="tab" aria-selected="${seg === x[0]}">${x[1]}</button>`).join('')}</div>
-<button class="btn" data-act="dang">＋ Đăng ${seg === 'san' ? 'việc có thù lao' : seg === 'hoc' ? 'điều tôi muốn học' : 'nhu cầu nhờ giúp'}</button>
+<div class="row"><button class="btn" data-act="dang">＋ Đăng ${seg === 'san' ? 'việc có thù lao' : seg === 'hoc' ? 'điều tôi muốn học' : 'nhu cầu'}</button>${seg !== 'san' ? '<button class="btn alt" data-act="gantoi" style="flex:0 0 auto">📍 Gần tôi</button>' : ''}</div>
 ${seg !== 'san' ? '<div class="safe"><b>Giữ an toàn:</b> lần đầu gặp ở nơi đông người hoặc có người thân. Không nhận tiền, không giữ giấy tờ. Việc y tế chỉ nhắc nhở, không làm thay chuyên môn.</div>' : `<p class="note" style="margin:10px 0">Mỗi việc có ba lối nhận: tiền công, góp tiền công vào quỹ, hoặc ghi Giờ Tử Tế. EFCARE không giữ tiền: người thuê trả thẳng cho bạn.${S.toi.toi.xm.C === 'dat' ? '' : ' <b>Cần kỹ năng đã có người xác nhận để nhận việc.</b>'}</p>`}
 <div style="margin-top:12px">${items.length ? items.map(card).join('') : '<div class="empty"><i>🌤️</i>Chưa có việc nào ở mục này.<br>Bạn có thể là người đăng đầu tiên.</div>'}</div>${hocKH}
 ${mine.length ? `<h3>Việc tôi đã đăng</h3><div class="card">${mine.map(x => `<div class="li"><span class="l">${esc(x.t)}${x.extra ? `<br><span class="note">${esc(x.extra)}</span>` : ''}</span>${pill((TT_VIEC[x.s] || [x.s])[0], (TT_VIEC[x.s] || ['', 'p-mut'])[1])}</div>`).join('')}</div>` : ''}`;
 };
+ACT.gantoi = async b => {
+  busy(b, true); const g = await geoP(); busy(b, false);
+  if (!g) { sheet(`<button class="x" data-act="close" aria-label="Đóng">×</button><h2>Chưa lấy được vị trí</h2><p style="margin:10px 0">Hãy cho phép trình duyệt dùng vị trí: iPhone vào Cài đặt › Quyền riêng tư › Dịch vụ định vị › Safari; Android bấm biểu tượng ổ khoá cạnh địa chỉ trang › Vị trí › Cho phép. Rồi bấm lại.</p><button class="btn" data-act="close">Đã hiểu</button>`); return; }
+  const r = await run(b, 'ganToi', [S.phien, g]); if (!r) return; GAN = r;
+  const kn = x => x.kyNang.map(k => `<span class="pill ${k.xn ? 'p-gtt' : 'p-mut'}">${k.xn ? '✓ ' : ''}${esc(k.ten)}</span>`).join(' ');
+  sheet(`<button class="x" data-act="close" aria-label="Đóng">×</button><h2>📍 Gần bạn</h2><p class="note">Khoảng cách ước lượng. Không ai thấy vị trí chính xác hay số điện thoại của nhau.</p>
+${r.toiHien ? '' : `<div class="msg warn" style="margin-top:10px">Bạn đang ẩn với người gần đây. <button class="link" data-act="batgan">Cho người gần đây thấy tôi</button></div>`}
+<h3>Việc cần giúp gần bạn · ${r.viec.length}</h3>${r.viec.length ? r.viec.map(x => `<div class="job">${pill(x.dai, 'p-san')} ${x.loai === 'hoc' ? pill('Muốn học', 'p-hoc') : pill('Tử tế · ghi giờ', 'p-gtt')}<h4>${esc(x.nguoiCan)}</h4><div class="meta">${esc(x.viec)} · ${esc(x.khuVuc)}${x.thoiGian ? ' · ' + esc(x.thoiGian) : ''}</div>${x.moTa ? `<p style="font-size:15px;margin-bottom:8px">${esc(x.moTa)}</p>` : ''}<button class="btn ok" data-act="nhannho" data-ma="${x.ma}"><span class="sp"></span><span>${x.loai === 'hoc' ? 'Tôi dạy được' : 'Tôi giúp được'}</span></button></div>`).join('') : '<p class="note">Chưa có nhu cầu nào gắn vị trí quanh bạn.</p>'}
+<h3>Người sẵn sàng giúp gần bạn · ${r.nguoi.length}</h3>${r.nguoi.length ? r.nguoi.map(x => `<div class="job"><div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><h4 style="margin:0">${esc(x.ten)}</h4>${pill(x.dai, 'p-san')}</div><div class="meta" style="margin-top:4px">${x.soViec} việc đã được xác nhận${x.dat ? ' · đủ điều kiện việc có thù lao' : ''}</div><div style="margin-bottom:10px">${kn(x) || '<span class="note">Chưa khai kỹ năng</span>'}</div><button class="btn alt" data-act="moigiup" data-efc="${x.efc}">Mời giúp</button></div>`).join('') : '<p class="note">Chưa có ai bật hiện với người gần đây quanh bạn.</p>'}
+<div class="safe">Lần đầu gặp ở nơi đông người hoặc có người thân. Không đưa tiền, không giao giấy tờ.</div>`);
+};
+let GAN = null;
+ACT.moigiup = b => { const x = (GAN && GAN.nguoi || []).find(y => y.efc === b.dataset.efc); if (!x) return; closeSheet(); setTimeout(() => dangNho('giup', { efc: x.efc, ten: x.ten }), 250); };
+ACT.batgan = async b => { const g = await geoP(); if (!g) { toast('Chưa lấy được vị trí.'); return; } run(b, 'idViTri', [S.phien, g, true], async () => { await loadMe(); toast('Người gần đây đã thấy bạn. Tắt bất cứ lúc nào ở mục Tôi.'); closeSheet(); }); };
 ACT.seg = b => { S.seg = b.dataset.s; S.tab = 'viec'; render(); };
 ACT.nhannho = b => run(b, 'gttNhanViec', [S.phien, b.dataset.ma], async r => { await loadMe(); celebrate('Bạn đã nhận việc', `Gọi ${r.tenNguoiDang || 'người đăng'} theo số ${r.lienHe || '(chưa có)'} để hẹn. Xong việc, bấm "Xong rồi" ở Trang chủ để ghi nhận.`); render(); });
 ACT.ghidanh = b => run(b, 'hocGhiDanh', [S.phien, b.dataset.ma], async r => { await loadMe(); celebrate('Đã ghi danh', r.taiTro ? 'Học phí của bạn được quỹ tài trợ. Học viện sẽ liên hệ lịch học.' : 'Khoá đang chờ suất tài trợ. Học viện sẽ báo khi có.'); render(); });
@@ -1197,11 +1258,12 @@ function loiSheet(x, cur, go) {
 ACT.doiloi = b => { const x = S.viec.ycLam.find(y => y.ma === b.dataset.ma); loiSheet(x, x.hinhThuc, ht => run($('loi-go'), 'sanDoiLoi', [S.phien, x.ma, ht], async () => { closeSheet(); await loadMe(); toast('Đã đổi lối nhận.'); render(); }, $('loi-msg'))); };
 ACT.dang = () => { const s = S.seg; if (s === 'san') return dangSan(); dangNho(s); };
 function choAi() { return `<label class="t" for="d-cho">Cho ai?</label><select id="d-cho"><option value="">Cho tôi</option>${S.toi.thayMat.map(x => `<option value="${x.efc}">${esc(x.ten)}${x.quanHe ? ' (' + esc(x.quanHe) + ')' : ''}</option>`).join('')}</select>${S.toi.thayMat.length ? '' : '<p class="note">Muốn đăng cho cha mẹ? Thêm người thân ở mục Tôi.</p>'}`; }
-function dangNho(loai) {
-  sheet(`<button class="x" data-act="close" aria-label="Đóng">×</button><h2>${loai === 'hoc' ? 'Tôi muốn học' : 'Nhờ giúp'}</h2><p class="sub">${loai === 'hoc' ? 'Người biết việc sẽ nhận dạy. Họ được ghi giờ, bạn không mất tiền.' : 'Người ở gần sẽ thấy và nhận giúp. Họ được ghi giờ, bạn không mất tiền.'}</p>${choAi()}
+function dangNho(loai, moi) {
+  moi = moi || null;
+  sheet(`<button class="x" data-act="close" aria-label="Đóng">×</button><h2>${moi ? 'Mời ' + esc(moi.ten) + ' giúp' : loai === 'hoc' ? 'Tôi muốn học' : 'Nhờ giúp'}</h2><p class="sub">${loai === 'hoc' ? 'Người biết việc sẽ nhận dạy. Họ được ghi giờ, bạn không mất tiền.' : 'Người ở gần sẽ thấy và nhận giúp. Họ được ghi giờ, bạn không mất tiền.'}</p>${choAi()}
 <label class="t" for="d-viec">${loai === 'hoc' ? 'Muốn học việc gì?' : 'Cần giúp việc gì?'}</label><select id="d-viec">${optViec()}</select><label class="t" for="d-kv">Khu vực</label><input type="text" id="d-kv" value="${esc(S.toi.toi.khuVuc)}" placeholder="Phường, quận"><label class="t" for="d-tg">Lúc nào tiện?</label><input type="text" id="d-tg" placeholder="Sáng thứ Bảy"><label class="t" for="d-mt">Mô tả ngắn (không ghi thông tin bệnh)</label><textarea id="d-mt" maxlength="300"></textarea>
-<label class="chk"><input type="checkbox" id="d-dy"><span>Đồng ý đăng lên bảng việc. Số điện thoại chỉ hiện cho người nhận.</span></label><div id="d-msg"></div><button class="btn" id="d-go" style="margin-top:12px"><span class="sp"></span><span>Đăng</span></button>`);
-  $('d-go').onclick = () => run($('d-go'), 'gttDangNho', [S.phien, { loai, viec: val('d-viec'), choEfc: val('d-cho'), khuVuc: val('d-kv'), thoiGian: val('d-tg'), moTa: val('d-mt'), dongY: val('d-dy') }], async () => { closeSheet(); await loadMe(); celebrate('Đã đăng', 'Khi có người nhận, họ sẽ gọi cho bạn. Bạn cũng thấy trong mục Việc tôi đã đăng.'); render(); }, $('d-msg'));
+<label class="chk"><input type="checkbox" id="d-vt"><span>Gắn vị trí gần đúng (khoảng 500 m) để người ở gần thấy. <span class="note">Không lộ địa chỉ chính xác.</span></span></label><label class="chk"><input type="checkbox" id="d-dy"><span>Đồng ý đăng lên bảng việc${moi ? ' và gửi lời mời' : ''}. Số điện thoại chỉ hiện cho người nhận.</span></label><div id="d-msg"></div><button class="btn" id="d-go" style="margin-top:12px"><span class="sp"></span><span>Đăng</span></button>`);
+  $('d-go').onclick = async () => { const b = $('d-go'); let g = null; if (val('d-vt')) { busy(b, true); g = await geoP(); busy(b, false); if (!g) { toast('Chưa lấy được vị trí. Vẫn đăng, không gắn vị trí.'); } } run(b, 'gttDangNho', [S.phien, { loai, viec: val('d-viec'), choEfc: val('d-cho'), khuVuc: val('d-kv'), thoiGian: val('d-tg'), moTa: val('d-mt'), dongY: val('d-dy'), geo: g, efcMoi: moi ? moi.efc : '' }], async () => { closeSheet(); await loadMe(); celebrate(moi ? 'Đã gửi lời mời' : 'Đã đăng', moi ? moi.ten + ' sẽ thấy lời mời trong mục Việc cần bạn. Khi nhận, họ sẽ gọi cho bạn.' : 'Khi có người nhận, họ sẽ gọi cho bạn. Bạn cũng thấy trong mục Việc tôi đã đăng.'); render(); }, $('d-msg')); };
 }
 function dangSan() {
   const san = S.cfg.giaSanC;
@@ -1288,11 +1350,11 @@ VIEW.toi = () => {
 ${r.ghiDanh.length ? `<h3>Khoá học của tôi</h3><div class="card">${r.ghiDanh.map(g => `<div class="li"><span class="l">${esc(g.khoa)}</span>${pill(g.trangThai === 'hoan_thanh' ? 'Đã hoàn thành' : g.trangThai === 'cho_tai_tro' ? 'Chờ suất tài trợ' : 'Đang học' + (g.taiTro ? ' · được tài trợ' : ''), g.trangThai === 'hoan_thanh' ? 'p-gtt' : 'p-hoc')}</div>`).join('')}</div>` : ''}
 <h3>Gia đình</h3><div class="card">${gd ? `<p><b>${esc(gd.ten)}</b> · mã <b>${esc(gd.ma)}</b></p><p class="note">Gửi mã này cho người thân để họ vào gia đình.</p>${gd.thanhVien.map(m => `<div class="li"><span class="l">${esc(m.ten)}${m.vai ? ' · ' + esc(m.vai) : ''}</span><span class="note">${esc(m.efc)}</span></div>`).join('')}<label class="t" for="p-tk">Người thừa kế giờ của tôi</label><div class="row"><select id="p-tk"><option value="">Chưa chọn</option>${mem.map(m => `<option value="${m.efc}"${r.thuaKe && r.thuaKe.efc === m.efc ? ' selected' : ''}>${esc(m.ten)}</option>`).join('')}</select><button class="btn sm alt" data-act="luutk" style="flex:0 0 auto">Lưu</button></div>` : `<p class="note">Lập gia đình để tặng giờ cho cha mẹ, ông bà nhanh hơn và đặt người thừa kế.</p><label class="t" for="p-gdt">Tên gia đình</label><input type="text" id="p-gdt" placeholder="Nhà bà Lan"><label class="t" for="p-gdv">Vai của bạn</label><input type="text" id="p-gdv" placeholder="Con, cháu, bố, mẹ"><button class="btn alt" data-act="gdtao" style="margin-top:10px">Lập gia đình</button><label class="t" for="p-gdm">Hoặc vào gia đình đã có</label><div class="row"><input type="text" id="p-gdm" placeholder="GD-0001" autocapitalize="characters"><button class="btn sm alt" data-act="gdvao" style="flex:0 0 auto">Vào</button></div>`}</div>
 <h3>Người tôi thay mặt</h3><div class="card"><p class="note">Cha mẹ, ông bà không dùng điện thoại? Bạn đăng việc thay, họ vẫn là người xác nhận.</p>${r.thayMat.map(x => `<div class="li"><span class="l">${esc(x.ten)}${x.quanHe ? ' · ' + esc(x.quanHe) : ''}</span><span class="note">${esc(x.efc)}</span></div>`).join('')}<button class="btn alt" data-act="thaymat" style="margin-top:10px">＋ Thêm người thân</button></div>
-<h3>Quyền riêng tư</h3><div class="card"><p class="note">Ứng dụng lưu: tên, số điện thoại, năm sinh, khu vực, mã PIN đã mã hoá, các việc bạn làm; vị trí và ảnh chỉ khi bạn tự gắn. Số điện thoại chỉ hiện cho người nhận việc bạn đăng.</p>${Object.keys(S.cfg.mucDich).filter(k => k !== 'luu_lien_he').map(k => `<label class="chk"><input type="checkbox" data-dy="${k}"${r.dongY[k] ? ' checked' : ''}><span>${esc(S.cfg.mucDich[k])}</span></label>`).join('')}</div>
+<h3>Quyền riêng tư</h3><div class="card"><p class="note">Ứng dụng lưu: tên, số điện thoại, năm sinh, khu vực, mã PIN đã mã hoá, các việc bạn làm; vị trí và ảnh chỉ khi bạn tự gắn. Số điện thoại chỉ hiện cho người nhận việc bạn đăng.</p>${Object.keys(S.cfg.mucDich).filter(k => k !== 'luu_lien_he').map(k => `<label class="chk"><input type="checkbox" data-dy="${k}"${(k === 'gan_day' ? r.hienGanDay : r.dongY[k]) ? ' checked' : ''}><span>${esc(S.cfg.mucDich[k])}${k === 'gan_day' ? ' <span class="note">Vị trí làm tròn khoảng 500 m, tự hết hạn sau 30 ngày; không ai thấy số điện thoại của bạn.</span>' : ''}</span></label>`).join('')}</div>
 ${vaiList().length > 1 ? `<h3>Vai khác của tôi</h3><div class="card">${vaiList().slice(1).map(v => `<button class="btn alt" data-act="chonvai" data-k="${v.k}" style="margin-top:8px">${esc(v.t)}</button>`).join('')}</div>` : ''}
 <h3>Bảo mật</h3><div class="card"><p class="note">Đang đăng nhập trên ${r.phien} thiết bị.</p><button class="btn alt" data-act="doipin" style="margin-top:10px">Đổi mã PIN</button><button class="btn alt" data-act="dangxuat" style="margin-top:10px">Đăng xuất</button><button class="btn no" data-act="xoatk" style="margin-top:10px">Yêu cầu xoá tài khoản</button></div>${hoTro()}`;
 };
-VIEW._toi = () => { document.querySelectorAll('[data-dy]').forEach(c => c.onchange = () => run(null, 'idDongY', [S.phien, c.dataset.dy, c.checked], async () => { await loadMe(); toast('Đã lưu.'); })); };
+VIEW._toi = () => { document.querySelectorAll('[data-dy]').forEach(c => c.onchange = async () => { if (c.dataset.dy === 'gan_day') { const g = c.checked ? await geoP() : null; if (c.checked && !g) { c.checked = false; toast('Cần cho phép vị trí để bật mục này.'); return; } run(null, 'idViTri', [S.phien, g, c.checked], async () => { await loadMe(); toast(c.checked ? 'Người gần đây đã thấy bạn (khoảng cách ước lượng).' : 'Đã ẩn bạn và xoá vị trí đã lưu.'); }); return; } run(null, 'idDongY', [S.phien, c.dataset.dy, c.checked], async () => { await loadMe(); toast('Đã lưu.'); }); }); };
 ACT.luukv = b => run(b, 'idCapNhat', [S.phien, { khuVuc: val('p-kv') }], async () => { await loadMe(); toast('Đã lưu khu vực.'); });
 ACT.muon = b => { const cur = S.toi.toi.muon.slice(), k = b.dataset.k, nx = cur.indexOf(k) >= 0 ? cur.filter(x => x !== k) : cur.concat(k); run(null, 'idCapNhat', [S.phien, { muon: nx }], async () => { await loadMe(); render(); }); };
 ACT.themkn = b => run(b, 'idCapNhat', [S.phien, { kyNang: [val('p-kn')] }], async () => { await loadMe(); render(); });

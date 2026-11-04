@@ -1,5 +1,5 @@
 /* Cộng đồng EFCARE · service worker: mở được khi mất mạng. Không chặn lời gọi máy chủ (POST sang Apps Script). */
-const BAN = 'efc-v1.7';
+const BAN = 'efc-v1.8';
 const VO = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './apple-touch-icon.png', './icon-mask-512.png', './cai-dat.html'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(BAN).then(c => c.addAll(VO)).then(() => self.skipWaiting())); });
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== BAN).map(k => caches.delete(k)))).then(() => self.clients.claim())); });
