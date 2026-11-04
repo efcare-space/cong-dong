@@ -1,7 +1,7 @@
 {
   "id": "/cong-dong/",
-  "name": "EFC · EF-Community Platform",
-  "short_name": "EFC",
+  "name": "EFCommunity · Cộng đồng EFCARE",
+  "short_name": "EFCommunity",
   "description": "Cộng đồng EFCARE: đề xuất nhu cầu, góp một giờ, học hỏi, chia sẻ kinh nghiệm, có thêm thu nhập. Một tài khoản cho tất cả.",
   "lang": "vi",
   "start_url": "./?nguon=man-hinh-chinh",

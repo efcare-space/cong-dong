@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#0b1f3f"><meta name="description" content="Cộng đồng EFCARE: giúp người, học kỹ năng, có thêm thu nhập. Một tài khoản cho tất cả."><title>EFC · Cộng đồng EFCARE</title><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="EFC"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><style>
+<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#0b1f3f"><meta name="description" content="Cộng đồng EFCARE: giúp người, học kỹ năng, có thêm thu nhập. Một tài khoản cho tất cả."><title>EFCommunity · Cộng đồng EFCARE</title><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="EFCommunity"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><style>
 :root{--ink:#16233a;--mut:#5c6b84;--line:#dde4ef;--bg:#f3f6fb;--card:#fff;--blue:#1d5fd1;--navy:#0b1f3f;--gtt:#13795b;--gttbg:#dcf2e8;--san:#1d5fd1;--sanbg:#e4edfb;--red:#b8342a;--redbg:#fbe1de;--warn:#7a5410;--warnbg:#fcefd2;--gold:#f4cf6a;--r:16px;color-scheme:light}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html{-webkit-text-size-adjust:100%}
@@ -993,7 +993,7 @@ function vaiList() { const out = [{ k: 'ca_nhan', t: 'Cá nhân · ' + (S.toi ? 
 function header() {
   let chip = '';
   if (S.toi) { const v = vaiList(), cur = v.find(x => x.k === S.vai) || v[0]; chip = `<button class="rolechip" data-act="vai" aria-label="Đổi vai">${esc(cur.t)}${v.length > 1 ? ' ▾' : ''}</button>`; }
-  $('hdr').innerHTML = `<div class="lg"><img src="${window.EFC_LOGO || ''}" alt="EFCARE"></div><div class="t"><b>EFC</b>${chip || '<span class="note" style="color:#b9cdf5">Cộng đồng EFCARE</span>'}</div><button class="hb" data-act="fz" aria-label="Đổi cỡ chữ">A<sup>${FZ === 2 ? '–' : '+'}</sup></button>`;
+  $('hdr').innerHTML = `<div class="lg"><img src="${window.EFC_LOGO || ''}" alt="EFCARE"></div><div class="t"><b>EFCommunity</b>${chip || '<span class="note" style="color:#b9cdf5">Cộng đồng EFCARE</span>'}</div><button class="hb" data-act="fz" aria-label="Đổi cỡ chữ">A<sup>${FZ === 2 ? '–' : '+'}</sup></button>`;
 }
 function nav() {
   const show = S.toi && S.vai === 'ca_nhan' && S.man === 'app';
