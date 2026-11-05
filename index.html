@@ -150,7 +150,6 @@ var TB = {
   'Khoá học': ['ma:Mã', 'maOrg:Học viện', 'ten:Tên', 'moTa:Mô tả', 'hocPhi:Học phí (đ)', 'soBuoi:Số buổi', 'ketNoi:Kỹ năng đạt', 'tang:Tầng mở', 'trangThai:Trạng thái'],
   'Ghi danh': ['ma:Mã', 'maKH:Khoá', 'efc:EF-ID', 'maCT:Chương trình', 'trangThai:Trạng thái', 'tao:Tạo lúc', 'htLuc:Hoàn thành lúc', 'tra70:Trả 70% lúc', 'tra30:Trả 30% lúc'],
   'Trạm': ['ma:Mã', 'ten:Tên', 'diaChi:Địa chỉ', 'khuVuc:Khu vực', 'efcPhuTrach:Người phụ trách', 'trangThai:Trạng thái', 'tao:Tạo lúc'],
-  'Cơ hội': ['ma:Mã', 'efc:EF-ID', 'luong:Luồng', 'bac:Bậc', 'loaiNoiDungNhan:Loại nội dung đã nhận', 'trangThaiCH:Trạng thái cơ hội', 'nguon:Nguồn (kênh/mã ref)', 'efcGiu:Người giữ', 'tao:Tạo lúc', 'capNhat:Cập nhật lúc'],
   'Ghi chú điều phối': ['luc:Lúc', 'efc:Thành viên', 'tacGia:Người ghi', 'loai:Loại', 'noiDung:Nội dung'],
   'Nhật ký quản trị': ['luc:Lúc', 'efcAdmin:Người thao tác', 'hanhDong:Hành động', 'doiTuong:Đối tượng', 'chiTiet:Chi tiết'],
   'Hiệu năng': ['luc:Lúc', 'fn:Chức năng', 'ms:Mili giây'],
@@ -299,7 +298,7 @@ function err_(m) { throw new Error(m); }
 function tv_(efc) { return find_('Thành viên', function (o) { return S(o.efc) === efc; }); }
 function tvSdt_(sdt) { return find_('Thành viên', function (o) { return S(o.sdt) === sdt; }); }
 function ten_(efc) { var t = tv_(efc); return t ? S(t.ten) : ''; }
-function vai_(efc) { return where_('Vai', function (o) { return S(o.efc) === efc && !S(o.den); }).map(function (o) { var vai = S(o.vai); if (vai === 'dai_su') { var tr = find_('Trạm', function (x) { return S(x.ma) === S(o.maOrg); }); return { vai: vai, maOrg: S(o.maOrg), tenOrg: tr ? S(tr.ten) : '', loaiOrg: '' }; } var org = o.maOrg ? org_(S(o.maOrg)) : null; return { vai: vai, maOrg: S(o.maOrg), tenOrg: org ? S(org.ten) : '', loaiOrg: org ? S(org.loai) : '' }; }); }
+function vai_(efc) { return where_('Vai', function (o) { return S(o.efc) === efc && !S(o.den); }).map(function (o) { var org = o.maOrg ? org_(S(o.maOrg)) : null; return { vai: S(o.vai), maOrg: S(o.maOrg), tenOrg: org ? S(org.ten) : '', loaiOrg: org ? S(org.loai) : '' }; }); }
 function org_(ma) { return find_('Tổ chức', function (o) { return S(o.ma) === ma; }); }
 function ganVai_(efc, vai, maOrg) { if (!find_('Vai', function (o) { return S(o.efc) === efc && S(o.vai) === vai && S(o.maOrg) === S(maOrg || '') && !S(o.den); })) add_('Vai', { efc: efc, vai: vai, maOrg: maOrg || '', tu: now_(), den: '' }); }
 function dongY_(efc, md, co, cach, nguoi) { add_('Đồng ý', { efc: efc, mucDich: md, co: co ? 1 : 0, cach: cach || 'o_tich', nguoiGhi: nguoi || efc, luc: now_() }); }
@@ -923,7 +922,7 @@ function qtBang(t) {
   var d13 = [], ev = tb_('Sự kiện'); tb_('Thành viên').forEach(function (o) { var a = ev.filter(function (e) { return S(e.efc) === S(o.efc) && S(e.bac) === 'CD1'; })[0], b = ev.filter(function (e) { return S(e.efc) === S(o.efc) && S(e.bac) === 'CD3'; })[0]; if (a && b) d13.push((new Date(S(b.luc)) - new Date(S(a.luc))) / 86400000); });
   d13.sort(function (a, b) { return a - b; });
   var orgs = tb_('Tổ chức').map(function (o) { return { ma: S(o.ma), ten: S(o.ten), loai: S(o.loai), daiDien: ten_(S(o.efcDaiDien)), trangThai: S(o.trangThai) }; });
-  var vai = where_('Vai', function (o) { return !S(o.den) && ['dieu_phoi', 'quan_tri', 'dai_su'].indexOf(S(o.vai)) >= 0; }).map(function (o) { return { ten: ten_(S(o.efc)), efc: S(o.efc), vai: S(o.vai), maTram: S(o.vai) === 'dai_su' ? S(o.maOrg) : '' }; });
+  var vai = where_('Vai', function (o) { return !S(o.den) && ['dieu_phoi', 'quan_tri'].indexOf(S(o.vai)) >= 0; }).map(function (o) { return { ten: ten_(S(o.efc)), efc: S(o.efc), vai: S(o.vai) }; });
   return { ok: true, phieu: bac, trungViCD1CD3: d13.length ? r2_(d13[Math.floor(d13.length / 2)]) : null, toChuc: orgs, vaiHeThong: vai, quy: quy_(), thanhVien: tb_('Thành viên').length, cauHinh: tb_('Cấu hình').filter(function (o) { return S(o.key) !== 'Muoi'; }).map(function (o) { return { key: S(o.key), val: S(o.val), note: S(o.note) }; }) };
 }
 function qtTaoToChuc(t, p) {
@@ -933,7 +932,7 @@ function qtTaoToChuc(t, p) {
   var dd = tvSdt_(phone_(p.sdtDaiDien)); if (!dd) return { ok: false, msg: 'Người đại diện cần tạo tài khoản EFCARE trước bằng số này.' };
   return lock_(function () { var ma = code_('Tổ chức', 'ORG-', 4); add_('Tổ chức', { ma: ma, ten: clean_(p.ten, 100), loai: p.loai, efcDaiDien: S(dd.efc), trangThai: 'hoat_dong', logo: S(p.logo).indexOf('https://') === 0 ? clean_(p.logo, 300) : '', tao: now_() }); ganVai_(S(dd.efc), 'dai_dien', ma); return { ok: true, ma: ma, daiDien: S(dd.ten) }; });
 }
-function qtGanVai(t, sdt, vai, maTram) { var m = me_(t); if (!can_(m, 'quan_tri')) err_('Cần vai quản trị.'); if (['dieu_phoi', 'quan_tri', 'dai_su'].indexOf(vai) < 0) return { ok: false, msg: 'Vai không hợp lệ.' }; if (vai === 'dai_su') { if (!clean_(maTram, 10)) return { ok: false, msg: 'Chọn Trạm cho Đại sứ.' }; if (!find_('Trạm', function (o) { return S(o.ma) === S(maTram).toUpperCase(); })) return { ok: false, msg: 'Mã Trạm không có.' }; } var x = tvSdt_(phone_(sdt)); if (!x) return { ok: false, msg: 'Chưa có tài khoản với số này.' }; ganVai_(S(x.efc), vai, vai === 'dai_su' ? S(maTram).toUpperCase() : ''); return { ok: true, ten: S(x.ten) }; }
+function qtGanVai(t, sdt, vai) { var m = me_(t); if (!can_(m, 'quan_tri')) err_('Cần vai quản trị.'); if (['dieu_phoi', 'quan_tri'].indexOf(vai) < 0) return { ok: false, msg: 'Vai không hợp lệ.' }; var x = tvSdt_(phone_(sdt)); if (!x) return { ok: false, msg: 'Chưa có tài khoản với số này.' }; ganVai_(S(x.efc), vai, ''); return { ok: true, ten: S(x.ten) }; }
 function qtCauHinh(t, key, val) { var m = me_(t); if (!can_(m, 'quan_tri')) err_('Cần vai quản trị.'); if (['GiaSanGioC', 'TranGiaQuyDoi', 'VanHanh', 'GiaTriThamChieuGio', 'SdtQuanTri', 'MoQuaBan'].indexOf(key) < 0) return { ok: false, msg: 'Khoá này không sửa ở đây.' }; setCfg_(key, clean_(val, 60)); return { ok: true }; }
 
 
@@ -1035,49 +1034,8 @@ function dataViecCanLam(t) {
   out.sort(function (a, b) { return a.muc - b.muc; });
   return { ok: true, items: out };
 }
-function dataTram(t) { var m = nv_(t); return { ok: true, laQT: m.laQT, items: tb_('Trạm').map(function (o) { var ma = S(o.ma); return { ma: ma, ten: S(o.ten), diaChi: S(o.diaChi), khuVuc: S(o.khuVuc), phuTrach: ten_(S(o.efcPhuTrach)), trangThai: S(o.trangThai), thanhVien: where_('Thành viên', function (x) { return S(x.kenh) === 'tram:' + ma; }).length, daiSu: where_('Vai', function (v) { return S(v.vai) === 'dai_su' && S(v.maOrg) === ma && !S(v.den); }).map(function (v) { return { efc: S(v.efc), ten: ten_(S(v.efc)) }; }) }; }) }; }
+function dataTram(t) { var m = nv_(t); return { ok: true, laQT: m.laQT, items: tb_('Trạm').map(function (o) { var ma = S(o.ma); return { ma: ma, ten: S(o.ten), diaChi: S(o.diaChi), khuVuc: S(o.khuVuc), phuTrach: ten_(S(o.efcPhuTrach)), trangThai: S(o.trangThai), thanhVien: where_('Thành viên', function (x) { return S(x.kenh) === 'tram:' + ma; }).length }; }) }; }
 function dataTaoTram(t, p) { var m = nv_(t, true); p = p || {}; var ma = S(p.ma).toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 10); if (!ma) return { ok: false, msg: 'Nhập mã Trạm (chữ, số), ví dụ DV01.' }; if (!clean_(p.ten, 80)) return { ok: false, msg: 'Nhập tên Trạm.' }; if (find_('Trạm', function (o) { return S(o.ma) === ma; })) return { ok: false, msg: 'Mã Trạm đã có.' }; var pt = p.sdtPhuTrach ? tvSdt_(phone_(p.sdtPhuTrach)) : null; add_('Trạm', { ma: ma, ten: clean_(p.ten, 80), diaChi: clean_(p.diaChi, 160), khuVuc: clean_(p.khuVuc, 80), efcPhuTrach: pt ? S(pt.efc) : '', trangThai: 'hoat_dong', tao: now_() }); nk_(m, 'tao_tram', ma, p.ten); return { ok: true, ma: ma }; }
-/* ---------- Cơ hội: hành trình CTV–khách hàng, Marketing→Sales→Chăm sóc (05/11, V1 TEST) ----------
- * Theo thiết kế efc-id-va-vong-doi-thong-nhat.md: 2 luồng (K khách hàng, L lực lượng/CTV), 9 bậc M1-M3,S1-S3,C1-C3.
- * V1 chỉ cho điều phối/quản trị tạo và cập nhật (vai CTV tự phục vụ còn chờ anh chốt ma trận quyền). */
-var BAC_CH = ['M1', 'M2', 'M3', 'S1', 'S2', 'S3', 'C1', 'C2', 'C3'];
-var TT_CH = ['dang_theo', 'can_warmup', 'can_cham_soc', 'chot', 'mat'];
-var LOAI_ND_CH = ['to_roi', 'catalog', 'hoi_thao', 'pitch_truc_tiep', 'khoa_dao_tao'];
-function chTao(t, p) {
-  var m = nv_(t); p = p || {};
-  if (['K', 'L'].indexOf(p.luong) < 0) return { ok: false, msg: 'Chọn luồng K (khách hàng) hoặc L (lực lượng).' };
-  if (p.loaiNoiDungNhan && LOAI_ND_CH.indexOf(p.loaiNoiDungNhan) < 0) return { ok: false, msg: 'Loại nội dung không hợp lệ.' };
-  var sdt = phone_(p.sdt); if (!sdt) return { ok: false, msg: 'Nhập số điện thoại.' };
-  var tv = tvSdt_(sdt), efc;
-  if (tv) efc = S(tv.efc);
-  else { if (!clean_(p.ten, 80)) return { ok: false, msg: 'Nhập tên.' }; efc = S(taoTV_({ ten: p.ten, sdt: sdt, namSinh: p.namSinh, kenh: clean_(p.nguon, 40) }, m.efc).efc); }
-  if (find_('Cơ hội', function (o) { return S(o.efc) === efc && ['chot', 'mat'].indexOf(S(o.trangThaiCH)) < 0; })) return { ok: false, msg: 'Người này đang có cơ hội mở, cập nhật cơ hội cũ, không tạo trùng.' };
-  var ma = code_('Cơ hội', 'CH-', 6);
-  add_('Cơ hội', { ma: ma, efc: efc, luong: p.luong, bac: p.loaiNoiDungNhan ? 'M2' : 'M1', loaiNoiDungNhan: p.loaiNoiDungNhan || '', trangThaiCH: 'dang_theo', nguon: clean_(p.nguon, 60), efcGiu: m.efc, tao: now_(), capNhat: now_() });
-  nk_(m, 'tao_co_hoi', efc, ma);
-  return { ok: true, ma: ma, efc: efc };
-}
-function chCapNhatBac(t, ma, bac) {
-  var m = nv_(t); if (BAC_CH.indexOf(bac) < 0) return { ok: false, msg: 'Bậc không hợp lệ.' };
-  var ch = find_('Cơ hội', function (o) { return S(o.ma) === S(ma); }); if (!ch) return { ok: false, msg: 'Không tìm thấy cơ hội.' };
-  set_('Cơ hội', ch, 'bac', bac); set_('Cơ hội', ch, 'capNhat', now_());
-  if (bac === 'S3' && S(ch.trangThaiCH) !== 'chot') set_('Cơ hội', ch, 'trangThaiCH', 'chot');
-  nk_(m, 'cap_nhat_bac_co_hoi', S(ch.efc), ma + ' -> ' + bac);
-  return { ok: true };
-}
-function chCapNhatTrangThai(t, ma, trangThai) {
-  var m = nv_(t); if (TT_CH.indexOf(trangThai) < 0) return { ok: false, msg: 'Trạng thái không hợp lệ.' };
-  var ch = find_('Cơ hội', function (o) { return S(o.ma) === S(ma); }); if (!ch) return { ok: false, msg: 'Không tìm thấy cơ hội.' };
-  set_('Cơ hội', ch, 'trangThaiCH', trangThai); set_('Cơ hội', ch, 'capNhat', now_());
-  nk_(m, 'cap_nhat_trang_thai_co_hoi', S(ch.efc), ma + ' -> ' + trangThai);
-  return { ok: true };
-}
-function chBang(t) {
-  var m = nv_(t);
-  var items = tb_('Cơ hội').map(function (o) { return { ma: S(o.ma), ten: ten_(S(o.efc)), efc: S(o.efc), luong: S(o.luong), bac: S(o.bac), loaiNoiDungNhan: S(o.loaiNoiDungNhan), trangThaiCH: S(o.trangThaiCH), nguon: S(o.nguon), nguoiGiu: ten_(S(o.efcGiu)), tao: S(o.tao), capNhat: S(o.capNhat) }; });
-  items.sort(function (a, b) { return a.capNhat < b.capNhat ? 1 : -1; });
-  return { ok: true, laQT: m.laQT, items: items };
-}
 function dataNhatKy(t) { var m = nv_(t, true); return { ok: true, items: tb_('Nhật ký quản trị').slice(-200).reverse().map(function (o) { return { luc: S(o.luc), nguoi: ten_(S(o.efcAdmin)), hanhDong: S(o.hanhDong), doiTuong: S(o.doiTuong), chiTiet: S(o.chiTiet) }; }) }; }
 function dataXuat(t, loai) {
   var m = nv_(t, true), q = function (v) { v = S(v).replace(/"/g, '""'); return /[",\n]/.test(v) ? '"' + v + '"' : v; }, rows;
@@ -1086,7 +1044,7 @@ function dataXuat(t, loai) {
   nk_(m, 'xuat_du_lieu', loai || 'thanh_vien', (rows.length - 1) + ' dòng');
   return { ok: true, ten: 'efc-' + (loai || 'thanh-vien') + '-' + new Date().toISOString().slice(0, 10) + '.csv', csv: '﻿' + rows.map(function (r) { return r.map(q).join(','); }).join('\n') };
 }
-function dataGanVai(t, efc, vai, bo, maTram) { var m = nv_(t, true), tv = tv_(S(efc)); if (!tv) return { ok: false, msg: 'Không tìm thấy thành viên.' }; if (['dieu_phoi', 'quan_tri', 'dai_su'].indexOf(vai) < 0) return { ok: false, msg: 'Vai không hợp lệ.' }; if (!bo && vai === 'dai_su') { if (!clean_(maTram, 10)) return { ok: false, msg: 'Chọn Trạm cho Đại sứ.' }; if (!find_('Trạm', function (o) { return S(o.ma) === S(maTram).toUpperCase(); })) return { ok: false, msg: 'Mã Trạm không có.' }; } if (bo) { if (S(efc) === m.efc && vai === 'quan_tri') return { ok: false, msg: 'Không tự bỏ vai quản trị của mình.' }; where_('Vai', function (o) { return S(o.efc) === S(efc) && S(o.vai) === vai && !S(o.den); }).forEach(function (o) { set_('Vai', o, 'den', now_()); }); } else ganVai_(S(efc), vai, vai === 'dai_su' ? S(maTram).toUpperCase() : ''); nk_(m, bo ? 'bo_vai' : 'gan_vai', S(efc), vai); return { ok: true }; }
+function dataGanVai(t, efc, vai, bo) { var m = nv_(t, true), tv = tv_(S(efc)); if (!tv) return { ok: false, msg: 'Không tìm thấy thành viên.' }; if (['dieu_phoi', 'quan_tri'].indexOf(vai) < 0) return { ok: false, msg: 'Vai không hợp lệ.' }; if (bo) { if (S(efc) === m.efc && vai === 'quan_tri') return { ok: false, msg: 'Không tự bỏ vai quản trị của mình.' }; where_('Vai', function (o) { return S(o.efc) === S(efc) && S(o.vai) === vai && !S(o.den); }).forEach(function (o) { set_('Vai', o, 'den', now_()); }); } else ganVai_(S(efc), vai, ''); nk_(m, bo ? 'bo_vai' : 'gan_vai', S(efc), vai); return { ok: true }; }
 
 /* ---------- Sao lưu hằng đêm (cần quyền Drive và trình kích hoạt: chủ tài khoản chạy caiSaoLuuDem một lần) ---------- */
 function saoLuuDem() {
@@ -1105,7 +1063,7 @@ function caiSaoLuuDem() {
 
 /* ---------- cổng API ---------- */
 var API_FNS = {};
-var FN_ = { apiCauHinh: apiCauHinh, apiBangViec: apiBangViec, idDangKy: idDangKy, idDangNhap: idDangNhap, idDangXuat: idDangXuat, idDoiPin: idDoiPin, idCapNhat: idCapNhat, idDongY: idDongY, idYeuCauXoa: idYeuCauXoa, idXinXacMinh: idXinXacMinh, idThayMat: idThayMat, idToi: idToi, idToiDayDu: idToiDayDu, idViTri: idViTri, ganToi: ganToi, viecCuaToi: viecCuaToi, gdTao: gdTao, gdVao: gdVao, datThuaKe: datThuaKe, tangGio: tangGio, gttTaoCa: gttTaoCa, gttTimCa: gttTimCa, gttXacNhan: gttXacNhan, gttXacNhanTrongApp: gttXacNhanTrongApp, gttDangNho: gttDangNho, gttNhanViec: gttNhanViec, gttXacNhanKyNang: gttXacNhanKyNang, sanDatViec: sanDatViec, sanNhanViec: sanNhanViec, sanDoiLoi: sanDoiLoi, sanXacNhan: sanXacNhan, uuDaiDoi: uuDaiDoi, hocGhiDanh: hocGhiDanh, ttBang: ttBang, ttTaoBaoTro: ttTaoBaoTro, dtBang: dtBang, dtTaoUuDai: dtTaoUuDai, dtDungPhieu: dtDungPhieu, quyBang: quyBang, quyXacNhanCT: quyXacNhanCT, quyXacNhanGop: quyXacNhanGop, quyTraPhieu: quyTraPhieu, quyTraHocPhi: quyTraHocPhi, quyThamSo: quyThamSo, hvBang: hvBang, hvTaoKhoa: hvTaoKhoa, hvHoanThanh: hvHoanThanh, dpBang: dpBang, dpAn: dpAn, dpXacMinh: dpXacMinh, dpMoKhoa: dpMoKhoa, dpHuyCa: dpHuyCa, dpThuaKe: dpThuaKe, qtBang: qtBang, qtTaoToChuc: qtTaoToChuc, qtGanVai: qtGanVai, qtCauHinh: qtCauHinh, dataTongQuan: dataTongQuan, dataThanhVien: dataThanhVien, dataHoSo: dataHoSo, dataGhiChu: dataGhiChu, dataCapNhat: dataCapNhat, dataXoaTheoYeuCau: dataXoaTheoYeuCau, dataViecCanLam: dataViecCanLam, dataTram: dataTram, dataTaoTram: dataTaoTram, dataNhatKy: dataNhatKy, dataXuat: dataXuat, dataGanVai: dataGanVai, chTao: chTao, chCapNhatBac: chCapNhatBac, chCapNhatTrangThai: chCapNhatTrangThai, chBang: chBang, dkDoiTac: dkDoiTac, dkCuaToi: dkCuaToi, dpDoiTacBang: dpDoiTacBang, dpDuyetDoiTac: dpDuyetDoiTac, knNopBang: knNopBang, knXinXacNhan: knXinXacNhan, knTraLoi: knTraLoi, dpBangCho: dpBangCho, dpXacMinhBang: dpXacMinhBang };
+var FN_ = { apiCauHinh: apiCauHinh, apiBangViec: apiBangViec, idDangKy: idDangKy, idDangNhap: idDangNhap, idDangXuat: idDangXuat, idDoiPin: idDoiPin, idCapNhat: idCapNhat, idDongY: idDongY, idYeuCauXoa: idYeuCauXoa, idXinXacMinh: idXinXacMinh, idThayMat: idThayMat, idToi: idToi, idToiDayDu: idToiDayDu, idViTri: idViTri, ganToi: ganToi, viecCuaToi: viecCuaToi, gdTao: gdTao, gdVao: gdVao, datThuaKe: datThuaKe, tangGio: tangGio, gttTaoCa: gttTaoCa, gttTimCa: gttTimCa, gttXacNhan: gttXacNhan, gttXacNhanTrongApp: gttXacNhanTrongApp, gttDangNho: gttDangNho, gttNhanViec: gttNhanViec, gttXacNhanKyNang: gttXacNhanKyNang, sanDatViec: sanDatViec, sanNhanViec: sanNhanViec, sanDoiLoi: sanDoiLoi, sanXacNhan: sanXacNhan, uuDaiDoi: uuDaiDoi, hocGhiDanh: hocGhiDanh, ttBang: ttBang, ttTaoBaoTro: ttTaoBaoTro, dtBang: dtBang, dtTaoUuDai: dtTaoUuDai, dtDungPhieu: dtDungPhieu, quyBang: quyBang, quyXacNhanCT: quyXacNhanCT, quyXacNhanGop: quyXacNhanGop, quyTraPhieu: quyTraPhieu, quyTraHocPhi: quyTraHocPhi, quyThamSo: quyThamSo, hvBang: hvBang, hvTaoKhoa: hvTaoKhoa, hvHoanThanh: hvHoanThanh, dpBang: dpBang, dpAn: dpAn, dpXacMinh: dpXacMinh, dpMoKhoa: dpMoKhoa, dpHuyCa: dpHuyCa, dpThuaKe: dpThuaKe, qtBang: qtBang, qtTaoToChuc: qtTaoToChuc, qtGanVai: qtGanVai, qtCauHinh: qtCauHinh, dataTongQuan: dataTongQuan, dataThanhVien: dataThanhVien, dataHoSo: dataHoSo, dataGhiChu: dataGhiChu, dataCapNhat: dataCapNhat, dataXoaTheoYeuCau: dataXoaTheoYeuCau, dataViecCanLam: dataViecCanLam, dataTram: dataTram, dataTaoTram: dataTaoTram, dataNhatKy: dataNhatKy, dataXuat: dataXuat, dataGanVai: dataGanVai, dkDoiTac: dkDoiTac, dkCuaToi: dkCuaToi, dpDoiTacBang: dpDoiTacBang, dpDuyetDoiTac: dpDuyetDoiTac, knNopBang: knNopBang, knXinXacNhan: knXinXacNhan, knTraLoi: knTraLoi, dpBangCho: dpBangCho, dpXacMinhBang: dpXacMinhBang };
 Object.keys(FN_).forEach(function (n) {
   API_FNS[n] = function () { CACHE = {}; try { var r = FN_[n].apply(null, arguments); if (SOGHI > GHI_DA_DEM && SOGHI > 0 && DOC_.indexOf(n) < 0) { var l = LockService.getScriptLock(); try { l.waitLock(10000); napSauGhi_(); } catch (e) { doiPhienBan_(); } finally { try { l.releaseLock(); } catch (e) {} } } return r; } catch (e) { return { ok: false, msg: String(e && e.message || e) }; } };
 });
