@@ -83,7 +83,7 @@ tbody tr[data-hs]{cursor:pointer}tbody tr[data-hs]:hover{background:#f4f8ff}
  *       EFCARE không giữ tiền · không lưu thông tin sức khỏe · chặn dưới 18 tuổi.
  * Tên trên điện thoại: EFC (EF-Community Platform), chốt 04/11. Cài đặt: xem 01-cai-dat.md.
  */
-var VER = '1.2';
+var VER = '1.3';
 var TB = {
   'Thành viên': ['efc:EF-ID', 'ten:Tên', 'sdt:Số điện thoại', 'namSinh:Năm sinh', 'khuVuc:Khu vực', 'pin:PIN (băm)', 'sai:Số lần sai', 'trangThai:Trạng thái', 'tao:Tạo lúc', 'muon:Muốn', 'muonThuNhap:Muốn thu nhập', 'hienBang:Hiện hồ sơ', 'xmA:Xác minh A', 'xmB:Xác minh B', 'xmC:Xác minh C', 'chungChi:Chứng chỉ', 'nguoiTao:Người tạo', 'kenh:Kênh đến', 'viTri:Vị trí gần đúng', 'viTriLuc:Vị trí lúc'],
   'Tổ chức': ['ma:Mã', 'ten:Tên', 'loai:Loại', 'efcDaiDien:Người đại diện', 'trangThai:Trạng thái', 'logo:Logo', 'tao:Tạo lúc'],
@@ -92,15 +92,16 @@ var TB = {
   'Gia đình': ['ma:Mã', 'ten:Tên', 'efcTao:Người tạo', 'tao:Tạo lúc'],
   'Đồng ý': ['efc:EF-ID', 'mucDich:Mục đích', 'co:Có', 'cach:Cách ghi', 'nguoiGhi:Người ghi', 'luc:Lúc'],
   'Phiên': ['bam:Phiên (băm)', 'efc:EF-ID', 'tao:Tạo', 'het:Hết hạn', 'thuHoi:Thu hồi', 'thietBi:Thiết bị'],
-  'Hồ sơ năng lực': ['efc:EF-ID', 'kyNang:Kỹ năng', 'nguon:Nguồn', 'soXacNhan:Số xác nhận', 'nguoiXacNhan:Người xác nhận', 'capNhat:Cập nhật'],
-  'Sự kiện': ['luc:Lúc', 'efc:EF-ID', 'bac:Bậc', 'loai:Loại', 'ma:Mã liên quan'],
+  'Hồ sơ năng lực': ['efc:EF-ID', 'kyNang:Kỹ năng', 'nguon:Nguồn', 'soXacNhan:Số xác nhận', 'nguoiXacNhan:Người xác nhận', 'capNhat:Cập nhật', 'bangCap:Bằng cấp', 'ttBang:Trạng thái bằng', 'nguoiDuyetBang:Người xác minh bằng'],
+  'Xin xác nhận kỹ năng': ['ma:Mã', 'efc:Người xin', 'kyNang:Kỹ năng', 'efcXn:Người được nhờ', 'loiNhan:Lời nhắn', 'trangThai:Trạng thái', 'tao:Tạo lúc', 'luc:Trả lời lúc'],
+  'Sự kiện': ['luc:Lúc', 'efc:EF-ID', 'bac:Bậc', 'loai:Loại', 'ma:Mã liên quan', 'anonId:Mã ẩn danh', 'utmNguon:UTM nguồn', 'utmKenh:UTM kênh', 'utmChienDich:UTM chiến dịch', 'utmNoiDung:UTM nội dung', 'refer:Mã giới thiệu'],
   'Ca': ['ma:Mã ca', 'tao:Tạo lúc', 'efcGiup:Người giúp', 'nguoiNhan:Người được giúp', 'efcNhan:EF-ID người được giúp', 'viec:Việc', 'phut:Phút', 'gio:Giờ', 'khuVuc:Khu vực', 'ghiChu:Ghi chú', 'bam:Mã xác nhận (băm)', 'thu:Số lần thử', 'trangThai:Trạng thái', 'xnLuc:Xác nhận lúc', 'nguoiXN:Người xác nhận', 'quanHe:Quan hệ', 'efcXN:EF-ID người xác nhận', 'ky:Ký trách nhiệm', 'sao:Sao', 'pub:Cho công khai', 'dev:Máy tạo', 'devXN:Máy xác nhận', 'geo:Vị trí tạo', 'geoXN:Vị trí xác nhận', 'anh:Ảnh', 'mucXM:Mức xác minh', 'maNho:Mã nhờ giúp', 'maYC:Mã việc Sàn', 'maCT:Mã chương trình'],
   'Sổ giờ': ['ma:Mã', 'luc:Lúc', 'loai:Loại', 'efc:EF-ID', 'gio:Giờ', 'doiUng:Đối ứng', 'ghiChu:Ghi chú'],
   'Nhờ giúp': ['ma:Mã', 'tao:Tạo lúc', 'loai:Loại', 'efcDang:Người đăng', 'efcCan:EF-ID người cần', 'nguoiCan:Người cần', 'viec:Việc', 'khuVuc:Khu vực', 'thoiGian:Thời gian', 'moTa:Mô tả', 'trangThai:Trạng thái', 'efcNhan:Người nhận', 'nhanLuc:Nhận lúc', 'maCa:Mã ca', 'xacNhanKN:Đã xác nhận kỹ năng', 'viTri:Vị trí gần đúng', 'efcMoi:Mời riêng'],
   'Việc Sàn': ['ma:Mã', 'tao:Tạo lúc', 'efcDat:Người đặt', 'efcCho:Làm cho (EF-ID)', 'loaiBen:Bên nhận', 'tang:Tầng', 'viec:Việc', 'moTa:Mô tả', 'khuVuc:Khu vực', 'thoiDiem:Thời điểm', 'soGio:Số giờ', 'gia:Giá (đ)', 'hinhThuc:Lối nhận', 'trangThai:Trạng thái', 'efcLam:Người làm', 'nhanLuc:Nhận lúc', 'sao:Sao', 'daTra:Đã trả', 'xnLuc:Xác nhận lúc', 'maCa:Mã ca', 'maGop:Mã góp'],
   'Chương trình bảo trợ': ['ma:Mã', 'maOrg:Nhà tài trợ', 'ten:Tên', 'goi:Gói', 'loai:Loại', 'soGio:Số giờ', 'giaBaoTro:Giá bảo trợ', 'soTien:Số tiền', 'khuVuc:Khu vực', 'nhomViec:Nhóm việc', 'trangThai:Trạng thái', 'tao:Tạo lúc', 'tienVeLuc:Tiền về lúc'],
   'Góp quỹ': ['ma:Mã', 'maYC:Mã việc', 'efc:Người làm', 'soTien:Số tiền', 'trangThai:Trạng thái', 'tao:Tạo lúc', 'veLuc:Tiền về lúc'],
-  'Ưu đãi': ['ma:Mã', 'maOrg:Đối tác', 'ten:Tên', 'moTa:Mô tả', 'gio:Số giờ', 'quyTra:Quỹ trả', 'soLuong:Số lượng', 'daDoi:Đã đổi', 'trangThai:Trạng thái'],
+  'Ưu đãi': ['ma:Mã', 'maOrg:Đối tác', 'ten:Tên', 'moTa:Mô tả', 'gio:Số giờ', 'quyTra:Quỹ trả', 'soLuong:Số lượng', 'daDoi:Đã đổi', 'trangThai:Trạng thái', 'giaTri:Giá trị (đ)', 'loaiQua:Loại quà'],
   'Phiếu': ['ma:Mã', 'efc:EF-ID', 'maUu:Ưu đãi', 'maOrg:Đối tác', 'gio:Giờ', 'giaTri:Quỹ trả (đ)', 'trangThai:Trạng thái', 'tao:Tạo lúc', 'dungLuc:Dùng lúc', 'ttLuc:Thanh toán lúc'],
   'Khoá học': ['ma:Mã', 'maOrg:Học viện', 'ten:Tên', 'moTa:Mô tả', 'hocPhi:Học phí (đ)', 'soBuoi:Số buổi', 'ketNoi:Kỹ năng đạt', 'tang:Tầng mở', 'trangThai:Trạng thái'],
   'Ghi danh': ['ma:Mã', 'maKH:Khoá', 'efc:EF-ID', 'maCT:Chương trình', 'trangThai:Trạng thái', 'tao:Tạo lúc', 'htLuc:Hoàn thành lúc', 'tra70:Trả 70% lúc', 'tra30:Trả 30% lúc'],
@@ -108,6 +109,7 @@ var TB = {
   'Ghi chú điều phối': ['luc:Lúc', 'efc:Thành viên', 'tacGia:Người ghi', 'loai:Loại', 'noiDung:Nội dung'],
   'Nhật ký quản trị': ['luc:Lúc', 'efcAdmin:Người thao tác', 'hanhDong:Hành động', 'doiTuong:Đối tượng', 'chiTiet:Chi tiết'],
   'Hiệu năng': ['luc:Lúc', 'fn:Chức năng', 'ms:Mili giây'],
+  'Đăng ký đối tác': ['ma:Mã', 'efc:EF-ID', 'vai:Đăng ký làm', 'tenOrg:Tên đơn vị', 'diaChi:Địa chỉ', 'moTa:Giới thiệu', 'qua:Quà đầu tiên', 'camKet:Cam kết', 'bangChung:Bằng chứng', 'trangThai:Trạng thái', 'lyDo:Lý do trả lại', 'nguoiDuyet:Người duyệt', 'tao:Tạo lúc', 'duyetLuc:Duyệt lúc', 'maOrg:Mã tổ chức'],
   'Cấu hình': ['key:Khóa', 'val:Giá trị', 'note:Ghi chú']
 };
 var CFG0 = [
@@ -116,27 +118,38 @@ var CFG0 = [
   ['GiaSanGioC', '25500', 'Giá sàn tầng C (đ/giờ) = lương tối thiểu giờ vùng I 2026 (NĐ 293/2025).'],
   ['TranGiaQuyDoi', '12000', 'Trần giá trị quy đổi 1 giờ (đ hàng hoá) = 50% giá sàn tầng C, làm tròn.'],
   ['HeSoAnToan', '0.8', 'Hệ số an toàn s trong công thức giá quy đổi.'],
+  ['MoQuaBan', '0', 'Quà do đối tác bán (quỹ trả tiền) chỉ đổi được khi = 1, tức là đã có đơn vị giữ quỹ thật.'],
   ['VanHanh', '0.15', 'Phần vận hành chương trình trong giá bảo trợ.'],
   ['QuyMo', '0', '1 = đơn vị giữ quỹ đã có tài khoản, mở lối Góp quỹ.'],
   ['TaiKhoanQuy', '', 'Thông tin tài khoản đơn vị giữ quỹ, hiện cho nhà tài trợ và người góp.'],
-  ['GiaTriThamChieuGio', '0', 'Giá trị tham chiếu xã hội 1 giờ (đ), chỉ dùng cho báo cáo tác động.']
+  ['GiaTriThamChieuGio', '66500', 'Giá trị tham chiếu xã hội 1 giờ (đ) = GDP bình quân đầu người VN / giờ làm quy ước 1 năm, theo đề xuất CT Hùng 04/11. Nguồn 07/11: IMF WEO 10/2026 GDP/người 5.259 USD, tỷ giá 26.300đ, 2.080 giờ/năm → 66.500đ. Cập nhật lại mỗi năm.']
 ];
 var DANH_MUC = [
-  { id: 'nhac-thuoc', ten: 'Gọi nhắc lịch thuốc, lịch tái khám', nhom: 'Nhắc lịch', mo: true },
+  { id: 'nhac-thuoc', ten: 'Gọi nhắc lịch thuốc, lịch tái khám', nhom: 'Nhắc lịch', mo: true, canhBao: 'Nhắc đúng lịch bác sĩ đã kê. Không khuyên dùng thuốc, không tư vấn đổi liều.' },
   { id: 'tro-chuyen', ten: 'Trò chuyện, hỏi thăm, lắng nghe', nhom: 'Đồng hành tinh thần', mo: true },
-  { id: 'cong-nghe', ten: 'Hướng dẫn dùng điện thoại, ứng dụng', nhom: 'Hỗ trợ công nghệ', mo: true },
-  { id: 'thu-tuc', ten: 'Hỗ trợ hồ sơ, thủ tục', nhom: 'Hồ sơ và thủ tục', mo: true },
+  { id: 'doc-sach', ten: 'Đọc báo, đọc sách cho người mắt kém', nhom: 'Đồng hành tinh thần', mo: true },
+  { id: 'di-dao', ten: 'Đi dạo, đi lễ, đi sinh hoạt cùng', nhom: 'Đồng hành tinh thần', mo: true },
+  { id: 'cong-nghe', ten: 'Hướng dẫn dùng điện thoại, Zalo, VNeID, ngân hàng số', nhom: 'Hỗ trợ công nghệ', mo: true },
+  { id: 'lua-dao', ten: 'Kiểm tra giúp cuộc gọi, tin nhắn nghi lừa đảo', nhom: 'Hỗ trợ công nghệ', mo: true, canhBao: 'Không hỏi mật khẩu hay mã OTP của người được giúp. Nghi lừa đảo thật thì báo công an hoặc gọi 156.' },
+  { id: 'thu-tuc', ten: 'Hỗ trợ hồ sơ, thủ tục BHYT, lương hưu, dịch vụ công', nhom: 'Hồ sơ và thủ tục', mo: true, canhBao: 'Chỉ hướng dẫn. Không giữ giấy tờ gốc, không thay mặt ký tên.' },
   { id: 'ky-uc-so', ten: 'Ghi ký ức số cho ông bà', nhom: 'Liên thế hệ', mo: true },
-  { id: 'tu-do', ten: 'Hướng dẫn tự đo huyết áp, SpO2', nhom: 'Hỗ trợ tự đo', mo: true },
+  { id: 'tu-do', ten: 'Hướng dẫn dùng máy đo huyết áp, SpO2 tại nhà', nhom: 'Hỗ trợ tự đo', mo: true, canhBao: 'Làm theo sách hướng dẫn của máy. Không đọc kết quả thay bác sĩ, không tư vấn điều trị.' },
   { id: 'mua-ho', ten: 'Mua hộ thực phẩm, vật dụng', nhom: 'Sinh hoạt nhẹ', mo: true },
+  { id: 'nau-an', ten: 'Nấu giúp một bữa', nhom: 'Sinh hoạt nhẹ', mo: true },
+  { id: 'don-dep', ten: 'Dọn dẹp nhà cửa', nhom: 'Sinh hoạt nhẹ', mo: true },
   { id: 'nha-an-toan', ten: 'Sắp xếp nhà an toàn, chống té ngã', nhom: 'Sinh hoạt nhẹ', mo: true },
+  { id: 'sua-vat', ten: 'Sửa vặt nhỏ trong nhà', nhom: 'Sinh hoạt nhẹ', mo: true, canhBao: 'Không đụng điện lưới, không trèo cao, không sửa thiết bị gas.' },
   { id: 'moi-truong', ten: 'Vệ sinh, chăm cây khu dân cư', nhom: 'Cộng đồng', mo: true },
+  { id: 'sinh-hoat-td', ten: 'Giúp sinh hoạt tổ dân phố, câu lạc bộ người cao tuổi', nhom: 'Cộng đồng', mo: true },
   { id: 'day-kem', ten: 'Kể chuyện, dạy kèm, truyền nghề', nhom: 'Liên thế hệ', mo: true },
-  { id: 'nang-luc', ten: 'Giúp người đầu bạc lập hồ sơ năng lực', nhom: 'Hoàn thiện năng lực', mo: true },
-  { id: 'ho-tro-tram', ten: 'Hỗ trợ Trạm Ngũ Tâm', nhom: 'Trạm Ngũ Tâm', mo: true },
-  { id: 'ky-nang-song', ten: 'Chia sẻ kỹ năng sống, cẩm nang phòng bệnh', nhom: 'Chia sẻ kỹ năng', mo: true },
+  { id: 'nang-luc', ten: 'Giúp người đầu bạc lập hồ sơ năng lực', nhom: 'Việc cho Trạm', mo: true },
+  { id: 'ho-tro-tram', ten: 'Hỗ trợ Trạm Ngũ Tâm', nhom: 'Việc cho Trạm', mo: true },
+  { id: 'ky-nang-song', ten: 'Chia sẻ cẩm nang phòng bệnh tại Trạm', nhom: 'Việc cho Trạm', mo: true, canhBao: 'Dùng tài liệu chính thống đã duyệt, không tư vấn điều trị riêng.' },
   { id: 'vuon-nam-duoc', ten: 'Chăm vườn nam dược Mộc Tâm', nhom: 'Cộng đồng', mo: true },
-  { id: 'dua-kham', ten: 'Đồng hành đi khám (không cấp cứu)', nhom: 'Di chuyển', mo: false }
+  { id: 'dua-kham', ten: 'Đồng hành đi khám (không cấp cứu)', nhom: 'Di chuyển', mo: false },
+  { id: 'cham-soc-cb', ten: 'Chăm sóc người cao tuổi cơ bản (không thủ thuật y tế)', nhom: 'Hoàn thiện năng lực', mo: true, canhBao: 'Không làm thủ thuật y tế, không thay thuốc. Việc cần thủ thuật chuyển qua FaCare Life.' },
+  { id: 'health-coach', ten: 'Health Coach: đồng hành lối sống lành mạnh', nhom: 'Hoàn thiện năng lực', mo: true },
+  { id: 'ban-hang-online', ten: 'Bán hàng online cho hộ kinh doanh', nhom: 'Hoàn thiện năng lực', mo: true }
 ];
 var TANG = { A: 'Chăm sóc chuyên nghiệp (qua FaCare Life)', B: 'Cố vấn, kèm cặp cho hộ kinh doanh, doanh nghiệp nhỏ', C: 'Việc cộng đồng nhẹ có thù lao' };
 var MUC_DICH = { luu_lien_he: 'Lưu thông tin và để điều phối viên liên hệ', chia_se_cau_chuyen: 'Chia sẻ câu chuyện ẩn danh', tin_nhiem: 'Hiện số việc tử tế đã xác nhận trên hồ sơ Sàn', hien_ho_so: 'Hiện hồ sơ năng lực trên bảng việc', gan_day: 'Cho người gần đây thấy tôi (tên, kỹ năng, khoảng cách ước lượng)' };
@@ -174,9 +187,13 @@ function setup() {
 }
 function cache_() { try { return typeof CacheService !== 'undefined' ? CacheService.getScriptCache() : null; } catch (e) { return null; } }
 /** Chỉ kiểm tra đủ trang tính một lần mỗi 6 giờ: bỏ 23 lần tìm trang ở mỗi lượt gọi. */
-function ensure_() { var c = cache_(); if (c && c.get('daSetup') === VER) return; if (Object.keys(TB).some(function (n) { return !sheet_(n); })) setup(); if (c) c.put('daSetup', VER, 21600); }
+var HDR_OK = '';
+var LOAI_QUA = { hang: 'Hàng hoá', dich_vu: 'Dịch vụ', giam_gia: 'Giảm giá' };
+/** Bảng đã có dữ liệu mà khai báo thêm cột: ghi tiêu đề cột mới vào dòng 1 (một lần mỗi phiên bản). */
+function hdr_() { Object.keys(TB).forEach(function (n) { var sh = sheet_(n); if (!sh || !sh.getLastRow()) return; var h = sh.getDataRange().getValues()[0] || []; TB[n].forEach(function (x, i) { if (!String(h[i] === undefined ? '' : h[i])) sh.getRange(1, i + 1).setValue(x.split(':')[1]); }); }); }
+function ensure_() { if (HDR_OK !== VER) { try { hdr_(); } catch (e) {} HDR_OK = VER; } var c = cache_(); if (c && c.get('daSetup') === VER) return; if (Object.keys(TB).some(function (n) { return !sheet_(n); })) setup(); if (c) c.put('daSetup', VER, 21600); }
 function nho_(k, giay, fn) { var c = cache_(), d = dv_(); if (c && d) { var v = c.get(k + ':' + d); if (v) return JSON.parse(v); } var r = fn(); if (c && d && r && r.ok) { try { c.put(k + ':' + d, JSON.stringify(r), giay); } catch (e) {} } return r; }
-var DOC_ = ['ganToi', 'apiCauHinh', 'apiBangViec', 'idToi', 'viecCuaToi', 'idToiDayDu', 'gttTimCa', 'ttBang', 'dtBang', 'quyBang', 'hvBang', 'dpBang', 'qtBang', 'dataTongQuan', 'dataThanhVien', 'dataHoSo', 'dataViecCanLam', 'dataTram', 'dataNhatKy', 'dataXuat'];
+var DOC_ = ['ganToi', 'apiCauHinh', 'apiBangViec', 'idToi', 'viecCuaToi', 'idToiDayDu', 'gttTimCa', 'ttBang', 'dtBang', 'quyBang', 'hvBang', 'dpBang', 'qtBang', 'dataTongQuan', 'dataThanhVien', 'dataHoSo', 'dataViecCanLam', 'dataTram', 'dataNhatKy', 'dataXuat', 'dkCuaToi', 'dpDoiTacBang', 'dpBangCho', 'dpNguTam'];
 function salt_() { var s = '', k = 'abcdefghijklmnopqrstuvwxyz0123456789'; for (var i = 0; i < 24; i++) s += k.charAt(Math.floor(Math.random() * k.length)); return s; }
 /* Bộ nhớ đệm dữ liệu có phiên bản: đọc lấy cả các bảng trong một lượt; mọi lần ghi đổi phiên bản nên không đọc nhầm dữ liệu cũ.
  * Trong khoá ghi (lock_) luôn đọc thẳng từ Sheet. */
@@ -253,6 +270,7 @@ function ganVai_(efc, vai, maOrg) { if (!find_('Vai', function (o) { return S(o.
 function dongY_(efc, md, co, cach, nguoi) { add_('Đồng ý', { efc: efc, mucDich: md, co: co ? 1 : 0, cach: cach || 'o_tich', nguoiGhi: nguoi || efc, luc: now_() }); }
 function coDongY_(efc, md) { var d = where_('Đồng ý', function (o) { return S(o.efc) === efc && S(o.mucDich) === md; }); return d.length ? S(d[d.length - 1].co) === '1' : false; }
 function ev_(efc, bac, loai, ma) { if (!efc) return; if (bac && find_('Sự kiện', function (o) { return S(o.efc) === efc && S(o.bac) === bac; })) return; add_('Sự kiện', { luc: now_(), efc: efc, bac: bac || '', loai: loai, ma: ma || '' }); }
+function skNguon(p) { p = p || {}; add_('Sự kiện', { luc: now_(), efc: '', bac: '', loai: 'nguon', ma: '', anonId: clean_(p.anonId, 40), utmNguon: clean_(p.utmNguon, 60), utmKenh: clean_(p.utmKenh, 60), utmChienDich: clean_(p.utmChienDich, 60), utmNoiDung: clean_(p.utmNoiDung, 60), refer: clean_(p.refer, 60) }); return { ok: true }; }
 function token_() { return (Utilities.getUuid() + Utilities.getUuid()).replace(/-/g, ''); }
 function phienMoi_(efc, tb) { var t = token_(); add_('Phiên', { bam: hash_('phien', t), efc: efc, tao: now_(), het: new Date(Date.now() + PHIEN_NGAY * 86400000).toISOString(), thuHoi: '', thietBi: clean_(tb, 60) }); return t; }
 function me_(t) {
@@ -383,10 +401,11 @@ function ganCT_(ca) {
 function apiCauHinh() { return nho_('cauHinh', 120, apiCauHinh_); }
 function apiCauHinh_() {
   var orgs = where_('Tổ chức', function (o) { return S(o.trangThai) === 'hoat_dong' && ['tai_tro', 'doi_tac', 'hoc_vien'].indexOf(S(o.loai)) >= 0; }).map(function (o) { return { ten: S(o.ten), loai: S(o.loai), logo: S(o.logo) }; });
-  var uu = where_('Ưu đãi', function (o) { return S(o.trangThai) === 'mo'; }).map(function (o) { var g = org_(S(o.maOrg)); return { ma: S(o.ma), ten: S(o.ten), moTa: S(o.moTa), gio: N(o.gio), quyTra: S(o.quyTra) === '1', conLai: N(o.soLuong) ? N(o.soLuong) - N(o.daDoi) : null, doiTac: g ? S(g.ten) : '' }; });
+  var q0 = quy_();
+  var uu = where_('Ưu đãi', function (o) { return S(o.trangThai) === 'mo'; }).map(function (o) { var g = org_(S(o.maOrg)), qt = S(o.quyTra) === '1', gt = N(o.giaTri) || (qt ? Math.round(N(o.gio) * q0.gia) : 0), lq = LOAI_QUA[S(o.loaiQua)] ? S(o.loaiQua) : 'hang'; return { ma: S(o.ma), ten: S(o.ten), moTa: S(o.moTa), gio: N(o.gio), quyTra: qt, hinhThuc: qt ? 'ban' : 'tai_tro', giaTri: gt, loaiQua: lq, tenLoai: LOAI_QUA[lq], doiDuoc: !qt || (cfg_('MoQuaBan') === '1' && q0.gia > 0 && gt <= Math.round(N(o.gio) * q0.gia) && gt <= q0.khaDung), choQuy: qt && cfg_('MoQuaBan') !== '1', conLai: N(o.soLuong) ? N(o.soLuong) - N(o.daDoi) : null, doiTac: g ? S(g.ten) : '' }; });
   var kh = where_('Khoá học', function (o) { return S(o.trangThai) === 'mo'; }).map(function (o) { return { ma: S(o.ma), ten: S(o.ten), moTa: S(o.moTa), soBuoi: N(o.soBuoi), ketNoi: S(o.ketNoi), tang: S(o.tang), hocPhi: N(o.hocPhi) }; });
   var q = quy_();
-  return { ok: true, ver: VER, danhMuc: DANH_MUC, tang: TANG, mucDich: MUC_DICH, toChuc: orgs, uuDai: uu, khoaHoc: kh, giaQuyDoi: q.gia, giaSanC: N(cfg_('GiaSanGioC')), quyMo: cfg_('QuyMo') === '1', taiKhoanQuy: cfg_('TaiKhoanQuy') };
+  return { ok: true, ver: VER, danhMuc: DANH_MUC, tang: TANG, mucDich: MUC_DICH, toChuc: orgs, uuDai: uu, khoaHoc: kh, giaQuyDoi: q.gia, giaSanC: N(cfg_('GiaSanGioC')), giaThamChieu: N(cfg_('GiaTriThamChieuGio')), quyMo: cfg_('QuyMo') === '1', taiKhoanQuy: cfg_('TaiKhoanQuy') };
 }
 function apiBangViec() { return nho_('bangViec', 30, apiBangViec_); }
 function apiBangViec_() {
@@ -403,11 +422,12 @@ function idToi(t) {
   var tk = find_('Quan hệ', function (o) { return S(o.a) === e && S(o.loai) === 'thua_ke' && !S(o.den); });
   var ls = where_('Sổ giờ', function (o) { return S(o.efc) === e; }).slice(-40).reverse().map(function (o) { return { luc: S(o.luc), loai: S(o.loai), gio: N(o.gio), doiUng: S(o.doiUng), ghiChu: S(o.ghiChu) }; });
   var phieu = where_('Phiếu', function (o) { return S(o.efc) === e; }).reverse().map(function (o) { var u = find_('Ưu đãi', function (x) { return S(x.ma) === S(o.maUu); }); var g = org_(S(o.maOrg)); return { ma: S(o.ma), ten: u ? S(u.ten) : '', doiTac: g ? S(g.ten) : '', gio: N(o.gio), trangThai: S(o.trangThai), tao: S(o.tao) }; });
-  var hs = where_('Hồ sơ năng lực', function (o) { return S(o.efc) === e; }).map(function (o) { var v = viec_(S(o.kyNang)); return { kyNang: S(o.kyNang), ten: v ? v.ten : S(o.kyNang), nguon: S(o.nguon), soXacNhan: N(o.soXacNhan) }; });
+  var hs = where_('Hồ sơ năng lực', function (o) { return S(o.efc) === e && S(o.kyNang); }).map(function (o) { var v = viec_(S(o.kyNang)); return { kyNang: S(o.kyNang), ten: v ? v.ten : S(o.kyNang), nguon: S(o.nguon), soXacNhan: N(o.soXacNhan), bangCap: S(o.bangCap), ttBang: S(o.ttBang), dangNho: where_('Xin xác nhận kỹ năng', function (x) { return S(x.efc) === e && S(x.kyNang) === S(o.kyNang) && S(x.trangThai) === 'cho'; }).length }; });
+  var nhoXn = where_('Xin xác nhận kỹ năng', function (x) { return S(x.efcXn) === e && S(x.trangThai) === 'cho'; }).map(function (x) { return { ma: S(x.ma), nguoi: ten_(S(x.efc)), kyNang: (viec_(S(x.kyNang)) || {}).ten || S(x.kyNang), loiNhan: S(x.loiNhan) }; });
   var dy = {}; Object.keys(MUC_DICH).forEach(function (k) { dy[k] = coDongY_(e, k); });
   var ghiDanh = where_('Ghi danh', function (o) { return S(o.efc) === e; }).map(function (o) { var k = find_('Khoá học', function (x) { return S(x.ma) === S(o.maKH); }); return { ma: S(o.ma), khoa: k ? S(k.ten) : '', trangThai: S(o.trangThai), taiTro: !!S(o.maCT) }; });
   return { ok: true, toi: { efc: e, ten: S(tv.ten), sdt: S(tv.sdt), namSinh: N(tv.namSinh), khuVuc: S(tv.khuVuc), muon: S(tv.muon) ? S(tv.muon).split(',') : [], muonThuNhap: S(tv.muonThuNhap) === '1', xm: { A: S(tv.xmA), B: S(tv.xmB), C: duTangC_(e) ? 'dat' : S(tv.xmC) }, chungChi: S(tv.chungChi) },
-    vai: m.vai, dongY: dy, hienGanDay: dy.gan_day && !!S(tv.viTri), soDu: soDu_(e), thongKe: st, huyHieu: badges_(st), lichSu: ls, phieu: phieu, giaDinh: gd, thuaKe: tk ? { efc: S(tk.b), ten: ten_(S(tk.b)) } : null, thayMat: thayMat_(e), hoSo: hs, ghiDanh: ghiDanh, giaQuyDoi: quy_().gia,
+    vai: m.vai, dongY: dy, hienGanDay: dy.gan_day && !!S(tv.viTri), soDu: soDu_(e), thongKe: st, huyHieu: badges_(st), lichSu: ls, phieu: phieu, giaDinh: gd, thuaKe: tk ? { efc: S(tk.b), ten: ten_(S(tk.b)) } : null, thayMat: thayMat_(e), hoSo: hs, nhoXnKN: nhoXn, ghiDanh: ghiDanh, giaQuyDoi: quy_().gia,
     phien: where_('Phiên', function (o) { return S(o.efc) === e && !S(o.thuHoi) && new Date(S(o.het)).getTime() > Date.now(); }).length };
 }
 /** Một lượt gọi thay cho idToi + viecCuaToi khi mở app. */
@@ -569,7 +589,50 @@ function gttXacNhanKyNang(t, maNho) {
 }
 
 /* ---------- Sàn năng lực ---------- */
-function duTangC_(efc) { return where_('Hồ sơ năng lực', function (o) { return S(o.efc) === efc && (N(o.soXacNhan) >= 2 || S(o.nguon) === 'hoc_vien'); }).length > 0; }
+/* ---------- Kỹ năng: bằng cấp (điều phối viên xác minh) và xác nhận từ cộng đồng ---------- */
+function cungNha_(a, b) { var g = function (e) { return where_('Quan hệ', function (o) { return S(o.a) === e && S(o.loai) === 'gia_dinh' && !S(o.den); }).map(function (o) { return S(o.b); }); }, ga = g(a); return g(b).some(function (x) { return ga.indexOf(x) >= 0; }); }
+function hsCuaToi_(e, kn) { var h = find_('Hồ sơ năng lực', function (o) { return S(o.efc) === e && S(o.kyNang) === S(kn); }); if (!h && viec_(S(kn))) h = add_('Hồ sơ năng lực', { efc: e, kyNang: S(kn), nguon: 'tu_khai', soXacNhan: 0, nguoiXacNhan: '', capNhat: now_(), bangCap: '', ttBang: '', nguoiDuyetBang: '' }); return h; }
+function knNopBang(t, kn, p) {
+  p = p || {}; var m = me_(t);
+  var ten = clean_(p.ten, 100), noi = clean_(p.noiCap, 100), so = clean_(p.soHieu, 40), nam = N(p.nam);
+  if (!ten || !noi) return { ok: false, msg: 'Nhập tên bằng và nơi cấp.' };
+  if (nam && (nam < 1950 || nam > new Date().getFullYear())) return { ok: false, msg: 'Năm cấp chưa đúng.' };
+  return lock_(function () { var h = hsCuaToi_(m.efc, kn); if (!h) return { ok: false, msg: 'Kỹ năng không có trong danh mục.' };
+    set_('Hồ sơ năng lực', h, 'bangCap', [ten, noi, so ? 'số ' + so : '', nam ? 'năm ' + nam : ''].filter(String).join(' · ')); set_('Hồ sơ năng lực', h, 'ttBang', 'cho'); set_('Hồ sơ năng lực', h, 'nguoiDuyetBang', ''); set_('Hồ sơ năng lực', h, 'capNhat', now_());
+    return { ok: true }; });
+}
+function knXinXacNhan(t, kn, ai, loiNhan) {
+  var m = me_(t), x = /^EFC-/i.test(S(ai).trim()) ? tv_(S(ai).trim().toUpperCase()) : tvSdt_(phone_(ai));
+  if (!x) return { ok: false, msg: 'Chưa có thành viên với số hoặc mã này. Người xác nhận cần có tài khoản EFCommunity.' };
+  if (S(x.efc) === m.efc) return { ok: false, msg: 'Không tự xác nhận cho mình.' };
+  if (cungNha_(m.efc, S(x.efc))) return { ok: false, msg: 'Người cùng gia đình không xác nhận kỹ năng cho nhau. Hãy nhờ người ngoài gia đình đã thấy bạn làm việc này.' };
+  return lock_(function () { var h = hsCuaToi_(m.efc, kn); if (!h) return { ok: false, msg: 'Kỹ năng không có trong danh mục.' };
+    if (S(h.nguoiXacNhan).split(',').indexOf(S(x.efc)) >= 0) return { ok: false, msg: 'Người này đã xác nhận kỹ năng này cho bạn.' };
+    if (find_('Xin xác nhận kỹ năng', function (o) { return S(o.efc) === m.efc && S(o.kyNang) === S(kn) && S(o.efcXn) === S(x.efc) && S(o.trangThai) === 'cho'; })) return { ok: false, msg: 'Bạn đã nhờ người này, đang chờ họ trả lời.' };
+    if (where_('Xin xác nhận kỹ năng', function (o) { return S(o.efc) === m.efc && S(o.trangThai) === 'cho'; }).length >= 10) return { ok: false, msg: 'Bạn đang chờ 10 lời nhờ. Đợi họ trả lời rồi nhờ thêm.' };
+    var ma = code_('Xin xác nhận kỹ năng', 'XN-', 5); add_('Xin xác nhận kỹ năng', { ma: ma, efc: m.efc, kyNang: S(kn), efcXn: S(x.efc), loiNhan: clean_(loiNhan, 120), trangThai: 'cho', tao: now_(), luc: '' });
+    return { ok: true, ma: ma, ten: S(x.ten) }; });
+}
+function knTraLoi(t, ma, dongY, daThay) {
+  var m = me_(t);
+  return lock_(function () { var r = find_('Xin xác nhận kỹ năng', function (o) { return S(o.ma) === S(ma); }); if (!r || S(r.efcXn) !== m.efc || S(r.trangThai) !== 'cho') return { ok: false, msg: 'Lời nhờ này không còn chờ bạn.' };
+    if (dongY && daThay !== true) return { ok: false, msg: 'Chỉ xác nhận khi bạn đã trực tiếp thấy người này làm việc này.' };
+    set_('Xin xác nhận kỹ năng', r, 'trangThai', dongY ? 'dong_y' : 'tu_choi'); set_('Xin xác nhận kỹ năng', r, 'luc', now_());
+    if (!dongY) return { ok: true, soXacNhan: null };
+    var h = hsCuaToi_(S(r.efc), S(r.kyNang)), ds = S(h.nguoiXacNhan) ? S(h.nguoiXacNhan).split(',') : [];
+    if (ds.indexOf(m.efc) < 0) { ds.push(m.efc); set_('Hồ sơ năng lực', h, 'nguoiXacNhan', ds.join(',')); set_('Hồ sơ năng lực', h, 'soXacNhan', ds.length); }
+    if (S(h.nguon) === 'tu_khai') set_('Hồ sơ năng lực', h, 'nguon', 'cong_dong');
+    set_('Hồ sơ năng lực', h, 'capNhat', now_());
+    return { ok: true, soXacNhan: ds.length, duTangC: duTangC_(S(r.efc)) }; });
+}
+function dpBangCho(t) { var m = me_(t); if (!can_(m, 'dieu_phoi')) err_('Cần vai điều phối viên.'); return { ok: true, items: where_('Hồ sơ năng lực', function (o) { return S(o.ttBang) === 'cho' && S(o.kyNang); }).map(function (o) { var x = tv_(S(o.efc)); return { efc: S(o.efc), ten: x ? S(x.ten) : '', sdt: x ? sdtHien_(x.sdt) : '', kyNang: S(o.kyNang), tenKN: (viec_(S(o.kyNang)) || {}).ten || S(o.kyNang), bangCap: S(o.bangCap) }; }) }; }
+function dpXacMinhBang(t, efc, kn, dat) {
+  var m = me_(t); if (!can_(m, 'dieu_phoi')) err_('Cần vai điều phối viên.');
+  return lock_(function () { var h = find_('Hồ sơ năng lực', function (o) { return S(o.efc) === S(efc) && S(o.kyNang) === S(kn) && S(o.ttBang) === 'cho'; }); if (!h) return { ok: false, msg: 'Không còn bằng chờ xác minh.' };
+    set_('Hồ sơ năng lực', h, 'ttBang', dat ? 'dat' : 'khong'); set_('Hồ sơ năng lực', h, 'nguoiDuyetBang', m.efc); if (dat && ['tu_khai', 'cong_dong'].indexOf(S(h.nguon)) >= 0) set_('Hồ sơ năng lực', h, 'nguon', 'bang_cap');
+    nk_(m, dat ? 'xac_minh_bang' : 'khong_dat_bang', S(efc), S(kn)); return { ok: true }; });
+}
+function duTangC_(efc) { return where_('Hồ sơ năng lực', function (o) { return S(o.efc) === efc && S(o.kyNang) && (N(o.soXacNhan) >= 2 || S(o.nguon) === 'hoc_vien' || S(o.ttBang) === 'dat'); }).length > 0; }
 function duTang_(efc, tang) { var tv = tv_(efc); if (tang === 'C') return duTangC_(efc) || S(tv.xmC) === 'dat'; return S(tv['xm' + tang]) === 'dat' || (tang === 'B' && !!find_('Ghi danh', function (o) { if (S(o.efc) !== efc || S(o.trangThai) !== 'hoan_thanh') return false; var k = find_('Khoá học', function (x) { return S(x.ma) === S(o.maKH); }); return k && S(k.tang) === 'B'; })); }
 function choPhepGio_(y) { var v = viec_(S(y.viec)); return S(y.loaiBen) === 'ca_nhan' && v && v.mo; }
 function sanDatViec(t, p) {
@@ -630,11 +693,11 @@ function uuDaiDoi(t, maUu) {
     var u = find_('Ưu đãi', function (o) { return S(o.ma) === S(maUu) && S(o.trangThai) === 'mo'; }); if (!u) return { ok: false, msg: 'Ưu đãi không còn.' };
     if (N(u.soLuong) && N(u.daDoi) >= N(u.soLuong)) return { ok: false, msg: 'Ưu đãi đã hết lượt.' };
     if (soDu_(m.efc) < N(u.gio)) return { ok: false, msg: 'Số dư giờ chưa đủ.' };
-    var giaTri = 0; if (S(u.quyTra) === '1') { var q = quy_(); if (!q.gia) return { ok: false, msg: 'Quỹ chưa đủ để bảo chứng lúc này. Hãy chọn ưu đãi do đối tác tặng.' }; giaTri = Math.round(N(u.gio) * q.gia); if (giaTri > q.khaDung) return { ok: false, msg: 'Quỹ chưa đủ cho ưu đãi này.' }; }
+    var giaTri = 0; if (S(u.quyTra) === '1') { if (cfg_('MoQuaBan') !== '1') return { ok: false, msg: 'Quà bán sẽ mở khi có đơn vị giữ quỹ. Lúc này bạn chọn quà do đối tác tài trợ nhé.' }; var q = quy_(); if (!q.gia) return { ok: false, msg: 'Quỹ chưa đủ để bảo chứng lúc này. Hãy chọn quà do đối tác tài trợ.' }; giaTri = N(u.giaTri) || Math.round(N(u.gio) * q.gia); if (giaTri > Math.round(N(u.gio) * q.gia)) return { ok: false, msg: 'Giá quy đổi của quỹ lúc này chưa đủ bảo chứng giá món quà này. Hãy chọn quà khác hoặc quay lại sau.' }; if (giaTri > q.khaDung) return { ok: false, msg: 'Quỹ chưa đủ cho ưu đãi này.' }; }
     var ma = code_('Phiếu', 'PH-' + day_() + '-', 3);
     add_('Phiếu', { ma: ma, efc: m.efc, maUu: S(u.ma), maOrg: S(u.maOrg), gio: N(u.gio), giaTri: giaTri, trangThai: 'chua_dung', tao: now_(), dungLuc: '', ttLuc: '' });
     set_('Ưu đãi', u, 'daDoi', N(u.daDoi) + 1); so_('doi_uu_dai', m.efc, -N(u.gio), ma, S(u.ten));
-    return { ok: true, maPhieu: ma, ten: S(u.ten), doiTac: (org_(S(u.maOrg)) || {}).ten || '' };
+    return { ok: true, maPhieu: ma, ten: S(u.ten), giaTri: N(u.giaTri) || giaTri, hinhThuc: S(u.quyTra) === '1' ? 'ban' : 'tai_tro', doiTac: (org_(S(u.maOrg)) || {}).ten || '' };
   });
 }
 
@@ -680,12 +743,66 @@ function ttTaoBaoTro(t, p) {
 /* ---------- Đối tác ---------- */
 function dtBang(t, maOrg) {
   var m = me_(t), v = org4_(m, 'doi_tac', maOrg);
-  var uu = where_('Ưu đãi', function (o) { return S(o.maOrg) === v.maOrg; }).map(function (o) { return { ma: S(o.ma), ten: S(o.ten), moTa: S(o.moTa), gio: N(o.gio), quyTra: S(o.quyTra) === '1', soLuong: N(o.soLuong), daDoi: N(o.daDoi), trangThai: S(o.trangThai) }; });
+  var uu = where_('Ưu đãi', function (o) { return S(o.maOrg) === v.maOrg; }).map(function (o) { return { ma: S(o.ma), ten: S(o.ten), moTa: S(o.moTa), gio: N(o.gio), quyTra: S(o.quyTra) === '1', giaTri: N(o.giaTri), loaiQua: S(o.loaiQua) || 'hang', tenLoai: LOAI_QUA[S(o.loaiQua)] || LOAI_QUA.hang, soLuong: N(o.soLuong), daDoi: N(o.daDoi), trangThai: S(o.trangThai) }; });
   var ph = where_('Phiếu', function (o) { return S(o.maOrg) === v.maOrg; }).reverse().map(function (o) { var u = find_('Ưu đãi', function (x) { return S(x.ma) === S(o.maUu); }); return { ma: S(o.ma), ten: u ? S(u.ten) : '', gio: N(o.gio), giaTri: N(o.giaTri), trangThai: S(o.trangThai), tao: S(o.tao), dungLuc: S(o.dungLuc) }; });
   var choTT = 0, daTT = 0; ph.forEach(function (p) { if (p.trangThai === 'da_dung') choTT += p.giaTri; if (p.trangThai === 'da_thanh_toan') daTT += p.giaTri; });
   return { ok: true, toChuc: v.tenOrg, maOrg: v.maOrg, uuDai: uu, phieu: ph, choThanhToan: choTT, daThanhToan: daTT, khachDen: ph.filter(function (p) { return p.trangThai !== 'chua_dung'; }).length };
 }
-function dtTaoUuDai(t, p) { p = p || {}; var m = me_(t), v = org4_(m, 'doi_tac', p.maOrg); if (!clean_(p.ten, 80)) return { ok: false, msg: 'Nhập tên ưu đãi.' }; if (!(N(p.gio) >= 0.5)) return { ok: false, msg: 'Số giờ từ 0,5.' }; return lock_(function () { var ma = code_('Ưu đãi', 'UD-', 4); add_('Ưu đãi', { ma: ma, maOrg: v.maOrg, ten: clean_(p.ten, 80), moTa: clean_(p.moTa, 200), gio: r2_(N(p.gio)), quyTra: p.quyTra ? 1 : 0, soLuong: N(p.soLuong), daDoi: 0, trangThai: 'mo' }); return { ok: true, ma: ma }; }); }
+function dtTaoUuDai(t, p) { p = p || {}; var m = me_(t), v = org4_(m, 'doi_tac', p.maOrg); if (!clean_(p.ten, 80)) return { ok: false, msg: 'Nhập tên ưu đãi.' }; var gt = Math.round(N(p.giaTri)); if (!(gt >= 1000)) return { ok: false, msg: 'Nhập giá trị món quà bằng đồng (từ 1.000 đ), để người đổi biết rõ giá trị.' }; var lq = LOAI_QUA[S(p.loaiQua)] ? S(p.loaiQua) : 'hang', ban = p.quyTra === true || p.quyTra === 1 || S(p.quyTra) === '1' || S(p.hinhThuc) === 'ban', gio = N(p.gio); if (ban) gio = gioBan_(gt, gio); if (!(gio >= 0.5)) return { ok: false, msg: 'Số giờ từ 0,5.' }; return lock_(function () { var ma = code_('Ưu đãi', 'UD-', 4); add_('Ưu đãi', { ma: ma, maOrg: v.maOrg, ten: clean_(p.ten, 80), moTa: clean_(p.moTa, 200), gio: r2_(gio), quyTra: ban ? 1 : 0, soLuong: N(p.soLuong), daDoi: 0, trangThai: 'mo', giaTri: gt, loaiQua: lq }); return { ok: true, ma: ma, gio: r2_(gio), giaTri: gt }; }); }
+/** Quà bán: số giờ đủ bảo chứng giá trị theo giá quy đổi của quỹ; chưa có quỹ thì giữ số giờ đối tác ghi, quà ở trạng thái chờ. */
+function gioBan_(gt, gio) { var q = quy_(); return q.gia ? Math.max(gio || 0, Math.ceil(gt / q.gia * 2) / 2) : Math.max(gio || 0, 1); }
+
+/* ---------- Đăng ký đồng hành: đối tác, nhà tài trợ, nhà hảo tâm (giai đoạn 1: đăng ký rồi chờ điều phối viên duyệt) ---------- */
+var VAI_DH = { doi_tac: 'Đối tác tặng quà', tai_tro: 'Nhà tài trợ', hao_tam: 'Nhà hảo tâm' };
+function dkHien_(o) { var q = null; try { q = S(o.qua) ? JSON.parse(S(o.qua)) : null; } catch (e) {} return { ma: S(o.ma), vai: S(o.vai), tenVai: VAI_DH[S(o.vai)] || '', tenOrg: S(o.tenOrg), diaChi: S(o.diaChi), moTa: S(o.moTa), qua: q, bangChung: S(o.bangChung), trangThai: S(o.trangThai), lyDo: S(o.lyDo), tao: S(o.tao), duyetLuc: S(o.duyetLuc), maOrg: S(o.maOrg) }; }
+function dkDoiTac(t, p) {
+  p = p || {}; var m = me_(t), vai = S(p.vai);
+  if (!VAI_DH[vai]) return { ok: false, msg: 'Chọn cách bạn muốn đồng hành.' };
+  var ten = clean_(p.tenOrg, 100) || (vai === 'hao_tam' ? ten_(m.efc) : ''); if (!ten) return { ok: false, msg: 'Nhập tên cửa hàng hoặc đơn vị.' };
+  var ck = p.camKet || []; if (ck.length !== 5 || ck.some(function (x) { return x !== true; })) return { ok: false, msg: 'Cần đồng ý đủ 5 cam kết.' };
+  var qua = '';
+  if (vai === 'doi_tac') {
+    var q = p.qua || {}, gt = Math.round(N(q.giaTri));
+    if (!clean_(q.ten, 80)) return { ok: false, msg: 'Nhập món quà đầu tiên.' };
+    if (!(gt >= 1000)) return { ok: false, msg: 'Nhập giá trị món quà bằng đồng (từ 1.000 đ).' };
+    qua = JSON.stringify({ ten: clean_(q.ten, 80), moTa: clean_(q.moTa, 200), loaiQua: LOAI_QUA[S(q.loaiQua)] ? S(q.loaiQua) : 'hang', giaTri: gt, ban: q.ban === true || S(q.hinhThuc) === 'ban', gio: Math.max(0.5, N(q.gio) || 1), soLuong: Math.max(0, Math.round(N(q.soLuong))) });
+  }
+  return lock_(function () {
+    if (find_('Đăng ký đối tác', function (o) { return S(o.efc) === m.efc && S(o.trangThai) === 'cho_duyet'; })) return { ok: false, msg: 'Bạn đã có một đăng ký đang chờ duyệt.' };
+    var ma = code_('Đăng ký đối tác', 'DK-', 4);
+    add_('Đăng ký đối tác', { ma: ma, efc: m.efc, vai: vai, tenOrg: ten, diaChi: clean_(p.diaChi, 160), moTa: clean_(p.moTa, 300), qua: qua, camKet: '5/5', bangChung: clean_(p.bangChung, 300), trangThai: 'cho_duyet', lyDo: '', nguoiDuyet: '', tao: now_(), duyetLuc: '', maOrg: '' });
+    return { ok: true, ma: ma };
+  });
+}
+function dkCuaToi(t) { var m = me_(t); return { ok: true, items: where_('Đăng ký đối tác', function (o) { return S(o.efc) === m.efc; }).reverse().map(dkHien_) }; }
+function dpDoiTacBang(t) {
+  var m = me_(t); if (!can_(m, 'dieu_phoi')) err_('Cần vai điều phối viên.');
+  var all = tb_('Đăng ký đối tác');
+  return { ok: true, cho: all.filter(function (o) { return S(o.trangThai) === 'cho_duyet'; }).map(function (o) { var x = dkHien_(o), tv = tv_(S(o.efc)); x.nguoi = tv ? S(tv.ten) : ''; x.sdt = tv ? sdtHien_(tv.sdt) : ''; x.efc = S(o.efc); return x; }),
+    gan: all.filter(function (o) { return S(o.trangThai) !== 'cho_duyet'; }).slice(-10).reverse().map(dkHien_) };
+}
+function dpDuyetDoiTac(t, ma, duyet, kiem, lyDo) {
+  var m = me_(t); if (!can_(m, 'dieu_phoi')) err_('Cần vai điều phối viên.');
+  return lock_(function () {
+    var o = find_('Đăng ký đối tác', function (x) { return S(x.ma) === S(ma); }); if (!o || S(o.trangThai) !== 'cho_duyet') return { ok: false, msg: 'Đăng ký này không còn chờ duyệt.' };
+    if (!duyet) {
+      if (!clean_(lyDo, 200)) return { ok: false, msg: 'Ghi lý do trả lại để người đăng ký bổ sung.' };
+      set_('Đăng ký đối tác', o, 'trangThai', 'tra_lai'); set_('Đăng ký đối tác', o, 'lyDo', clean_(lyDo, 200)); set_('Đăng ký đối tác', o, 'nguoiDuyet', m.efc); set_('Đăng ký đối tác', o, 'duyetLuc', now_());
+      nk_(m, 'tra_lai_dong_hanh', S(o.ma), lyDo); return { ok: true, trangThai: 'tra_lai' };
+    }
+    if (!kiem || kiem.length !== 5 || kiem.some(function (x) { return x !== true; })) return { ok: false, msg: 'Đánh dấu đủ 5 mục đã kiểm bằng chứng thì mới duyệt được.' };
+    var maOrg = '';
+    if (S(o.vai) === 'doi_tac') {
+      maOrg = code_('Tổ chức', 'ORG-', 4);
+      add_('Tổ chức', { ma: maOrg, ten: S(o.tenOrg), loai: 'doi_tac', efcDaiDien: S(o.efc), trangThai: 'hoat_dong', logo: '', tao: now_() });
+      ganVai_(S(o.efc), 'dai_dien', maOrg);
+      var q = dkHien_(o).qua;
+      if (q) add_('Ưu đãi', { ma: code_('Ưu đãi', 'UD-', 4), maOrg: maOrg, ten: q.ten, moTa: q.moTa, gio: r2_(q.ban ? gioBan_(q.giaTri, N(q.gio)) : Math.max(0.5, N(q.gio))), quyTra: q.ban ? 1 : 0, soLuong: N(q.soLuong), daDoi: 0, trangThai: 'mo', giaTri: q.giaTri, loaiQua: q.loaiQua });
+    }
+    set_('Đăng ký đối tác', o, 'trangThai', 'da_duyet'); set_('Đăng ký đối tác', o, 'nguoiDuyet', m.efc); set_('Đăng ký đối tác', o, 'duyetLuc', now_()); set_('Đăng ký đối tác', o, 'maOrg', maOrg);
+    nk_(m, 'duyet_dong_hanh', S(o.ma), S(o.tenOrg)); return { ok: true, trangThai: 'da_duyet', maOrg: maOrg };
+  });
+}
 function dtDungPhieu(t, maPhieu, maOrg) { var m = me_(t), v = org4_(m, 'doi_tac', maOrg); var p = find_('Phiếu', function (o) { return S(o.ma) === S(maPhieu).trim().toUpperCase(); }); if (!p || S(p.maOrg) !== v.maOrg) return { ok: false, msg: 'Phiếu không thuộc cửa hàng này.' }; if (S(p.trangThai) !== 'chua_dung') return { ok: false, msg: 'Phiếu đã dùng.' }; set_('Phiếu', p, 'trangThai', 'da_dung'); set_('Phiếu', p, 'dungLuc', now_()); var u = find_('Ưu đãi', function (x) { return S(x.ma) === S(p.maUu); }); return { ok: true, ten: u ? S(u.ten) : '', nguoi: ten_(S(p.efc)) }; }
 
 /* ---------- Đơn vị giữ quỹ ---------- */
@@ -783,7 +900,7 @@ function qtTaoToChuc(t, p) {
   return lock_(function () { var ma = code_('Tổ chức', 'ORG-', 4); add_('Tổ chức', { ma: ma, ten: clean_(p.ten, 100), loai: p.loai, efcDaiDien: S(dd.efc), trangThai: 'hoat_dong', logo: S(p.logo).indexOf('https://') === 0 ? clean_(p.logo, 300) : '', tao: now_() }); ganVai_(S(dd.efc), 'dai_dien', ma); return { ok: true, ma: ma, daiDien: S(dd.ten) }; });
 }
 function qtGanVai(t, sdt, vai) { var m = me_(t); if (!can_(m, 'quan_tri')) err_('Cần vai quản trị.'); if (['dieu_phoi', 'quan_tri'].indexOf(vai) < 0) return { ok: false, msg: 'Vai không hợp lệ.' }; var x = tvSdt_(phone_(sdt)); if (!x) return { ok: false, msg: 'Chưa có tài khoản với số này.' }; ganVai_(S(x.efc), vai, ''); return { ok: true, ten: S(x.ten) }; }
-function qtCauHinh(t, key, val) { var m = me_(t); if (!can_(m, 'quan_tri')) err_('Cần vai quản trị.'); if (['GiaSanGioC', 'TranGiaQuyDoi', 'VanHanh', 'GiaTriThamChieuGio', 'SdtQuanTri'].indexOf(key) < 0) return { ok: false, msg: 'Khoá này không sửa ở đây.' }; setCfg_(key, clean_(val, 60)); return { ok: true }; }
+function qtCauHinh(t, key, val) { var m = me_(t); if (!can_(m, 'quan_tri')) err_('Cần vai quản trị.'); if (['GiaSanGioC', 'TranGiaQuyDoi', 'VanHanh', 'GiaTriThamChieuGio', 'SdtQuanTri', 'MoQuaBan'].indexOf(key) < 0) return { ok: false, msg: 'Khoá này không sửa ở đây.' }; setCfg_(key, clean_(val, 60)); return { ok: true }; }
 
 
 /* ---------- NỀN TẢNG QUẢN LÝ ID VÀ DATA V1 ----------
@@ -806,6 +923,19 @@ function dataTongQuan(t) {
   return { ok: true, laQT: m.laQT, tong: tvs.length, moi7: tvs.filter(function (o) { return new Date(S(o.tao)).getTime() > d7; }).length, moi30: tvs.filter(function (o) { return new Date(S(o.tao)).getTime() > d30; }).length, hoatDong30: Object.keys(hd30).length,
     caHieuLuc: where_('Ca', function (o) { return S(o.trangThai) === 'ok'; }).length, gio: r2_(gio), viecSanXong: where_('Việc Sàn', function (o) { return S(o.trangThai) === 'xong'; }).length,
     theoKenh: kenh, theoKhuVuc: khuVuc, theoCua: cua, theoNgay: ngay, phieu: bac, tram: tb_('Trạm').length, hieuNang: hieuNang_() };
+}
+function dpNguTam(t) {
+  nv_(t); var d30 = Date.now() - 30 * 864e5;
+  var tvs = tb_('Thành viên').filter(function (o) { return S(o.trangThai) !== 'da_xoa'; });
+  var hienBang = tvs.length ? r2_(100 * tvs.filter(function (o) { return S(o.hienBang) === '1' || o.hienBang === true; }).length / tvs.length) : null;
+  var uu = tb_('Ưu đãi');
+  var tuTe = uu.length ? r2_(100 * uu.filter(function (o) { return N(o.giaTri) > 0; }).length / uu.length) : null;
+  var tinhTan = Object.keys(tb_('Hồ sơ năng lực').filter(function (o) { return new Date(S(o.capNhat)).getTime() > d30; }).reduce(function (a, o) { a[S(o.efc)] = 1; return a; }, {})).length;
+  var nhan = where_('Nhờ giúp', function (o) { return S(o.nhanLuc) && new Date(S(o.nhanLuc)).getTime() > d30; });
+  var tanTam = nhan.length ? r2_(nhan.reduce(function (s, o) { return s + (new Date(S(o.nhanLuc)) - new Date(S(o.tao))) / 36e5; }, 0) / nhan.length) : null;
+  var ca30 = where_('Ca', function (o) { return S(o.trangThai) === 'ok' && new Date(S(o.xnLuc)).getTime() > d30; });
+  var thanhTuu = r2_(ca30.reduce(function (s, o) { return s + N(o.gio); }, 0));
+  return { ok: true, thienTam: hienBang, tuTe: tuTe, tinhTan: tinhTan, tanTam: tanTam, thanhTuu: thanhTuu };
 }
 function hieuNang_() {
   var r = tb_('Hiệu năng').slice(-300), ms = r.map(function (o) { return N(o.ms); }).sort(function (a, b) { return a - b; }), theo = {};
@@ -913,12 +1043,13 @@ function caiSaoLuuDem() {
 
 /* ---------- cổng API ---------- */
 var API_FNS = {};
-var FN_ = { apiCauHinh: apiCauHinh, apiBangViec: apiBangViec, idDangKy: idDangKy, idDangNhap: idDangNhap, idDangXuat: idDangXuat, idDoiPin: idDoiPin, idCapNhat: idCapNhat, idDongY: idDongY, idYeuCauXoa: idYeuCauXoa, idXinXacMinh: idXinXacMinh, idThayMat: idThayMat, idToi: idToi, idToiDayDu: idToiDayDu, idViTri: idViTri, ganToi: ganToi, viecCuaToi: viecCuaToi, gdTao: gdTao, gdVao: gdVao, datThuaKe: datThuaKe, tangGio: tangGio, gttTaoCa: gttTaoCa, gttTimCa: gttTimCa, gttXacNhan: gttXacNhan, gttXacNhanTrongApp: gttXacNhanTrongApp, gttDangNho: gttDangNho, gttNhanViec: gttNhanViec, gttXacNhanKyNang: gttXacNhanKyNang, sanDatViec: sanDatViec, sanNhanViec: sanNhanViec, sanDoiLoi: sanDoiLoi, sanXacNhan: sanXacNhan, uuDaiDoi: uuDaiDoi, hocGhiDanh: hocGhiDanh, ttBang: ttBang, ttTaoBaoTro: ttTaoBaoTro, dtBang: dtBang, dtTaoUuDai: dtTaoUuDai, dtDungPhieu: dtDungPhieu, quyBang: quyBang, quyXacNhanCT: quyXacNhanCT, quyXacNhanGop: quyXacNhanGop, quyTraPhieu: quyTraPhieu, quyTraHocPhi: quyTraHocPhi, quyThamSo: quyThamSo, hvBang: hvBang, hvTaoKhoa: hvTaoKhoa, hvHoanThanh: hvHoanThanh, dpBang: dpBang, dpAn: dpAn, dpXacMinh: dpXacMinh, dpMoKhoa: dpMoKhoa, dpHuyCa: dpHuyCa, dpThuaKe: dpThuaKe, qtBang: qtBang, qtTaoToChuc: qtTaoToChuc, qtGanVai: qtGanVai, qtCauHinh: qtCauHinh, dataTongQuan: dataTongQuan, dataThanhVien: dataThanhVien, dataHoSo: dataHoSo, dataGhiChu: dataGhiChu, dataCapNhat: dataCapNhat, dataXoaTheoYeuCau: dataXoaTheoYeuCau, dataViecCanLam: dataViecCanLam, dataTram: dataTram, dataTaoTram: dataTaoTram, dataNhatKy: dataNhatKy, dataXuat: dataXuat, dataGanVai: dataGanVai };
+var FN_ = { apiCauHinh: apiCauHinh, apiBangViec: apiBangViec, idDangKy: idDangKy, idDangNhap: idDangNhap, idDangXuat: idDangXuat, idDoiPin: idDoiPin, idCapNhat: idCapNhat, idDongY: idDongY, idYeuCauXoa: idYeuCauXoa, idXinXacMinh: idXinXacMinh, idThayMat: idThayMat, idToi: idToi, idToiDayDu: idToiDayDu, idViTri: idViTri, ganToi: ganToi, viecCuaToi: viecCuaToi, gdTao: gdTao, gdVao: gdVao, datThuaKe: datThuaKe, tangGio: tangGio, gttTaoCa: gttTaoCa, gttTimCa: gttTimCa, gttXacNhan: gttXacNhan, gttXacNhanTrongApp: gttXacNhanTrongApp, gttDangNho: gttDangNho, gttNhanViec: gttNhanViec, gttXacNhanKyNang: gttXacNhanKyNang, sanDatViec: sanDatViec, sanNhanViec: sanNhanViec, sanDoiLoi: sanDoiLoi, sanXacNhan: sanXacNhan, uuDaiDoi: uuDaiDoi, hocGhiDanh: hocGhiDanh, ttBang: ttBang, ttTaoBaoTro: ttTaoBaoTro, dtBang: dtBang, dtTaoUuDai: dtTaoUuDai, dtDungPhieu: dtDungPhieu, quyBang: quyBang, quyXacNhanCT: quyXacNhanCT, quyXacNhanGop: quyXacNhanGop, quyTraPhieu: quyTraPhieu, quyTraHocPhi: quyTraHocPhi, quyThamSo: quyThamSo, hvBang: hvBang, hvTaoKhoa: hvTaoKhoa, hvHoanThanh: hvHoanThanh, dpBang: dpBang, dpAn: dpAn, dpXacMinh: dpXacMinh, dpMoKhoa: dpMoKhoa, dpHuyCa: dpHuyCa, dpThuaKe: dpThuaKe, qtBang: qtBang, qtTaoToChuc: qtTaoToChuc, qtGanVai: qtGanVai, qtCauHinh: qtCauHinh, dataTongQuan: dataTongQuan, dataThanhVien: dataThanhVien, dataHoSo: dataHoSo, dataGhiChu: dataGhiChu, dataCapNhat: dataCapNhat, dataXoaTheoYeuCau: dataXoaTheoYeuCau, dataViecCanLam: dataViecCanLam, dataTram: dataTram, dataTaoTram: dataTaoTram, dataNhatKy: dataNhatKy, dataXuat: dataXuat, dataGanVai: dataGanVai, dkDoiTac: dkDoiTac, dkCuaToi: dkCuaToi, dpDoiTacBang: dpDoiTacBang, dpDuyetDoiTac: dpDuyetDoiTac, knNopBang: knNopBang, knXinXacNhan: knXinXacNhan, knTraLoi: knTraLoi, dpBangCho: dpBangCho, dpXacMinhBang: dpXacMinhBang, skNguon: skNguon, dpNguTam: dpNguTam };
 Object.keys(FN_).forEach(function (n) {
   API_FNS[n] = function () { CACHE = {}; try { var r = FN_[n].apply(null, arguments); if (SOGHI > GHI_DA_DEM && SOGHI > 0 && DOC_.indexOf(n) < 0) { var l = LockService.getScriptLock(); try { l.waitLock(10000); napSauGhi_(); } catch (e) { doiPhienBan_(); } finally { try { l.releaseLock(); } catch (e) {} } } return r; } catch (e) { return { ok: false, msg: String(e && e.message || e) }; } };
 });
 function doGet() { return ContentService.createTextOutput('Cộng đồng EFCARE API v' + VER).setMimeType(ContentService.MimeType.TEXT); }
 function doPost(e) {
+  if (typeof chuyenMay_ === 'function') { var cm = chuyenMay_(e); if (cm) return cm; }
   var out;
   var t0 = Date.now(), ten = ''; DV = null; DV0 = null; PRE = null; SMAP = null; FRESH = false; DEM = {}; MOI = {}; SOGHI = 0; GHI_DA_DEM = -1; KHOA = 0;
   try { ensure_(); CACHE = {}; var req = JSON.parse((e && e.postData && e.postData.contents) || '{}'); ten = S(req.fn); var fn = API_FNS[req.fn]; if (!fn) throw new Error('Yêu cầu không hợp lệ.'); out = { ok: true, data: fn.apply(null, req.args || []) }; }
@@ -944,18 +1075,23 @@ var DEMO_TK = [
 function seedDemo() {
   var F = API_FNS, T = {};
   function ok(r, w) { if (!r || r.ok === false) throw new Error('seed ' + w + ': ' + (r && r.msg)); return r; }
-  setup(); setCfg_('SdtQuanTri', '0900000001'); setCfg_('QuyMo', '1'); setCfg_('TaiKhoanQuy', 'Tài khoản minh hoạ của Đơn vị giữ quỹ mẫu (bản thử, không chuyển tiền thật)'); setCfg_('GiaTriThamChieuGio', '55000');
+  setup(); setCfg_('SdtQuanTri', '0900000001'); setCfg_('QuyMo', '1'); setCfg_('MoQuaBan', '1'); setCfg_('TaiKhoanQuy', 'Tài khoản minh hoạ của Đơn vị giữ quỹ mẫu (bản thử, không chuyển tiền thật)'); setCfg_('GiaTriThamChieuGio', '66500');
   DEMO_TK.forEach(function (a) { T[a[4]] = ok(F.idDangKy({ ten: a[1], sdt: a[0], namSinh: a[2], pin: DEMO_PIN, dongY: true, chiaSe: true, kenh: ['lan', 'minh'].indexOf(a[4]) >= 0 ? 'tram:DV01' : a[4] === 'ha' ? 'web:gop_gio' : '' }), a[1]).phien; });
   ok(F.qtGanVai(T.qt, '0900000002', 'dieu_phoi'), 'gan dp');
   ok(F.dataTaoTram(T.qt, { ma: 'DV01', ten: 'Trạm Ngũ Tâm Dịch Vọng', diaChi: 'Tầng 6, Số 10 Ngõ 45 Trần Thái Tông', khuVuc: 'Dịch Vọng, Cầu Giấy', sdtPhuTrach: '0900000002' }), 'tram');
   var org = {};
-  [['tt', 'Nhà tài trợ mẫu', 'tai_tro', '0900000003'], ['dt', 'Cửa hàng mẫu', 'doi_tac', '0900000004'], ['qy', 'Đơn vị giữ quỹ mẫu', 'giu_quy', '0900000005'], ['hv', 'Học viện EFCARE', 'hoc_vien', '0900000006']].forEach(function (o) { org[o[0]] = ok(F.qtTaoToChuc(T.qt, { ten: o[1], loai: o[2], sdtDaiDien: o[3] }), o[1]).ma; });
+  [['tt', 'Nhà tài trợ mẫu', 'tai_tro', '0900000003', ''], ['dt', 'Cửa hàng mẫu', 'doi_tac', '0900000004', 'https://efcare-space.github.io/cong-dong/assets/logo-efcare.png'], ['nt', 'Nhà thuốc mẫu', 'doi_tac', '0900000004', ''], ['pk', 'Phòng khám mẫu', 'doi_tac', '0900000004', ''], ['qy', 'Đơn vị giữ quỹ mẫu', 'giu_quy', '0900000005', ''], ['hv', 'Học viện EFCARE', 'hoc_vien', '0900000006', '']].forEach(function (o) { org[o[0]] = ok(F.qtTaoToChuc(T.qt, { ten: o[1], loai: o[2], sdtDaiDien: o[3], logo: o[4] }), o[1]).ma; });
   var c1 = ok(F.ttTaoBaoTro(T.tt, { goi: 'vun', khuVuc: 'Cầu Giấy', ten: 'Vun · Người cao tuổi Cầu Giấy không một mình' }), 'ct1').ma;
   var c2 = ok(F.ttTaoBaoTro(T.tt, { loai: 'hoc', soTien: 20000000, ten: 'Gói Học · Học để làm, làm để sống vui' }), 'ct2').ma;
   ok(F.quyXacNhanCT(T.qy, c1), 'tien ct1'); ok(F.quyXacNhanCT(T.qy, c2), 'tien ct2');
-  ok(F.dtTaoUuDai(T.dt, { ten: 'Phiếu mua rau sạch', moTa: 'Đổi tại quầy, quỹ thanh toán cho cửa hàng', gio: 2, quyTra: true, soLuong: 50 }), 'ud1');
-  ok(F.dtTaoUuDai(T.dt, { ten: 'Giảm 20% một bữa cơm gia đình', moTa: 'Cửa hàng tự tặng, không lấy tiền quỹ', gio: 1, quyTra: false, soLuong: 30 }), 'ud2');
-  ok(F.dtTaoUuDai(T.dt, { ten: 'Cắt tóc miễn phí cho người trên 60 tuổi', moTa: 'Cửa hàng tự tặng', gio: 1, quyTra: false }), 'ud3');
+  // Quà mẫu: mỗi món ghi rõ giá trị (đ), loại, và đối tác tài trợ hay bán. Tên đối tác đều là "mẫu".
+  [['dt', 'Phiếu mua rau sạch 20.000 đ', 'Đổi tại quầy. Cửa hàng bán, quỹ thanh toán cho cửa hàng.', 'hang', 20000, true, 2, 50],
+   ['dt', 'Giảm 20% một bữa cơm gia đình (tối đa 40.000 đ)', 'Cửa hàng tài trợ phần giảm, không lấy tiền quỹ.', 'giam_gia', 40000, false, 1, 30],
+   ['dt', 'Cắt tóc cho người trên 60 tuổi', 'Cửa hàng tài trợ, giá niêm yết 50.000 đ.', 'dich_vu', 50000, false, 1, 0],
+   ['nt', 'Hộp khẩu trang y tế 50 chiếc', 'Nhà thuốc bán, quỹ thanh toán.', 'hang', 35000, true, 3, 40],
+   ['nt', 'Đo huyết áp và đường huyết tại quầy', 'Nhà thuốc tài trợ, giá niêm yết 30.000 đ. Chỉ đo, không tư vấn điều trị.', 'dich_vu', 30000, false, 1, 0],
+   ['pk', 'Giảm 100.000 đ gói khám sức khoẻ tổng quát', 'Phòng khám tài trợ phần giảm khi khách mua gói khám.', 'giam_gia', 100000, false, 2, 20]
+  ].forEach(function (q, i) { ok(F.dtTaoUuDai(T.dt, { maOrg: org[q[0]], ten: q[1], moTa: q[2], loaiQua: q[3], giaTri: q[4], quyTra: q[5], gio: q[6], soLuong: q[7] }), 'ud' + (i + 1)); });
   [['Kỹ năng số cho người cao tuổi', 'Tự dùng Zalo, gọi video, ứng dụng y tế; dạy lại người cùng tuổi.', 1200000, 6, 'cong-nghe', 'C'],
    ['Người Bạn Tuổi Già', 'Đồng hành an toàn, lắng nghe, ranh giới, nhận biết dấu hiệu cấp cứu để gọi 115.', 1500000, 8, 'tro-chuyen', 'C'],
    ['Kể chuyện và lưu ký ức', 'Ghi câu chuyện đời, ảnh, giọng nói cho Ký ức số.', 900000, 4, 'ky-uc-so', 'C'],
@@ -988,7 +1124,7 @@ function seedDemo() {
 
 </script><script>(function(){
  var bar=document.getElementById('demobar');
- if(window.API_URL){bar.className='demo-bar live';bar.textContent='Đã kết nối máy chủ EFCARE · dữ liệu thật';return}
+ if(window.API_URL){bar.style.display='none';return}
  bar.className='demo-bar';bar.textContent='Bản thử · dữ liệu mẫu, chỉ lưu trên máy này';
  var KEY='efcare_cd_v1',sheets=window.__sheets;
  window.__save=function(){try{var o={};Object.keys(sheets).forEach(function(k){o[k]=sheets[k].rows});localStorage.setItem(KEY,JSON.stringify(o))}catch(e){}};
@@ -1054,6 +1190,7 @@ const V = {};
 /* ---------- tổng quan ---------- */
 V.tongquan = async () => {
   const r = await api('dataTongQuan', S.phien); if (!r.ok) { $('main').innerHTML = `<p>${esc(r.msg)}</p>`; return; }
+  const nt = await api('dpNguTam', S.phien);
   S.kenhs = Object.keys(r.theoKenh);
   const ng = Object.entries(r.theoNgay), mx = Math.max(1, ...ng.map(x => x[1])), W = 600, H = 150, bw = W / ng.length;
   const svg = `<svg viewBox="0 0 ${W} ${H + 22}" role="img" aria-label="Số đăng ký mới mỗi ngày trong 30 ngày"><line x1="0" y1="${H}" x2="${W}" y2="${H}" class="ax"/>${ng.map((x, i) => { const h = x[1] / mx * (H - 16); return `<rect x="${i * bw + 2}" y="${H - h}" width="${bw - 4}" height="${h}" rx="2" class="${i === ng.length - 1 ? 'b last' : 'b'}"><title>${x[0]}: ${x[1]}</title></rect>${x[1] ? `<text x="${i * bw + bw / 2}" y="${H - h - 4}" class="v">${x[1]}</text>` : ''}`; }).join('')}<text x="0" y="${H + 16}" class="lb">${ng[0][0].slice(5).split('-').reverse().join('/')}</text><text x="${W}" y="${H + 16}" class="lb" text-anchor="end">Hôm nay</text></svg>`;
@@ -1063,7 +1200,7 @@ V.tongquan = async () => {
 <div class="kpi"><b>${r.tong}</b><span>Thành viên</span></div><div class="kpi"><b>${r.moi7}</b><span>Mới 7 ngày</span></div><div class="kpi"><b>${r.hoatDong30}</b><span>Hoạt động 30 ngày</span></div><div class="kpi"><b>${r.caHieuLuc} · ${fmt(r.gio)} giờ</b><span>Việc tử tế đã xác nhận</span></div><div class="kpi"><b>${r.viecSanXong}</b><span>Việc có thù lao đã xong</span></div><div class="kpi"><b>${r.tram}</b><span>Trạm</span></div></div>
 <div class="grid2"><div class="card"><h3>Đăng ký mới mỗi ngày · 30 ngày</h3>${svg}</div>
 <div class="card"><h3>Hành trình thành viên</h3>${Object.keys(BAC).map(k => `<div class="fr"><span>${k} · ${BAC[k]}</span><b>${r.phieu[k]}</b></div><div class="bar"><i style="width:${r.phieu[k] / pmx * 100}%"></i></div>`).join('')}</div>
-<div class="card"><h3>Tốc độ máy chủ</h3>${r.hieuNang && r.hieuNang.n ? `<div class="fr"><span>Trung vị</span><b>${(r.hieuNang.trungVi / 1000).toFixed(1).replace('.', ',')} giây</b></div><div class="fr"><span>90% lượt gọi dưới</span><b>${(r.hieuNang.p90 / 1000).toFixed(1).replace('.', ',')} giây</b></div><p class="mut sm" style="margin-top:6px">Đo trên ${r.hieuNang.n} lượt gọi gần nhất (lấy mẫu 30%).</p>${r.hieuNang.trungVi > 3000 ? '<p style="margin-top:8px">' + chip('Chậm: trung vị trên 3 giây. Đã chạm ngưỡng cân nhắc chuyển máy chủ.', 'r') + '</p>' : '<p style="margin-top:8px">' + chip('Trong ngưỡng', 'g') + '</p>'}${r.hieuNang.cham.map(c => `<p class="mut sm">${esc(c.fn)}: ${(c.trungVi / 1000).toFixed(1)} giây</p>`).join('')}` : '<p class="mut">Chưa có số đo.</p>'}</div><div class="card"><h3>Kênh đến</h3>${tbl(r.theoKenh, kenhTen)}</div><div class="card"><h3>Cửa vào đã chọn</h3>${tbl(r.theoCua, k => CUA[k] || k)}</div><div class="card"><h3>Khu vực</h3>${tbl(r.theoKhuVuc)}</div></div>`;
+<div class="card"><h3>Tốc độ máy chủ</h3>${r.hieuNang && r.hieuNang.n ? `<div class="fr"><span>Trung vị</span><b>${(r.hieuNang.trungVi / 1000).toFixed(1).replace('.', ',')} giây</b></div><div class="fr"><span>90% lượt gọi dưới</span><b>${(r.hieuNang.p90 / 1000).toFixed(1).replace('.', ',')} giây</b></div><p class="mut sm" style="margin-top:6px">Đo trên ${r.hieuNang.n} lượt gọi gần nhất (lấy mẫu 30%).</p>${r.hieuNang.trungVi > 3000 ? '<p style="margin-top:8px">' + chip('Chậm: trung vị trên 3 giây. Đã chạm ngưỡng cân nhắc chuyển máy chủ.', 'r') + '</p>' : '<p style="margin-top:8px">' + chip('Trong ngưỡng', 'g') + '</p>'}${r.hieuNang.cham.map(c => `<p class="mut sm">${esc(c.fn)}: ${(c.trungVi / 1000).toFixed(1)} giây</p>`).join('')}` : '<p class="mut">Chưa có số đo.</p>'}</div><div class="card"><h3>Kênh đến</h3>${tbl(r.theoKenh, kenhTen)}</div><div class="card"><h3>Cửa vào đã chọn</h3>${tbl(r.theoCua, k => CUA[k] || k)}</div><div class="card"><h3>Khu vực</h3>${tbl(r.theoKhuVuc)}</div>${nt.ok ? `<div class="card"><h3>Ngũ Tâm · 30 ngày</h3><div class="fr"><span>Thiện Tâm · tự chọn hiện hồ sơ</span><b>${nt.thienTam == null ? '—' : nt.thienTam + '%'}</b></div><div class="fr"><span>Tử Tế · quà ghi đủ giá trị</span><b>${nt.tuTe == null ? '—' : nt.tuTe + '%'}</b></div><div class="fr"><span>Tinh Tấn · người cập nhật kỹ năng</span><b>${nt.tinhTan}</b></div><div class="fr"><span>Tận Tâm · giờ chờ có người nhận</span><b>${nt.tanTam == null ? '—' : fmt(nt.tanTam) + ' giờ'}</b></div><div class="fr"><span>Thành Tựu · giờ đã xác nhận</span><b>${fmt(nt.thanhTuu)} giờ</b></div><p class="mut sm" style="margin-top:6px">— là chưa đủ dữ liệu, không phải 0.</p></div>` : ''}</div>`;
 };
 
 /* ---------- việc cần làm ---------- */
@@ -1154,6 +1291,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(
 window.__EFQ = { S, go, openHS };
 boot();
 })();
+
 
 </script>
 </body></html>
