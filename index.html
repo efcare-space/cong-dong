@@ -1250,7 +1250,7 @@ function header() {
 function nav() {
   const show = S.toi && S.vai === 'ca_nhan' && S.man === 'app';
   document.body.classList.toggle('nav', !!show); $('nav').style.display = show ? 'flex' : 'none';
-  if (show) $('nav').innerHTML = [['home', '⌂', 'Trang chủ'], ['viec', '✋', 'Việc'], ['ghi', '✎', 'Ghi nhận'], ['vi', '◉', 'Ví'], ['toi', '☺', 'Tôi']].map(x => `<button data-act="tab" data-t="${x[0]}" class="${S.tab === x[0] ? 'on' : ''}"><span>${x[1]}</span>${x[2]}</button>`).join('');
+  if (show) $('nav').innerHTML = [['home', '⌂', 'Trang chủ'], ['viec', '💼', 'Sàn năng lực'], ['ghi', '✎', 'Ghi nhận'], ['vi', '◉', 'Ví'], ['toi', '☺', 'Tôi']].map(x => `<button data-act="tab" data-t="${x[0]}" class="${S.tab === x[0] ? 'on' : ''}"><span>${x[1]}</span>${x[2]}</button>`).join('');
 }
 function render() { header(); nav(); const m = $('main'); const v = VIEW[S.man === 'app' ? (S.vai === 'ca_nhan' ? S.tab : 'org') : S.man]; m.innerHTML = '<p class="note">Đang tải...</p>'; Promise.resolve(v()).then(h => { if (typeof h === 'string') m.innerHTML = h; if (VIEW['_' + (S.man === 'app' ? (S.vai === 'ca_nhan' ? S.tab : 'org') : S.man)]) VIEW['_' + (S.man === 'app' ? (S.vai === 'ca_nhan' ? S.tab : 'org') : S.man)](); }); window.scrollTo(0, 0); }
 async function loadMe() { const d = await api('idToiDayDu', S.phien); if (!d || !d.ok) { S.phien = ''; LS.del('ef_phien'); S.toi = null; return false; } const r = d.toi; S.toi = r; S.viec = d.viec && d.viec.ok ? d.viec : null; if (!vaiList().some(x => x.k === S.vai)) S.vai = 'ca_nhan'; return true; }
@@ -1348,7 +1348,7 @@ function todos() {
   (v.caCho || []).forEach(x => out.push(`<div class="todo"><div class="ic">⏱</div><div class="tx"><b>Chờ ${esc(x.nguoiNhan)} xác nhận</b>Ca ${esc(x.ma)} · ${fmt(x.gio)} giờ</div></div>`));
   return out;
 }
-const FA = [['seg', 's', 'giup', '', '🤝', 'Ai đang cần giúp'], ['seg', 's', 'hoc', '', '📚', 'Học kỹ năng'], ['seg', 's', 'san', '', '💼', 'Việc có thù lao'], ['mo', 't', 'vi', 'qua', '🎁', 'Đổi quà'], ['mo', 't', 'vi', 'tang', '💝', 'Tặng giờ'], ['mo', 't', 'vi', 'phieu', '🧾', 'Phiếu của tôi'], ['go', 'm', 'xacnhan', '', '✅', 'Xác nhận được giúp'], ['mo', 't', 'toi', '', '👨‍👩‍👧', 'Gia đình'], ['dhmo', '', '', '', '🏪', 'Đối tác, hảo tâm']];
+const FA = [['seg', 's', 'giup', '', '🤝', 'Ai đang cần giúp'], ['seg', 's', 'hoc', '', '📚', 'Học kỹ năng'], ['mo', 't', 'viec', '', '💼', 'Sàn năng lực'], ['mo', 't', 'vi', 'qua', '🎁', 'Đổi quà'], ['mo', 't', 'vi', 'tang', '💝', 'Tặng giờ'], ['mo', 't', 'vi', 'phieu', '🧾', 'Phiếu của tôi'], ['go', 'm', 'xacnhan', '', '✅', 'Xác nhận được giúp'], ['mo', 't', 'toi', '', '👨‍👩‍👧', 'Gia đình'], ['dhmo', '', '', '', '🏪', 'Đối tác, hảo tâm']];
 ACT.mo = b => { S.man = 'app'; S.tab = b.dataset.t; if (b.dataset.v) S.viSeg = b.dataset.v; render(); };
 VIEW.home = () => {
   const r = S.toi, t = r.thongKe, td = todos(), dat = r.huyHieu.filter(x => x.dat).length;
@@ -1365,26 +1365,42 @@ function hoTro() { return `<div class="card" style="margin-top:14px"><b>Cần h�
 function goiYCua() {
   const r = S.toi, m = r.toi.muon, L = { de_xuat: ['act', 'data-act="goiy" data-k="de_xuat"'], gop_gio: ['act', 'data-act="seg" data-s="giup"'], cam_nang: ['url', WEB + '/bai-viet'], chia_se_kn: ['act', 'data-act="seg" data-s="hoc"'], cau_chuyen: ['url', WEB + '/cong-dong/thanh-tuu-suc-khoe'], mo_tram: ['url', WEB + '/giai-phap/tram-ngu-tam#dang-ky'] };
   const rows = m.filter(k => L[k]).map(k => { const x = L[k], mu = MUON.find(y => y[0] === k); return [mu[1], mu[2], x[0] === 'url' ? `<a class="btn sm alt" href="${x[1]}" target="_blank" rel="noopener">Mở</a>` : `<button class="btn sm alt" ${x[1]}>Mở</button>`]; });
-  if (r.toi.muonThuNhap) rows.unshift(r.toi.xm.C === 'dat' ? ['💼', 'Bạn đủ điều kiện nhận việc có thù lao', '<button class="btn sm" data-act="seg" data-s="san">Xem</button>'] : ['💼', 'Học một kỹ năng để nhận việc có thù lao', '<button class="btn sm alt" data-act="seg" data-s="hoc">Học</button>']);
+  if (r.toi.muonThuNhap) rows.unshift(r.toi.xm.C === 'dat' ? ['💼', 'Bạn đủ điều kiện nhận việc có thù lao', '<button class="btn sm" data-act="mo" data-t="viec">Xem</button>'] : ['💼', 'Học một kỹ năng để nhận việc có thù lao', '<button class="btn sm alt" data-act="seg" data-s="hoc">Học</button>']);
   if (!rows.length) return '';
   return `<div class="card"><b>Gợi ý cho bạn</b>${rows.slice(0, 3).map(x => `<div class="todo"><div class="ic">${x[0]}</div><div class="tx"><b>${esc(x[1])}</b></div>${x[2]}</div>`).join('')}</div>`;
 }
-ACT.goiy = b => { if (b.dataset.k === 'de_xuat') { S.seg = 'giup'; S.tab = 'viec'; render(); setTimeout(() => dangNho('giup'), 300); } };
+ACT.goiy = b => { if (b.dataset.k === 'de_xuat') { S.seg = 'giup'; S.tab = 'gtt'; render(); setTimeout(() => dangNho('giup'), 300); } };
 
-/* ---------- VIỆC ---------- */
+/* ---------- SÀN NĂNG LỰC (việc có thù lao, 55+ ưu tiên phía nhận) ---------- */
 VIEW.viec = async () => {
   const b = await api('apiBangViec'); S.bang = b.items || [];
-  const me = S.toi.toi.efc, tm = S.toi.thayMat.map(x => x.efc), seg = S.seg;
-  const items = S.bang.filter(x => seg === 'san' ? x.nguon === 'san' : x.nguon === 'gtt' && x.loai === seg);
-  const card = x => { const mine = x.efcDang === me; const tag = x.nguon === 'san' ? pill('Có thù lao · tầng ' + x.tang, 'p-san') : x.loai === 'hoc' ? pill('Muốn học', 'p-hoc') : pill('Tử tế · ghi giờ', 'p-gtt');
-    return `<div class="job">${x.anh ? `<img src="${x.anh}" alt="" style="width:100%;border-radius:10px;margin-bottom:8px;max-height:160px;object-fit:cover">` : ''}${tag} <span class="note">${esc(x.viec)}</span><h4>${esc(x.nguoiCan)}</h4><div class="meta">📍 ${esc(x.khuVuc)}${x.thoiGian ? ' · 🕘 ' + esc(x.thoiGian) : ''}${x.nguon === 'san' ? ` · ${x.soGio} giờ · <span class="price">${vnd(x.gia)} đ</span>${x.loaiBen === 'to_chuc' ? ' · tổ chức' : ''}` : ''}</div>${x.moTa ? `<p style="font-size:15.5px;margin-bottom:10px">${esc(x.moTa)}</p>` : ''}
-${mine ? '<p class="note">Việc bạn đăng.</p>' : `<button class="btn${x.nguon === 'san' ? '' : ' ok'}" data-act="${x.nguon === 'san' ? 'nhansan' : 'nhannho'}" data-ma="${x.ma}"><span class="sp"></span><span>${x.nguon === 'san' ? 'Nhận việc này' : x.loai === 'hoc' ? 'Tôi dạy được' : 'Tôi giúp được'}</span></button>`}</div>`; };
+  const me = S.toi.toi.efc;
+  const items = S.bang.filter(x => x.nguon === 'san');
+  const card = x => { const mine = x.efcDang === me;
+    return `<div class="job">${x.anh ? `<img src="${x.anh}" alt="" style="width:100%;border-radius:10px;margin-bottom:8px;max-height:160px;object-fit:cover">` : ''}${pill('Có thù lao · tầng ' + x.tang, 'p-san')} <span class="note">${esc(x.viec)}</span><h4>${esc(x.nguoiCan)}</h4><div class="meta">📍 ${esc(x.khuVuc)}${x.thoiGian ? ' · 🕘 ' + esc(x.thoiGian) : ''} · ${x.soGio} giờ · <span class="price">${vnd(x.gia)} đ</span>${x.loaiBen === 'to_chuc' ? ' · tổ chức' : ''}</div>${x.moTa ? `<p style="font-size:15.5px;margin-bottom:10px">${esc(x.moTa)}</p>` : ''}
+${mine ? '<p class="note">Việc bạn đăng.</p>' : `<button class="btn" data-act="nhansan" data-ma="${x.ma}"><span class="sp"></span><span>Nhận việc này</span></button>`}</div>`; };
   const v = S.viec || {};
-  const mine = [].concat((v.nhoDang || []).map(x => ({ t: (x.loai === 'hoc' ? 'Muốn học: ' : 'Nhờ giúp: ') + x.viec + ' · cho ' + x.nguoiCan, s: x.trangThai, extra: x.nguoiNhan ? 'Người nhận: ' + x.nguoiNhan + (x.lienHe ? ' · ' + x.lienHe : '') : '' })), (v.ycDat || []).map(x => ({ t: 'Có thù lao: ' + x.moTa, s: x.trangThai, extra: x.nguoiLam ? 'Người làm: ' + x.nguoiLam + ' · ' + (LOI[x.hinhThuc] || ['', ''])[1] : '' })));
+  const mine = (v.ycDat || []).map(x => ({ t: 'Có thù lao: ' + x.moTa, s: x.trangThai, extra: x.nguoiLam ? 'Người làm: ' + x.nguoiLam + ' · ' + (LOI[x.hinhThuc] || ['', ''])[1] : '' }));
+  return `<h2>Sàn năng lực 55+</h2><p class="sub">Sinh kế từ kinh nghiệm và năng lực. Bạn trả thẳng cho người làm, hoặc họ chọn góp vào quỹ, hoặc chọn ghi giờ. EFCARE không thu phí trong giai đoạn đầu.</p>
+<div class="row"><button class="btn" data-act="dangsan">＋ Đăng việc có thù lao</button><button class="btn alt" data-act="tab" data-t="toi" style="flex:0 0 auto">👤 Hồ sơ năng lực</button></div>
+<p class="note" style="margin:10px 0">Mỗi việc có ba lối nhận: tiền công, góp tiền công vào quỹ, hoặc ghi Giờ Tử Tế.${S.toi.toi.xm.C === 'dat' ? '' : ' <b>Cần kỹ năng đã có người xác nhận để nhận việc.</b>'}${S.toi.toi.du55 ? '' : ' <b>Sàn năng lực ưu tiên cơ hội nhận việc cho thành viên từ 55 tuổi — cập nhật ngày sinh ở mục Tôi.</b>'}</p>
+<div style="margin-top:12px">${items.length ? items.map(card).join('') : '<div class="empty"><i>🌤️</i>Chưa có việc nào.<br>Bạn có thể là người đăng đầu tiên.</div>'}</div>
+${mine.length ? `<h3>Việc tôi đã đăng</h3><div class="card">${mine.map(x => `<div class="li"><span class="l">${esc(x.t)}${x.extra ? `<br><span class="note">${esc(x.extra)}</span>` : ''}</span>${pill((TT_VIEC[x.s] || [x.s])[0], (TT_VIEC[x.s] || ['', 'p-mut'])[1])}</div>`).join('')}</div>` : ''}`;
+};
+/* ---------- GIỜ TỬ TẾ (cần giúp / muốn học, không qua tiền) — vào từ Trang chủ ---------- */
+VIEW.gtt = async () => {
+  const b = await api('apiBangViec'); S.bang = b.items || [];
+  const seg = S.seg === 'hoc' ? 'hoc' : 'giup';
+  const items = S.bang.filter(x => x.nguon === 'gtt' && x.loai === seg);
+  const card = x => { const mine = x.efcDang === S.toi.toi.efc; const tag = x.loai === 'hoc' ? pill('Muốn học', 'p-hoc') : pill('Tử tế · ghi giờ', 'p-gtt');
+    return `<div class="job">${tag} <span class="note">${esc(x.viec)}</span><h4>${esc(x.nguoiCan)}</h4><div class="meta">📍 ${esc(x.khuVuc)}${x.thoiGian ? ' · 🕘 ' + esc(x.thoiGian) : ''}</div>${x.moTa ? `<p style="font-size:15.5px;margin-bottom:10px">${esc(x.moTa)}</p>` : ''}
+${mine ? '<p class="note">Việc bạn đăng.</p>' : `<button class="btn ok" data-act="nhannho" data-ma="${x.ma}"><span class="sp"></span><span>${x.loai === 'hoc' ? 'Tôi dạy được' : 'Tôi giúp được'}</span></button>`}</div>`; };
+  const v = S.viec || {};
+  const mine = (v.nhoDang || []).map(x => ({ t: (x.loai === 'hoc' ? 'Muốn học: ' : 'Nhờ giúp: ') + x.viec + ' · cho ' + x.nguoiCan, s: x.trangThai, extra: x.nguoiNhan ? 'Người nhận: ' + x.nguoiNhan + (x.lienHe ? ' · ' + x.lienHe : '') : '' }));
   const hocKH = seg === 'hoc' ? `<h3>Khoá của Học viện EFCARE</h3><p class="note" style="margin-bottom:8px">Học phí do quỹ tài trợ trả khi còn suất. Học xong, kỹ năng vào hồ sơ của bạn.</p>${(S.cfg.khoaHoc || []).map(k => { const da = S.toi.ghiDanh.some(g => g.khoa === k.ten); return `<div class="job">${pill(k.soBuoi + ' buổi', 'p-hoc')} ${k.tang === 'B' ? pill('Mở việc tầng B', 'p-san') : ''}<h4>${esc(k.ten)}</h4><p style="font-size:15px;margin-bottom:10px">${esc(k.moTa)}</p>${da ? '<p class="note">✓ Bạn đã ghi danh</p>' : `<button class="btn alt" data-act="ghidanh" data-ma="${k.ma}"><span class="sp"></span><span>Ghi danh</span></button>`}</div>`; }).join('')}` : '';
-  return `<h2>Việc quanh bạn</h2><div class="seg" role="tablist">${[['giup', 'Cần giúp'], ['hoc', 'Muốn học'], ['san', 'Có thù lao']].map(x => `<button class="${seg === x[0] ? 'on' : ''}" data-act="seg" data-s="${x[0]}" role="tab" aria-selected="${seg === x[0]}">${x[1]}</button>`).join('')}</div>
-<div class="row"><button class="btn" data-act="dang">＋ Đăng ${seg === 'san' ? 'việc có thù lao' : seg === 'hoc' ? 'điều tôi muốn học' : 'nhu cầu'}</button>${seg !== 'san' ? '<button class="btn alt" data-act="gantoi" style="flex:0 0 auto">📍 Gần tôi</button>' : ''}</div>
-${seg !== 'san' ? '<div class="safe"><b>Giữ an toàn:</b> lần đầu gặp ở nơi đông người hoặc có người thân. Không nhận tiền, không giữ giấy tờ. Việc y tế chỉ nhắc nhở, không làm thay chuyên môn.</div>' : `<p class="note" style="margin:10px 0">Mỗi việc có ba lối nhận: tiền công, góp tiền công vào quỹ, hoặc ghi Giờ Tử Tế. EFCARE không giữ tiền: người thuê trả thẳng cho bạn.${S.toi.toi.xm.C === 'dat' ? '' : ' <b>Cần kỹ năng đã có người xác nhận để nhận việc.</b>'}</p>`}
+  return `<button class="link" data-act="tab" data-t="home">‹ Trang chủ</button><h2>Giờ Tử Tế</h2><div class="seg" role="tablist">${[['giup', 'Cần giúp'], ['hoc', 'Muốn học']].map(x => `<button class="${seg === x[0] ? 'on' : ''}" data-act="seg" data-s="${x[0]}" role="tab" aria-selected="${seg === x[0]}">${x[1]}</button>`).join('')}</div>
+<div class="row"><button class="btn" data-act="danggtt">＋ Đăng ${seg === 'hoc' ? 'điều tôi muốn học' : 'nhu cầu'}</button><button class="btn alt" data-act="gantoi" style="flex:0 0 auto">📍 Gần tôi</button></div>
+<div class="safe"><b>Giữ an toàn:</b> lần đầu gặp ở nơi đông người hoặc có người thân. Không nhận tiền, không giữ giấy tờ. Việc y tế chỉ nhắc nhở, không làm thay chuyên môn.</div>
 <div style="margin-top:12px">${items.length ? items.map(card).join('') : '<div class="empty"><i>🌤️</i>Chưa có việc nào ở mục này.<br>Bạn có thể là người đăng đầu tiên.</div>'}</div>${hocKH}
 ${mine.length ? `<h3>Việc tôi đã đăng</h3><div class="card">${mine.map(x => `<div class="li"><span class="l">${esc(x.t)}${x.extra ? `<br><span class="note">${esc(x.extra)}</span>` : ''}</span>${pill((TT_VIEC[x.s] || [x.s])[0], (TT_VIEC[x.s] || ['', 'p-mut'])[1])}</div>`).join('')}</div>` : ''}`;
 };
@@ -1402,7 +1418,7 @@ ${r.toiHien ? '' : `<div class="msg warn" style="margin-top:10px">Bạn đang �
 let GAN = null;
 ACT.moigiup = b => { const x = (GAN && GAN.nguoi || []).find(y => y.efc === b.dataset.efc); if (!x) return; closeSheet(); setTimeout(() => dangNho('giup', { efc: x.efc, ten: x.ten }), 250); };
 ACT.batgan = async b => { const g = await geoP(); if (!g) { toast('Chưa lấy được vị trí.'); return; } run(b, 'idViTri', [S.phien, g, true], async () => { await loadMe(); toast('Người gần đây đã thấy bạn. Tắt bất cứ lúc nào ở mục Tôi.'); closeSheet(); }); };
-ACT.seg = b => { S.seg = b.dataset.s; S.tab = 'viec'; render(); };
+ACT.seg = b => { S.seg = b.dataset.s; S.tab = 'gtt'; render(); };
 ACT.nhannho = b => run(b, 'gttNhanViec', [S.phien, b.dataset.ma], async r => { await loadMe(); celebrate('Bạn đã nhận việc', `Gọi ${r.tenNguoiDang || 'người đăng'} theo số ${r.lienHe || '(chưa có)'} để hẹn. Xong việc, bấm "Xong rồi" ở Trang chủ để ghi nhận.`); render(); });
 ACT.ghidanh = b => run(b, 'hocGhiDanh', [S.phien, b.dataset.ma], async r => { await loadMe(); celebrate('Đã ghi danh', r.taiTro ? 'Học phí của bạn được quỹ tài trợ. Học viện sẽ liên hệ lịch học.' : 'Khoá đang chờ suất tài trợ. Học viện sẽ báo khi có.'); render(); });
 ACT.nhansan = b => { const x = S.bang.find(y => y.ma === b.dataset.ma); loiSheet(x, null, ht => run($('loi-go'), 'sanNhanViec', [S.phien, x.ma, ht], async r => { closeSheet(); await loadMe(); celebrate('Bạn đã nhận việc', `Gọi ${r.tenNguoiDat} theo số ${r.lienHe} để hẹn. Lối nhận: ${LOI[ht][1]}. Có thể đổi trước khi xong việc.`); render(); }, $('loi-msg'))); };
@@ -1415,7 +1431,8 @@ function loiSheet(x, cur, go) {
   $('loi-go').onclick = () => go(sel);
 }
 ACT.doiloi = b => { const x = S.viec.ycLam.find(y => y.ma === b.dataset.ma); loiSheet(x, x.hinhThuc, ht => run($('loi-go'), 'sanDoiLoi', [S.phien, x.ma, ht], async () => { closeSheet(); await loadMe(); toast('Đã đổi lối nhận.'); render(); }, $('loi-msg'))); };
-ACT.dang = () => { const s = S.seg; if (s === 'san') return dangSan(); dangNho(s); };
+ACT.dangsan = () => dangSan();
+ACT.danggtt = () => dangNho(S.seg === 'hoc' ? 'hoc' : 'giup');
 function choAi() { return `<label class="t" for="d-cho">Cho ai?</label><select id="d-cho"><option value="">Cho tôi</option>${S.toi.thayMat.map(x => `<option value="${x.efc}">${esc(x.ten)}${x.quanHe ? ' (' + esc(x.quanHe) + ')' : ''}</option>`).join('')}</select>${S.toi.thayMat.length ? '' : '<p class="note">Muốn đăng cho cha mẹ? Thêm người thân ở mục Tôi.</p>'}`; }
 function dangNho(loai, moi) {
   moi = moi || null;
@@ -1507,6 +1524,7 @@ VIEW.toi = () => {
   const r = S.toi, t = r.toi, gd = r.giaDinh, mem = gd ? gd.thanhVien.filter(m => m.efc !== t.efc) : [];
   const xm = k => t.xm[k] === 'dat' ? pill('Đã đủ điều kiện', 'p-gtt') : t.xm[k] === 'cho' ? pill('Đang chờ xác minh', 'p-warn') : t.xm[k] === 'khong' ? pill('Chưa đạt', 'p-no') : pill('Chưa có', 'p-mut');
   return `<div class="card"><h2 style="margin:0">${esc(t.ten)}</h2><p class="note">${esc(t.efc)} · ${esc(t.sdt)} · sinh năm ${t.namSinh}</p><label class="t" for="p-kv">Khu vực</label><div class="row"><input type="text" id="p-kv" value="${esc(t.khuVuc)}" placeholder="Phường, quận"><button class="btn sm alt" data-act="luukv" style="flex:0 0 auto">Lưu</button></div>
+<label class="t" for="p-ns">Ngày sinh đầy đủ ${t.du55 ? pill('Đủ điều kiện Sàn năng lực 55+', 'p-gtt') : ''}</label><div class="row"><input type="date" id="p-ns" value="${esc(t.ngaySinh || '')}" max="${new Date().toISOString().slice(0, 10)}"><button class="btn sm alt" data-act="luungs" style="flex:0 0 auto">Lưu</button></div><p class="note" style="margin-top:4px">Cần để kiểm tra điều kiện nhận việc trên Sàn năng lực (từ 55 tuổi).</p>
 <label class="t">Tôi muốn</label><div class="chips">${MUON.map(m => `<button class="chip${t.muon.indexOf(m[0]) >= 0 ? ' on' : ''}" data-act="muon" data-k="${m[0]}">${m[1]} ${esc(m[2])}</button>`).join('')}</div></div>
 <h3>Kỹ năng của tôi</h3><div class="card">${r.hoSo.length ? r.hoSo.map(h => `<div class="kn" style="border-top:1px solid var(--line);padding:10px 0"><div class="li" style="border:0;padding:0"><span class="l"><b>${esc(h.ten)}</b></span>${pill((NGUON[h.nguon] || NGUON.tu_khai)[0] + (h.soXacNhan ? ' · ' + h.soXacNhan + ' người xác nhận' : ''), (NGUON[h.nguon] || NGUON.tu_khai)[1])}</div>${h.ttBang ? `<p class="note">${pill(TT_BANG[h.ttBang][0], TT_BANG[h.ttBang][1])} ${esc(h.bangCap)}</p>` : ''}${h.dangNho ? `<p class="note">Đang chờ ${h.dangNho} người trả lời lời nhờ xác nhận.</p>` : ''}<div class="row" style="margin-top:6px">${h.ttBang === 'dat' ? '' : `<button class="btn sm alt" data-act="knbang" data-k="${esc(h.kyNang)}" data-n="${esc(h.ten)}">＋ Bằng cấp</button>`}${h.nguon === 'hoc_vien' || h.ttBang === 'dat' ? '' : `<button class="btn sm alt" data-act="knxin" data-k="${esc(h.kyNang)}" data-n="${esc(h.ten)}">＋ Nhờ xác nhận</button>`}</div></div>`).join('') : '<p class="note">Chưa có kỹ năng nào.</p>'}<div class="row" style="margin-top:10px"><select id="p-kn">${optViec()}</select><button class="btn sm alt" data-act="themkn" style="flex:0 0 auto">Thêm</button></div><p class="note" style="margin-top:6px">Kỹ năng tự khai cần thêm một trong bốn bằng chứng mới dùng để nhận việc có thù lao: bằng cấp được điều phối viên xác minh; 2 người trong cộng đồng xác nhận; người dạy xác nhận; hoặc hoàn thành khoá Học viện.</p></div>
 <h3>Nhận việc có thù lao</h3><div class="card"><div class="li"><span class="l"><b>Tầng C</b> · việc cộng đồng nhẹ<br><span class="note">Một kỹ năng có 2 người xác nhận, hoặc hoàn thành khoá Học viện</span></span>${xm('C')}</div><div class="li"><span class="l"><b>Tầng B</b> · kèm cặp, cố vấn<br><span class="note">Điều phối viên xác minh kinh nghiệm</span></span>${t.xm.B ? xm('B') : '<button class="btn sm alt" data-act="xinxm" data-k="B">Gửi yêu cầu</button>'}</div><div class="li"><span class="l"><b>Tầng A</b> · chăm sóc chuyên nghiệp<br><span class="note">Cần chứng chỉ, đi qua FaCare Life</span></span>${t.xm.A ? xm('A') : '<button class="btn sm alt" data-act="xinxm" data-k="A">Gửi yêu cầu</button>'}</div></div>
@@ -1521,6 +1539,7 @@ ${vaiList().length > 1 ? `<h3>Vai khác của tôi</h3><div class="card">${vaiLi
 };
 VIEW._toi = () => { dhDs(); document.querySelectorAll('[data-dy]').forEach(c => c.onchange = async () => { if (c.dataset.dy === 'gan_day') { const g = c.checked ? await geoP() : null; if (c.checked && !g) { c.checked = false; toast('Cần cho phép vị trí để bật mục này.'); return; } run(null, 'idViTri', [S.phien, g, c.checked], async () => { await loadMe(); toast(c.checked ? 'Người gần đây đã thấy bạn (khoảng cách ước lượng).' : 'Đã ẩn bạn và xoá vị trí đã lưu.'); }); return; } run(null, 'idDongY', [S.phien, c.dataset.dy, c.checked], async () => { await loadMe(); toast('Đã lưu.'); }); }); };
 ACT.luukv = b => run(b, 'idCapNhat', [S.phien, { khuVuc: val('p-kv') }], async () => { await loadMe(); toast('Đã lưu khu vực.'); });
+ACT.luungs = b => run(b, 'idCapNhat', [S.phien, { ngaySinh: val('p-ns') }], async () => { await loadMe(); render(); toast('Đã lưu ngày sinh.'); });
 ACT.muon = b => { const cur = S.toi.toi.muon.slice(), k = b.dataset.k, nx = cur.indexOf(k) >= 0 ? cur.filter(x => x !== k) : cur.concat(k); run(null, 'idCapNhat', [S.phien, { muon: nx }], async () => { await loadMe(); render(); }); };
 ACT.themkn = b => run(b, 'idCapNhat', [S.phien, { kyNang: [val('p-kn')] }], async () => { await loadMe(); render(); });
 ACT.xinxm = b => { const k = b.dataset.k; sheet(`<button class="x" data-act="close" aria-label="Đóng">×</button><h2>Xác minh tầng ${k}</h2><p class="sub">${k === 'A' ? 'Ghi chứng chỉ chăm sóc của bạn (tên, số, nơi cấp). Việc tầng A đi qua FaCare Life.' : 'Ghi ngắn kinh nghiệm của bạn (ví dụ: 30 năm kế toán).'} Điều phối viên sẽ liên hệ.</p><textarea id="xm-t" maxlength="200"></textarea><div id="xm-msg"></div><button class="btn" id="xm-go" style="margin-top:12px"><span class="sp"></span><span>Gửi</span></button>`); $('xm-go').onclick = () => run($('xm-go'), 'idXinXacMinh', [S.phien, k, val('xm-t')], async () => { closeSheet(); await loadMe(); toast('Đã gửi yêu cầu xác minh.'); render(); }, $('xm-msg')); };
@@ -1677,7 +1696,8 @@ async function boot() {
   if (PARAMS.ca || PARAMS.mo === 'xacnhan') S.man = 'xacnhan'; else S.man = S.toi ? 'app' : 'chao';
   if (!S.toi && (PARAMS.mo === 'dangky' || PARAMS.mo === 'dangnhap')) S.man = PARAMS.mo;
   if (S.toi && ['ghi', 'viec', 'vi', 'toi'].indexOf(PARAMS.mo) >= 0) S.tab = PARAMS.mo;
-  if (PARAMS.seg && ['giup', 'hoc', 'san'].indexOf(PARAMS.seg) >= 0) { S.seg = PARAMS.seg; if (S.toi) S.tab = 'viec'; }
+  if (PARAMS.seg === 'san') { if (S.toi) S.tab = 'viec'; }
+  else if (PARAMS.seg === 'giup' || PARAMS.seg === 'hoc') { S.seg = PARAMS.seg; if (S.toi) S.tab = 'gtt'; }
   render();
 }
 /* ---------- Đồng hành: đối tác, nhà tài trợ, nhà hảo tâm (giai đoạn 1) ---------- */
