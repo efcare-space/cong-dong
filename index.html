@@ -1213,7 +1213,7 @@ function api(fn, ...args) {
 }
 const KENH = (() => { let k = {}; try { k = JSON.parse(LS.get('ef_kenh') || '{}'); } catch (e) {} if (PARAMS.tram) k.tram = PARAMS.tram.slice(0, 20); if (PARAMS.cua) k.cua = PARAMS.cua.slice(0, 20); ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'ref'].forEach(n => { if (PARAMS[n]) k[n] = PARAMS[n].slice(0, 60); }); LS.set('ef_kenh', JSON.stringify(k)); return k; })();
 if (API && (PARAMS.utm_source || PARAMS.utm_medium || PARAMS.utm_campaign || PARAMS.utm_content || PARAMS.ref)) api('skNguon', { anonId: DEV, utmNguon: PARAMS.utm_source || '', utmKenh: PARAMS.utm_medium || '', utmChienDich: PARAMS.utm_campaign || '', utmNoiDung: PARAMS.utm_content || '', refer: PARAMS.ref || '' }).catch(() => {});
-const S = { phien: LS.get('ef_phien') || '', cfg: null, toi: null, viec: null, bang: null, vai: LS.get('ef_vai') || 'ca_nhan', man: 'chao', tab: 'home', seg: 'giup', viSeg: 'qua', ghi: null, done: null, org: null, udAnh: '' };
+const S = { phien: LS.get('ef_phien') || '', cfg: null, toi: null, viec: null, bang: null, vai: LS.get('ef_vai') || 'ca_nhan', man: 'chao', tab: 'home', seg: 'giup', viSeg: 'tong', ghi: null, done: null, org: null, udAnh: '', ldbKy: 'thang' };
 
 /* ---------- tiện ích giao diện ---------- */
 function toast(t) { const e = $('toast'); e.textContent = t; e.style.display = 'block'; clearTimeout(toast.t); toast.t = setTimeout(() => e.style.display = 'none', 3200); }
@@ -1353,12 +1353,13 @@ function todos() {
   (v.caCho || []).forEach(x => out.push(`<div class="todo"><div class="ic">⏱</div><div class="tx"><b>Chờ ${esc(x.nguoiNhan)} xác nhận</b>Ca ${esc(x.ma)} · ${fmt(x.gio)} giờ</div></div>`));
   return out;
 }
-const FA = [['seg', 's', 'giup', '', '🤝', 'Ai đang cần giúp'], ['seg', 's', 'hoc', '', '📚', 'Học kỹ năng'], ['mo', 't', 'viec', '', '💼', 'Sàn năng lực'], ['mo', 't', 'vi', 'qua', '🎁', 'Đổi quà'], ['mo', 't', 'vi', 'tang', '💝', 'Tặng giờ'], ['mo', 't', 'vi', 'phieu', '🧾', 'Phiếu của tôi'], ['go', 'm', 'xacnhan', '', '✅', 'Xác nhận được giúp'], ['mo', 't', 'toi', '', '👨‍👩‍👧', 'Gia đình'], ['dhmo', '', '', '', '🏪', 'Đối tác, hảo tâm']];
+const FA = [['seg', 's', 'giup', '', '🤝', 'Ai đang cần giúp'], ['seg', 's', 'hoc', '', '📚', 'Học kỹ năng'], ['mo', 't', 'viec', '', '💼', 'Sàn năng lực'], ['mo', 't', 'vi', 'doi', '🎁', 'Đổi quà'], ['mo', 't', 'vi', 'tong', '💝', 'Tặng giờ'], ['mo', 't', 'vi', 'ls', '🧾', 'Phiếu của tôi'], ['go', 'm', 'xacnhan', '', '✅', 'Xác nhận được giúp'], ['mo', 't', 'toi', '', '👨‍👩‍👧', 'Gia đình'], ['mo', 't', 'toptute', '', '🏅', 'Top Tử Tế'], ['mo', 't', 'congdong5t', '', '💚', 'Cộng đồng 5T'], ['dhmo', '', '', '', '🏪', 'Đối tác, hảo tâm']];
 ACT.mo = b => { S.man = 'app'; S.tab = b.dataset.t; if (b.dataset.v) S.viSeg = b.dataset.v; render(); };
 VIEW.home = () => {
   const r = S.toi, t = r.thongKe, td = todos(), dat = r.huyHieu.filter(x => x.dat).length;
   return `<div class="bal"><div style="display:flex;justify-content:space-between;align-items:flex-end;gap:10px"><div><small>Chào ${esc(r.toi.ten)}</small><b class="big">${fmt(r.soDu)} giờ</b></div><button class="mini-badges" data-act="dauMoc" aria-label="Xem dấu mốc">${r.huyHieu.map(x => `<i class="${x.dat ? 'dat' : ''}">${x.dat ? ICON[x.id] || '★' : '·'}</i>`).join('')}<small>${dat}/${r.huyHieu.length} dấu mốc</small></button></div>
 <div class="stat3"><div><b>${fmt(t.gioDaGiup)}</b><span>giờ đã giúp</span></div><div><b>${t.soNguoi}</b><span>người được giúp</span></div>${t.thuNhap || r.toi.muonThuNhap ? `<div><b>${t.thuNhap ? vnd(t.thuNhap / 1000) + 'k' : '0'}</b><span>thu nhập (đ)</span></div>` : `<div><b>${fmt(t.gioDaTang)}</b><span>giờ đã tặng</span></div>`}</div></div>
+${gioiThieu5T()}
 ${theCai()}
 ${td.length ? `<div class="card"><b>Việc cần bạn · ${td.length}</b>${td.join('')}</div>` : ''}
 <button class="cta" data-act="tab" data-t="ghi"><span>✎</span>Ghi nhận việc vừa làm</button>
@@ -1407,6 +1408,43 @@ ${canXL.length ? `<h3>Cần bạn xử lý · ${canXL.length}</h3><div class="ca
 ${xong.length ? `<h3>Đã hoàn thành · ${xong.length}</h3><div class="card">${xong.map(row).join('')}</div>` : ''}`);
 };
 
+/* ---------- TOP TỬ TẾ (vinh danh giờ đóng góp đã xác nhận, công khai) ---------- */
+VIEW.toptute = async () => {
+  const r = await api('topTuTe', S.ldbKy);
+  const top3 = r.top.slice(0, 3), rest = r.top.slice(3);
+  const medal = ['🥇', '🥈', '🥉'];
+  return `<button class="link" data-act="tab" data-t="home">‹ Trang chủ</button><h2>🏅 Top Tử Tế</h2><p class="sub">Vinh danh những đóng góp Giờ Tử Tế đã được xác nhận. Không xếp hạng phẩm chất con người, chỉ ghi nhận hành động.</p>
+<div class="seg" role="tablist">${[['thang', 'Tháng'], ['quy', 'Quý'], ['nam', 'Năm']].map(x => `<button class="${S.ldbKy === x[0] ? 'on' : ''}" data-act="ldbseg" data-s="${x[0]}" role="tab" aria-selected="${S.ldbKy === x[0]}">${x[1]}</button>`).join('')}</div>
+<p class="note" style="margin:8px 0">${esc(r.nhan)}</p>
+${top3.length ? `<div class="row" style="margin-bottom:10px">${top3.map((x, i) => `<div class="job" style="text-align:center"><div style="font-size:28px">${medal[i]}</div><b>${esc(x.ten)}</b><div class="note">${fmt(x.gio)} giờ</div></div>`).join('')}</div>` : ''}
+${rest.length ? `<div class="card">${rest.map((x, i) => `<div class="li"><span class="l">#${i + 4} ${esc(x.ten)}</span><b>${fmt(x.gio)} giờ</b></div>`).join('')}</div>` : ''}
+${!r.top.length ? '<div class="empty"><i>🌤️</i>Chưa có đóng góp nào được xác nhận trong kỳ này.</div>' : ''}
+<p class="note" style="margin-top:12px">Xếp theo tổng giờ Giờ Tử Tế đã xác nhận, không dùng số dư ví hay giờ việc có thù lao. Chỉ hiện tên nếu bạn đồng ý ở mục Tôi, mặc định hiện "Thành viên ẩn danh".</p>`;
+};
+ACT.ldbseg = b => { S.ldbKy = b.dataset.s; render(); };
+
+/* ---------- CỘNG ĐỒNG 5T (triết lý Ngũ Tâm lồng ghép, khối trang chủ + trang riêng) ---------- */
+function gioiThieu5T() {
+  return `<div class="card" style="margin-top:14px"><b>💚 Cộng đồng 5T – Cùng sống tử tế, cùng trưởng thành</b><p class="note" style="margin:6px 0 10px">Một cộng đồng kết nối con người bằng sự quan tâm, đóng góp và những giá trị thiết thực: Thiện Tâm · Tử Tế · Tinh Tấn · Tận Tâm · Thành Tựu.</p><button class="btn alt" data-act="mo" data-t="congdong5t">Tìm hiểu cộng đồng 5T ›</button></div>`;
+}
+const DAT_5T = [
+  ['💚 Thiện Tâm', 'Đặt lợi ích và sự an tâm của con người lên trước. Không khai thác nỗi lo để ép mua, không gây áp lực.'],
+  ['🤝 Tử Tế', 'Rõ vai trò, chi phí, bên cung cấp và giới hạn trách nhiệm. Mỗi ca giúp có hai bên xác nhận.'],
+  ['🌱 Tinh Tấn', 'Liên tục rà soát, cập nhật nội dung và quy trình theo phản hồi thật.'],
+  ['❤️ Tận Tâm', 'Có người phụ trách theo dõi và phản hồi đến khi việc được xử lý xong.'],
+  ['🏆 Thành Tựu', 'Đánh giá bằng kết quả và chỉ số thực tế, có xác nhận, không dùng số liệu chưa kiểm chứng.']
+];
+VIEW.congdong5t = () => `<button class="link" data-act="tab" data-t="home">‹ Trang chủ</button><h2>Cộng đồng 5T</h2><p class="sub">Cùng sống tử tế, cùng trưởng thành.</p>
+<div class="card"><p>Chúng tôi tin một cộng đồng tốt đẹp không chỉ được tạo nên bởi những điều lớn lao, mà bắt đầu từ những hành động nhỏ, chân thành và có ích mỗi ngày.</p>
+<p style="margin-top:8px">Người có kinh nghiệm được tiếp tục cống hiến; người cần hỗ trợ có cơ hội được đồng hành; người có điều kiện có thể chia sẻ nguồn lực để cùng tạo nên những giá trị tốt đẹp. Mỗi người một khả năng, mỗi người một đóng góp.</p>
+<p style="margin-top:8px"><b>Bạn không cần phải thật giỏi mới có thể tham gia.</b> Chỉ cần sẵn lòng đóng góp một điều có ích, bạn đã có thể bắt đầu.</p></div>
+<h3>Năm giá trị Ngũ Tâm</h3><div class="card">${DAT_5T.map(v => `<div class="li" style="display:block;border-top:1px solid var(--line);padding:8px 0"><b>${esc(v[0])}</b><p class="note" style="margin:2px 0 0">${esc(v[1])}</p></div>`).join('')}</div>
+<h3>Thành viên có thể đóng góp những gì?</h3><div class="card">${MUON.filter(m => m[0] !== 'thu_nhap').map(m => `<div class="li"><span class="l">${m[1]} ${esc(m[2])}<br><span class="note">${esc(m[3])}</span></span></div>`).join('')}</div>
+<h3>Giờ Tử Tế (GTT) ghi nhận đóng góp thế nào?</h3><div class="card"><p class="note">Mỗi lần một việc tử tế được người nhận xác nhận, bạn được ghi thêm giờ vào Sổ giờ của mình. GTT không phải tiền, không mua bán, không rút ra tiền mặt.</p><button class="btn sm alt" data-act="mo" data-t="vi" data-v="giai" style="margin-top:8px">Xem thêm ở Ví</button></div>
+<h3>Đại sứ Ngũ Tâm</h3><div class="card"><p class="note">Là người lan tỏa tinh thần 5T trong khu vực của mình: giới thiệu cộng đồng, đồng hành cùng thành viên mới, kết nối với Trạm Ngũ Tâm gần nhất.</p></div>
+<h3>Trạm Ngũ Tâm</h3><div class="card"><p class="note">Điểm sinh hoạt cộng đồng tại địa phương, nơi diễn ra các hoạt động trực tiếp của 5T. Muốn mở hoặc kết nối một Trạm, đăng ký ở mục "Tôi muốn" tại Trang chủ.</p></div>
+<h3>Cách tham gia</h3><div class="card"><p class="note">Giúp một việc, học một kỹ năng, hoặc chia sẻ điều bạn biết — mỗi đóng góp đều có ý nghĩa, không cần đứng đầu bảng vinh danh mới là người tử tế.</p><button class="btn" data-act="tab" data-t="home" style="margin-top:10px">Về Trang chủ bắt đầu</button></div>`;
+
 /* ---------- SÀN NĂNG LỰC (việc có thù lao, 55+ ưu tiên phía nhận) ---------- */
 VIEW.viec = async () => {
   const b = await api('apiBangViec'); S.bang = b.items || [];
@@ -1421,7 +1459,8 @@ ${mine ? '<p class="note">Việc bạn đăng.</p>' : `<button class="btn" data-
 <div class="row"><button class="btn" data-act="dangsan">＋ Đăng việc có thù lao</button><button class="btn alt" data-act="toimuc" style="flex:0 0 auto">👤 Hồ sơ năng lực</button></div>
 <p class="note" style="margin:10px 0">Mỗi việc có ba lối nhận: tiền công, góp tiền công vào quỹ, hoặc ghi Giờ Tử Tế.${S.toi.toi.xm.C === 'dat' ? '' : ' <b>Cần kỹ năng đã có người xác nhận để nhận việc.</b>'}${S.toi.toi.du55 ? '' : ' <b>Sàn năng lực ưu tiên cơ hội nhận việc cho thành viên từ 55 tuổi — cập nhật ngày sinh ở mục Tôi.</b>'}</p>
 <div style="margin-top:12px">${items.length ? items.map(card).join('') : '<div class="empty"><i>🌤️</i>Chưa có việc nào.<br>Bạn có thể là người đăng đầu tiên.</div>'}</div>
-${mine.length ? `<h3>Việc tôi đã đăng</h3><div class="card">${mine.map(x => `<div class="li"><span class="l">${esc(x.t)}${x.extra ? `<br><span class="note">${esc(x.extra)}</span>` : ''}</span>${pill((TT_VIEC[x.s] || [x.s])[0], (TT_VIEC[x.s] || ['', 'p-mut'])[1])}</div>`).join('')}</div>` : ''}`;
+${mine.length ? `<h3>Việc tôi đã đăng</h3><div class="card">${mine.map(x => `<div class="li"><span class="l">${esc(x.t)}${x.extra ? `<br><span class="note">${esc(x.extra)}</span>` : ''}</span>${pill((TT_VIEC[x.s] || [x.s])[0], (TT_VIEC[x.s] || ['', 'p-mut'])[1])}</div>`).join('')}</div>` : ''}
+<h3>Thu nhập của tôi</h3><div class="kpis"><div class="kpi"><b>${vnd(S.toi.thongKe.thuNhap)} đ</b><span>Tiền công đã nhận</span></div><div class="kpi"><b>${vnd(S.toi.thongKe.daGop)} đ</b><span>Tiền công đã góp vào quỹ</span></div></div><p class="note" style="margin:8px 0 10px">EFCARE không giữ tiền. Người thuê trả thẳng cho bạn, hoặc chuyển thẳng vào tài khoản quỹ nếu bạn chọn góp. Đây là tiền thật, khác với GTT — xem GTT ở Ví.</p>${(v.ycLam || []).filter(x => x.trangThai === 'xong').length ? `<div class="card">${v.ycLam.filter(x => x.trangThai === 'xong').map(x => `<div class="li"><span class="l">${esc(x.moTa)}<br><span class="note">${esc(x.nguoiCan)} · ${LOI[x.hinhThuc][1]}</span></span><b>${x.hinhThuc === 'gio' ? fmt(gtt(x.soGio * 60)) + ' giờ' : vnd(x.gia) + ' đ'}</b></div>`).join('')}</div>` : '<div class="empty"><i>💼</i>Chưa có việc có thù lao nào xong.</div>'}`;
 };
 /* ---------- GIỜ TỬ TẾ (cần giúp / muốn học, không qua tiền) — vào từ Trang chủ ---------- */
 VIEW.gtt = async () => {
@@ -1543,22 +1582,52 @@ VIEW._ghi = () => {
 const codeMsg = () => { const d = S.done; return `Chào ${d.nguoiNhan}, ${S.toi.toi.ten} vừa ghi nhận một việc tử tế dành cho bạn (${d.phut} phút). Nếu đúng, bạn bấm xác nhận giúp nhé: ${BASE}?ca=${encodeURIComponent(d.ma)}&ma=${encodeURIComponent(d.otp)}\nMã ca: ${d.ma} · Mã xác nhận: ${d.otp}`; };
 ACT.sharecode = () => share(codeMsg()); ACT.copycode = () => copy(codeMsg()); ACT.ghimoi = () => { S.done = null; S.ghi = null; render(); };
 
-/* ---------- VÍ ---------- */
+/* ---------- VÍ: 4 khu vực (Tổng quan GTT · Đổi hàng & Ưu đãi · Lịch sử GTT · Giải thích GTT) ---------- */
+function soGhiNhan_(ls) { return r2_(ls.filter(x => x.gio >= 0).reduce((a, x) => a + x.gio, 0)); }
+function soSuDung_(ls) { return r2_(ls.filter(x => x.gio < 0).reduce((a, x) => a - x.gio, 0)); }
+function r2_(n) { return Math.round(n * 100) / 100; }
 VIEW.vi = () => {
-  const r = S.toi, s = S.viSeg, gd = r.giaDinh, mem = gd ? gd.thanhVien.filter(m => m.efc !== r.toi.efc && m.trangThai !== 'da_mat') : [];
+  const r = S.toi, s = S.viSeg;
   let body = '';
-  if (s === 'qua') body = (S.cfg.uuDai || []).length ? S.cfg.uuDai.map(u => `<div class="job">${u.anh ? `<img src="${u.anh}" alt="" style="width:100%;border-radius:10px;margin-bottom:8px;max-height:160px;object-fit:cover">` : ''}${u.quyTra ? pill('Đối tác bán · Quỹ trả thay bạn', 'p-gtt') : pill('Đối tác tài trợ', 'p-san')} ${pill(esc(u.tenLoai || 'Hàng hoá'), 'p-mut')}<h4>${esc(u.ten)}</h4><div class="meta">${u.quyTra ? '<b>' + esc(u.doiTac) + '</b> bán, quỹ thanh toán cho đối tác' : 'Do <b>' + esc(u.doiTac) + '</b> tài trợ, quỹ không trả tiền'}</div><div class="meta">Giá trị <b>${vnd(u.giaTri)} đ</b> · đổi bằng <b>${fmt(u.gio)} giờ</b>${u.conLai !== null ? ' · còn ' + u.conLai + ' suất' : ''}</div><p class="note" style="margin-bottom:10px">${esc(u.moTa)}</p><button class="btn alt" data-act="doiqua" data-ma="${u.ma}"${r.soDu < u.gio || !u.doiDuoc ? ' disabled' : ''}><span class="sp"></span><span>${u.choQuy ? 'Mở khi có quỹ' : !u.doiDuoc ? 'Tạm chưa đổi được' : r.soDu < u.gio ? 'Chưa đủ giờ' : 'Đổi ' + fmt(u.gio) + ' giờ'}</span></button></div>`).join('') : '<div class="empty"><i>🎁</i>Chưa có ưu đãi.</div>';
-  if (s === 'tang') body = `<div class="card"><p class="note">Tặng cho cha mẹ, ông bà, người thân hoặc bất kỳ ai có tài khoản.</p>${mem.length ? `<label class="t" for="t-to">Người trong gia đình</label><select id="t-to"><option value="">Chọn người</option>${mem.map(m => `<option value="${m.efc}">${esc(m.ten)}${m.vai ? ' (' + esc(m.vai) + ')' : ''}</option>`).join('')}</select>` : ''}<label class="t" for="t-ma">${mem.length ? 'Hoặc nhập' : 'Nhập'} mã thành viên</label><input type="text" id="t-ma" autocapitalize="characters" placeholder="EFC-000001"><label class="t" for="t-gio">Số giờ</label><input type="number" id="t-gio" step="0.25" min="0.25" value="1" inputmode="decimal"><label class="t" for="t-ln">Lời nhắn</label><input type="text" id="t-ln" maxlength="120" placeholder="Con tặng mẹ"><div id="t-msg"></div><button class="btn" id="t-go" data-act="tang" style="margin-top:12px"><span class="sp"></span><span>Tặng giờ</span></button></div>`;
-  if (s === 'phieu') body = r.phieu.length ? `<div class="card">${r.phieu.map(p => `<div class="li"><span class="l"><b>${esc(p.ma)}</b> · ${esc(p.ten)}<br><span class="note">${esc(p.doiTac)} · ${fmt(p.gio)} giờ · ${dt(p.tao)}</span></span>${p.trangThai === 'chua_dung' ? pill('Đưa mã cho cửa hàng', 'p-warn') : pill('Đã dùng', 'p-gtt')}</div>`).join('')}</div>` : '<div class="empty"><i>🧾</i>Chưa có phiếu.</div>';
-  if (s === 'ls') body = r.lichSu.length ? `<div class="card">${r.lichSu.map(x => `<div class="li"><span class="l">${esc(LOAI_SO[x.loai] || x.loai)}<br><span class="note">${dt(x.luc)}${x.ghiChu ? ' · ' + esc(tenViec(x.ghiChu) || x.ghiChu) : ''}</span></span><span class="${x.gio >= 0 ? 'pos' : 'neg'}">${x.gio >= 0 ? '+' : ''}${fmt(x.gio)}</span></div>`).join('')}</div>` : '<div class="empty"><i>📒</i>Chưa có giao dịch.</div>';
-  if (s === 'tn') { const lam = ((S.viec || {}).ycLam || []).filter(x => x.trangThai === 'xong'); body = `<div class="kpis"><div class="kpi"><b>${vnd(r.thongKe.thuNhap)} đ</b><span>Tiền công đã nhận</span></div><div class="kpi"><b>${vnd(r.thongKe.daGop)} đ</b><span>Tiền công đã góp vào quỹ</span></div></div><p class="note" style="margin-bottom:10px">EFCARE không giữ tiền. Người thuê trả thẳng cho bạn, hoặc chuyển thẳng vào tài khoản quỹ nếu bạn chọn góp.</p>${lam.length ? `<div class="card">${lam.map(x => `<div class="li"><span class="l">${esc(x.moTa)}<br><span class="note">${esc(x.nguoiCan)} · ${LOI[x.hinhThuc][1]}</span></span><b>${x.hinhThuc === 'gio' ? fmt(gtt(x.soGio * 60)) + ' giờ' : vnd(x.gia) + ' đ'}</b></div>`).join('')}</div>` : '<div class="empty"><i>💼</i>Chưa có việc có thù lao nào xong.</div>'}`; }
-  return `<div class="bal"><small>Ví giờ của ${esc(r.toi.ten)}</small><b class="big">${fmt(r.soDu)} giờ</b><small>${r.giaQuyDoi ? `Khi đổi quà quỹ bảo chứng: 1 giờ ≈ ${vnd(r.giaQuyDoi)} đ hàng hoá` : 'Quỹ đang chờ tài trợ để bảo chứng quà'}</small></div>
-<div class="seg" style="overflow-x:auto">${[['qua', 'Đổi quà'], ['tang', 'Tặng giờ'], ['phieu', 'Phiếu'], ['ls', 'Lịch sử'], ['tn', 'Thu nhập']].map(x => `<button class="${s === x[0] ? 'on' : ''}" data-act="viseg" data-s="${x[0]}">${x[1]}</button>`).join('')}</div>${body}
+  if (s === 'tong') {
+    const ghiNhan = soGhiNhan_(r.lichSu), suDung = soSuDung_(r.lichSu);
+    const goiY = (S.cfg.uuDai || []).filter(u => u.doiDuoc && !u.choQuy && r.soDu >= u.gio).slice(0, 2);
+    body = `<div class="card"><div class="li"><span class="l">GTT có thể đổi</span><b>${fmt(r.soDu)} giờ</b></div><div class="li"><span class="l">Tổng đã ghi nhận</span><span class="pos">+${fmt(ghiNhan)}</span></div><div class="li"><span class="l">Đã sử dụng</span><span class="neg">−${fmt(suDung)}</span></div><div class="li"><span class="l">Giờ đóng góp thực tế (đã xác nhận)</span><b>${fmt(r.thongKe.gioDaGiup)} giờ</b></div></div>
+<p class="note" style="margin:10px 0">Đây chỉ là giờ của riêng bạn trong Sổ giờ chung. GTT do đối tác tài trợ cho chương trình không tính vào ví cá nhân.</p>
+<div class="row"><button class="btn alt" data-act="tangsheet">🎁 Tặng giờ</button><button class="btn alt" data-act="viseg" data-s="doi">🛍️ Đổi hàng & Ưu đãi</button></div>
+${goiY.length ? `<h3 style="margin-top:16px">Có thể đổi ngay</h3><div class="card">${goiY.map(u => `<div class="li"><span class="l">${esc(u.ten)}<br><span class="note">${esc(u.doiTac)}</span></span><b>${fmt(u.gio)} giờ</b></div>`).join('')}</div>` : ''}`;
+  }
+  if (s === 'doi') body = (S.cfg.uuDai || []).length ? S.cfg.uuDai.map(u => `<div class="job">${u.anh ? `<img src="${u.anh}" alt="" style="width:100%;border-radius:10px;margin-bottom:8px;max-height:160px;object-fit:cover">` : ''}${u.quyTra ? pill('Đối tác bán · Quỹ trả thay bạn', 'p-gtt') : pill('Đối tác tài trợ', 'p-san')} ${pill(esc(u.tenLoai || 'Hàng hoá'), 'p-mut')}<h4>${esc(u.ten)}</h4><div class="meta">${u.quyTra ? '<b>' + esc(u.doiTac) + '</b> bán, quỹ thanh toán cho đối tác' : 'Do <b>' + esc(u.doiTac) + '</b> tài trợ, quỹ không trả tiền'}</div><div class="meta">Giá trị <b>${vnd(u.giaTri)} đ</b> · đổi bằng <b>${fmt(u.gio)} giờ</b>${u.conLai !== null ? ' · còn ' + u.conLai + ' suất' : ''}</div><p class="note" style="margin-bottom:10px">${esc(u.moTa)}</p><button class="btn alt" data-act="doiqua" data-ma="${u.ma}"${r.soDu < u.gio || !u.doiDuoc ? ' disabled' : ''}><span class="sp"></span><span>${u.choQuy ? 'Mở khi có quỹ' : !u.doiDuoc ? 'Tạm chưa đổi được' : r.soDu < u.gio ? 'Chưa đủ giờ' : 'Đổi ' + fmt(u.gio) + ' giờ'}</span></button></div>`).join('') : '<div class="empty"><i>🎁</i>Chưa có ưu đãi.</div>';
+  if (s === 'ls') {
+    const ghi = r.lichSu.filter(x => x.gio >= 0), dung = r.lichSu.filter(x => x.gio < 0);
+    const row = x => `<div class="li"><span class="l">${esc(LOAI_SO[x.loai] || x.loai)}<br><span class="note">${dt(x.luc)}${x.ghiChu ? ' · ' + esc(tenViec(x.ghiChu) || x.ghiChu) : ''}</span></span><span class="${x.gio >= 0 ? 'pos' : 'neg'}">${x.gio >= 0 ? '+' : ''}${fmt(x.gio)}</span></div>`;
+    body = `<h3>Giờ đã ghi nhận</h3>${ghi.length ? `<div class="card">${ghi.map(row).join('')}</div>` : '<div class="empty"><i>📒</i>Chưa có.</div>'}
+<h3 style="margin-top:14px">Giờ đã sử dụng</h3>${dung.length ? `<div class="card">${dung.map(row).join('')}</div>` : '<div class="empty"><i>📒</i>Chưa có.</div>'}
+<h3 style="margin-top:14px">Phiếu đổi quà</h3><p class="note" style="margin-bottom:8px">Riêng với Sổ giờ, không gộp chung.</p>${r.phieu.length ? `<div class="card">${r.phieu.map(p => `<div class="li"><span class="l"><b>${esc(p.ma)}</b> · ${esc(p.ten)}<br><span class="note">${esc(p.doiTac)} · ${fmt(p.gio)} giờ · ${dt(p.tao)}</span></span>${p.trangThai === 'chua_dung' ? pill('Đưa mã cho cửa hàng', 'p-warn') : pill('Đã dùng', 'p-gtt')}</div>`).join('')}</div>` : '<div class="empty"><i>🧾</i>Chưa có phiếu.</div>'}
+<p class="note" style="margin-top:10px">Không xoá lịch sử giao dịch.</p>`;
+  }
+  if (s === 'giai') body = `<div class="card">
+<p><b>GTT (Giờ Tử Tế) không phải tiền.</b></p>
+<p class="note">GTT ghi lại việc tử tế bạn đã làm hoặc được giúp, tính bằng giờ. Không mua bán, không chuyển nhượng cho người lạ, không đổi ngược lại thành tiền mặt.</p>
+<p style="margin-top:10px"><b>GTT dùng để làm gì?</b></p>
+<p class="note">Đổi quà, ưu đãi do đối tác tài trợ ở mục "Đổi hàng & Ưu đãi". Tặng cho người thân. Để lại cho người thừa kế bạn chọn ở mục Tôi.</p>
+<p style="margin-top:10px"><b>GTT đến từ đâu?</b></p>
+<p class="note">Mỗi lần một việc tử tế được người nhận xác nhận, bạn được ghi thêm giờ vào Sổ giờ của mình. Việc có thù lao trên Sàn năng lực là tiền, không phải GTT, trừ khi bạn chọn lối nhận "ghi giờ".</p>
+<p style="margin-top:10px"><b>Vì sao không rút ra tiền?</b></p>
+<p class="note">GTT ghi nhận lòng tốt, giữ cho mọi người bình đẳng khi đổi quà, không ai dùng tiền để mua được nhiều GTT hơn người khác.</p>
+</div>`;
+  return `<div class="bal"><small>Ví GTT của ${esc(r.toi.ten)}</small><b class="big">${fmt(r.soDu)} giờ</b><small>${r.giaQuyDoi ? `Khi đổi quà quỹ bảo chứng: 1 giờ ≈ ${vnd(r.giaQuyDoi)} đ hàng hoá` : 'Quỹ đang chờ tài trợ để bảo chứng quà'}</small></div>
+<div class="seg" style="overflow-x:auto">${[['tong', 'Tổng quan'], ['doi', 'Đổi hàng & Ưu đãi'], ['ls', 'Lịch sử GTT'], ['giai', 'Giải thích GTT']].map(x => `<button class="${s === x[0] ? 'on' : ''}" data-act="viseg" data-s="${x[0]}">${x[1]}</button>`).join('')}</div>${body}
 <p class="note" style="margin-top:12px">Giờ không rút ra tiền mặt, không trả lãi, không đổi ngược. Giờ còn lại có thể để thừa kế cho người thân (đặt ở mục Tôi).</p>`;
 };
 ACT.viseg = b => { S.viSeg = b.dataset.s; render(); };
 ACT.doiqua = b => { const u = S.cfg.uuDai.find(x => x.ma === b.dataset.ma); confirmBox(`Đổi ${fmt(u.gio)} giờ lấy "${u.ten}" (giá trị ${vnd(u.giaTri)} đ, ${u.quyTra ? u.doiTac + ' bán, quỹ trả' : 'do ' + u.doiTac + ' tài trợ'})?`, () => run(b, 'uuDaiDoi', [S.phien, u.ma], async r => { await refresh(); celebrate('Đã đổi quà', `Mã phiếu: ${r.maPhieu}. Đưa mã này cho ${r.doiTac} khi đến nhận.`); })); };
-ACT.tang = b => { const to = val('t-ma') || val('t-to'); run(b, 'tangGio', [S.phien, to, val('t-gio'), val('t-ln')], async r => { await loadMe(); celebrate('Đã tặng giờ', `Bạn vừa tặng ${val('t-gio')} giờ cho ${r.nguoiNhan}.`); render(); }, $('t-msg')); };
+ACT.tangsheet = () => {
+  const r = S.toi, gd = r.giaDinh, mem = gd ? gd.thanhVien.filter(m => m.efc !== r.toi.efc && m.trangThai !== 'da_mat') : [];
+  sheet(`<button class="x" data-act="close" aria-label="Đóng">×</button><h2>Tặng giờ</h2><p class="sub">Tặng cho cha mẹ, ông bà, người thân hoặc bất kỳ ai có tài khoản.</p>${mem.length ? `<label class="t" for="t-to">Người trong gia đình</label><select id="t-to"><option value="">Chọn người</option>${mem.map(m => `<option value="${m.efc}">${esc(m.ten)}${m.vai ? ' (' + esc(m.vai) + ')' : ''}</option>`).join('')}</select>` : ''}<label class="t" for="t-ma">${mem.length ? 'Hoặc nhập' : 'Nhập'} mã thành viên</label><input type="text" id="t-ma" autocapitalize="characters" placeholder="EFC-000001"><label class="t" for="t-gio">Số giờ</label><input type="number" id="t-gio" step="0.25" min="0.25" value="1" inputmode="decimal"><label class="t" for="t-ln">Lời nhắn</label><input type="text" id="t-ln" maxlength="120" placeholder="Con tặng mẹ"><div id="t-msg"></div><button class="btn" id="t-go" style="margin-top:12px"><span class="sp"></span><span>Tặng giờ</span></button>`);
+  $('t-go').onclick = () => ACT.tang($('t-go'));
+};
+ACT.tang = b => { const to = val('t-ma') || val('t-to'); run(b, 'tangGio', [S.phien, to, val('t-gio'), val('t-ln')], async r => { await loadMe(); closeSheet(); celebrate('Đã tặng giờ', `Bạn vừa tặng ${val('t-gio')} giờ cho ${r.nguoiNhan}.`); render(); }, $('t-msg')); };
 
 /* ---------- TÔI ---------- */
 VIEW.toi = () => {
@@ -1574,11 +1643,13 @@ ${r.ghiDanh.length ? `<h3>Khoá học của tôi</h3><div class="card">${r.ghiDa
 <h3>Người tôi thay mặt</h3><div class="card"><p class="note">Cha mẹ, ông bà không dùng điện thoại? Bạn đăng việc thay, họ vẫn là người xác nhận.</p>${r.thayMat.map(x => `<div class="li"><span class="l">${esc(x.ten)}${x.quanHe ? ' · ' + esc(x.quanHe) : ''}</span><span class="note">${esc(x.efc)}</span></div>`).join('')}<button class="btn alt" data-act="thaymat" style="margin-top:10px">＋ Thêm người thân</button></div>
 <h3>Đồng hành cùng EFCommunity</h3><div class="card"><p class="note">Cửa hàng tặng quà, doanh nghiệp tài trợ, hoặc cá nhân muốn góp sức: đăng ký ở đây. Điều phối viên xem và trả lời bạn.</p><div id="dh-ds"></div><button class="btn alt" data-act="dhmo" style="margin-top:10px">Đăng ký đồng hành</button></div>
 <h3>Ngũ Tâm của EFCARE</h3><div class="card">${NGU_TAM.map(v => `<div class="li" style="display:block;border-top:1px solid var(--line);padding:8px 0"><b>${esc(v[0])}</b><p class="note" style="margin:2px 0 0">${esc(v[1])}</p><p class="note" style="margin:2px 0 0">Đang chạy trong app: ${esc(v[2])}</p></div>`).join('')}</div>
+<h3>🏅 Top Tử tế</h3><div class="card"><label class="chk"><input type="checkbox" id="p-ldb"${t.ldbCongKhai ? ' checked' : ''}><span>Hiện tên thật của tôi trên bảng vinh danh Top Tử tế. Không chọn thì vẫn được tính, chỉ hiện "Thành viên ẩn danh".</span></label></div>
 <h3>Quyền riêng tư</h3><div class="card"><p class="note">Ứng dụng lưu: tên, số điện thoại, năm sinh, khu vực, mã PIN đã mã hoá, các việc bạn làm; vị trí và ảnh chỉ khi bạn tự gắn. Số điện thoại chỉ hiện cho người nhận việc bạn đăng.</p>${Object.keys(S.cfg.mucDich).filter(k => k !== 'luu_lien_he').map(k => `<label class="chk"><input type="checkbox" data-dy="${k}"${(k === 'gan_day' ? r.hienGanDay : r.dongY[k]) ? ' checked' : ''}><span>${esc(S.cfg.mucDich[k])}${k === 'gan_day' ? ' <span class="note">Vị trí làm tròn khoảng 500 m, tự hết hạn sau 30 ngày; không ai thấy số điện thoại của bạn.</span>' : ''}</span></label>`).join('')}</div>
 ${vaiList().length > 1 ? `<h3>Vai khác của tôi</h3><div class="card">${vaiList().slice(1).map(v => `<button class="btn alt" data-act="chonvai" data-k="${v.k}" style="margin-top:8px">${esc(v.t)}</button>`).join('')}</div>` : ''}
 <h3>Bảo mật</h3><div class="card"><p class="note">Đang đăng nhập trên ${r.phien} thiết bị.</p><button class="btn alt" data-act="doipin" style="margin-top:10px">Đổi mã PIN</button><button class="btn alt" data-act="dangxuat" style="margin-top:10px">Đăng xuất</button><button class="btn no" data-act="xoatk" style="margin-top:10px">Yêu cầu xoá tài khoản</button></div>${hoTro()}`;
 };
-VIEW._toi = () => { if (SCROLL_TO) { const el = document.getElementById(SCROLL_TO); if (el) setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50); SCROLL_TO = null; } dhDs(); document.querySelectorAll('[data-dy]').forEach(c => c.onchange = async () => { if (c.dataset.dy === 'gan_day') { const g = c.checked ? await geoP() : null; if (c.checked && !g) { c.checked = false; toast('Cần cho phép vị trí để bật mục này.'); return; } run(null, 'idViTri', [S.phien, g, c.checked], async () => { await loadMe(); toast(c.checked ? 'Người gần đây đã thấy bạn (khoảng cách ước lượng).' : 'Đã ẩn bạn và xoá vị trí đã lưu.'); }); return; } run(null, 'idDongY', [S.phien, c.dataset.dy, c.checked], async () => { await loadMe(); toast('Đã lưu.'); }); }); };
+VIEW._toi = () => { if (SCROLL_TO) { const el = document.getElementById(SCROLL_TO); if (el) setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50); SCROLL_TO = null; } dhDs();
+  $('p-ldb').onchange = function () { run(null, 'idCapNhat', [S.phien, { ldbCongKhai: this.checked }], async () => { await loadMe(); toast(this.checked ? 'Đã hiện tên trên Top Tử tế.' : 'Đã ẩn danh trên Top Tử tế.'); }); }; document.querySelectorAll('[data-dy]').forEach(c => c.onchange = async () => { if (c.dataset.dy === 'gan_day') { const g = c.checked ? await geoP() : null; if (c.checked && !g) { c.checked = false; toast('Cần cho phép vị trí để bật mục này.'); return; } run(null, 'idViTri', [S.phien, g, c.checked], async () => { await loadMe(); toast(c.checked ? 'Người gần đây đã thấy bạn (khoảng cách ước lượng).' : 'Đã ẩn bạn và xoá vị trí đã lưu.'); }); return; } run(null, 'idDongY', [S.phien, c.dataset.dy, c.checked], async () => { await loadMe(); toast('Đã lưu.'); }); }); };
 ACT.luukv = b => run(b, 'idCapNhat', [S.phien, { khuVuc: val('p-kv') }], async () => { await loadMe(); toast('Đã lưu khu vực.'); });
 ACT.luungs = b => run(b, 'idCapNhat', [S.phien, { ngaySinh: val('p-ns') }], async () => { await loadMe(); render(); toast('Đã lưu ngày sinh.'); });
 ACT.muon = b => { const cur = S.toi.toi.muon.slice(), k = b.dataset.k, nx = cur.indexOf(k) >= 0 ? cur.filter(x => x !== k) : cur.concat(k); run(null, 'idCapNhat', [S.phien, { muon: nx }], async () => { await loadMe(); render(); }); };
