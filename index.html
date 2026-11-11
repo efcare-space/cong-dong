@@ -1502,7 +1502,28 @@ VIEW.viec = async () => {
 ${mine ? '<p class="note">Việc bạn đăng.</p>' : `<button class="btn sm" data-act="nhansan" data-ma="${x.ma}" style="margin-top:6px"><span class="sp"></span><span>Nhận việc</span></button>`}</div>`; };
   const v = S.viec || {};
   const mine = (v.ycDat || []).map(x => ({ t: 'Có thù lao: ' + x.moTa, s: x.trangThai, extra: x.nguoiLam ? 'Người làm: ' + x.nguoiLam + ' · ' + (LOI[x.hinhThuc] || ['', ''])[1] : '' }));
-  return `<h2>Sàn năng lực 55+</h2><p class="sub">Sinh kế từ kinh nghiệm và năng lực. Bạn trả thẳng cho người làm, hoặc họ chọn góp vào quỹ, hoặc chọn ghi giờ. EFCARE không thu phí trong giai đoạn đầu.</p>
+  const veSan = `<h3 style="margin-top:4px">Về Sàn năng lực 55+</h3>
+<div class="seg" role="tablist">${[['chuyen', 'Giới thiệu về Sàn năng lực 55+'], ['quytac', 'Quy tắc Sàn năng lực 55+']].map(x => `<button class="${(S.sanInfo || 'chuyen') === x[0] ? 'on' : ''}" data-act="saninfo" data-s="${x[0]}" role="tab">${x[1]}</button>`).join('')}</div>
+${(S.sanInfo || 'chuyen') === 'chuyen' ? `<div class="card">
+<p><b>Năng lực không nghỉ hưu.</b></p>
+<p class="note">EFCARE tin một điều đơn giản: kinh nghiệm một đời không biến mất ở tuổi nghỉ hưu, nó chỉ cần đúng chỗ để tiếp tục có ích.</p>
+<p style="margin-top:10px"><b>Thành Tựu là gì?</b></p>
+<p class="note">Một trong 5 giá trị Ngũ Tâm — là lúc đóng góp được nhìn nhận bằng kết quả thật, có xác nhận, không phải lời khen suông.</p>
+<p style="margin-top:10px"><b>Sàn năng lực 55+ ra đời từ đó.</b></p>
+<p class="note">Nơi người từ 55 tuổi trở lên dùng đúng kỹ năng mình có để nhận việc, có thu nhập thật, và tiếp tục được cần đến.</p>
+</div>` : `<div class="card">
+<p><b>Sàn năng lực 55+ là gì?</b></p>
+<p class="note">Nơi đăng và nhận việc có thù lao, ưu tiên cơ hội cho thành viên từ 55 tuổi.</p>
+<p style="margin-top:10px"><b>Mỗi việc có ba lối nhận</b></p>
+<p class="note">Tiền công thẳng từ người thuê, góp tiền công vào quỹ, hoặc ghi Giờ Tử Tế — người nhận việc tự chọn.</p>
+<p style="margin-top:10px"><b>Điều kiện nhận việc</b></p>
+<p class="note">Cần ít nhất một kỹ năng đã có người xác nhận (2 người trong cộng đồng, người dạy, bằng cấp, hoặc hoàn thành khoá Học viện).</p>
+<p style="margin-top:10px"><b>Giá cả</b></p>
+<p class="note">Việc tầng C có giá sàn theo lương tối thiểu vùng. EFCARE không thu phí trong giai đoạn đầu, tiền trả thẳng không qua app.</p>
+</div>`}`;
+  return `<h2>Sàn năng lực 55+</h2>
+${veSan}
+<h3 style="margin-top:18px">Đăng và nhận việc</h3>
 <div class="row"><button class="btn" data-act="dangsan">＋ Đăng việc có thù lao</button><button class="btn alt" data-act="toimuc" style="flex:0 0 auto;width:auto">👤 Hồ sơ năng lực</button></div>
 <p class="note" style="margin:10px 0">Mỗi việc có ba lối nhận: tiền công, góp tiền công vào quỹ, hoặc ghi Giờ Tử Tế.${S.toi.toi.xm.C === 'dat' ? '' : ' <b>Cần kỹ năng đã có người xác nhận để nhận việc.</b>'}${S.toi.toi.du55 ? '' : ' <b>Sàn năng lực ưu tiên cơ hội nhận việc cho thành viên từ 55 tuổi — cập nhật ngày sinh ở mục Tôi.</b>'}</p>
 <div style="margin-top:12px;${items.length ? 'display:grid;grid-template-columns:1fr 1fr;gap:10px' : ''}">${items.length ? items.map(card).join('') : '<div class="empty"><i>🌤️</i>Chưa có việc nào.<br>Bạn có thể là người đăng đầu tiên.</div>'}</div>
@@ -1687,6 +1708,7 @@ ${xong.length ? `<div class="card">${xong.map(x => `<div class="li"><span class=
 };
 ACT.viseg = b => { S.viSeg = b.dataset.s; render(); };
 ACT.gttinfo = b => { S.gttInfo = b.dataset.s; render(); };
+ACT.saninfo = b => { S.sanInfo = b.dataset.s; render(); };
 ACT.doiqua = b => { const u = S.cfg.uuDai.find(x => x.ma === b.dataset.ma); confirmBox(`Đổi ${fmt(u.gio)} giờ lấy "${u.ten}" (giá trị ${vnd(u.giaTri)} đ, ${u.quyTra ? u.doiTac + ' bán, quỹ trả' : 'do ' + u.doiTac + ' tài trợ'})?`, () => run(b, 'uuDaiDoi', [S.phien, u.ma], async r => { await refresh(); celebrate('Đã đổi quà', `Mã phiếu: ${r.maPhieu}. Đưa mã này cho ${r.doiTac} khi đến nhận.`); })); };
 ACT.tangsheet = () => {
   const r = S.toi, gd = r.giaDinh, mem = gd ? gd.thanhVien.filter(m => m.efc !== r.toi.efc && m.trangThai !== 'da_mat') : [];
