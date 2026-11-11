@@ -1359,7 +1359,7 @@ function geo(cb) { if (!navigator.geolocation) { toast('Máy không hỗ trợ �
 function shrink(file, cb) { const r = new FileReader(); r.onload = () => { const img = new Image(); img.onload = () => { const s = Math.min(1, 320 / Math.max(img.width, img.height)), c = document.createElement('canvas'); c.width = Math.round(img.width * s); c.height = Math.round(img.height * s); c.getContext('2d').drawImage(img, 0, 0, c.width, c.height); let q = .6, d = c.toDataURL('image/jpeg', q); while (d.length > 44000 && q > .2) { q -= .1; d = c.toDataURL('image/jpeg', q); } cb(d.length <= 44000 ? d : ''); }; img.src = r.result; }; r.readAsDataURL(file); }
 
 /* ---------- TRANG CHỦ ---------- */
-const ICON = { 'dau-tien': '🌱', '5-gio': '⏳', '3-nguoi': '🏡', 'hieu-nghia': '💝', 'gieo-quy': '🌳', 'sinh-ke': '💼' };
+const ICON = { 'dau-tien': '🏅', '5-gio': '⏳', '3-nguoi': '🏡', 'hieu-nghia': '💝', 'gieo-quy': '🌳', 'sinh-ke': '💼' };
 function todos() {
   const v = S.viec || {}, out = [];
   ((S.toi && S.toi.nhoXnKN) || []).forEach(x => out.push(`<div class="todo"><div class="ic">🤝</div><div class="tx"><b>${esc(x.nguoi)} nhờ bạn xác nhận kỹ năng</b>${esc(x.kyNang)}${x.loiNhan ? ' · “' + esc(x.loiNhan) + '”' : ''}</div><button class="btn sm ok" data-act="kntl" data-ma="${x.ma}">Trả lời</button></div>`));
@@ -1375,13 +1375,12 @@ function todos() {
 ACT.mo = b => { S.man = 'app'; S.tab = b.dataset.t; if (b.dataset.v) S.viSeg = b.dataset.v; render(); };
 VIEW.home = () => {
   const r = S.toi, t = r.thongKe, td = todos(), dat = r.huyHieu.filter(x => x.dat).length;
-  return `<div class="bal"><div style="display:flex;justify-content:space-between;align-items:flex-end;gap:10px"><div><small>Chào ${esc(r.toi.ten)}</small><b class="big">${fmt(r.soDu)} giờ</b></div><button class="mini-badges" data-act="dauMoc" aria-label="Xem dấu mốc">${r.huyHieu.map(x => `<i class="${x.dat ? 'dat' : ''}">${x.dat ? ICON[x.id] || '★' : '·'}</i>`).join('')}<small>${dat}/${r.huyHieu.length} dấu mốc</small></button></div>
-<div class="stat3"><div><b>${fmt(t.gioDaGiup)}</b><span>giờ đã giúp</span></div><div><b>${t.soNguoi}</b><span>người được giúp</span></div>${t.thuNhap || r.toi.muonThuNhap ? `<div><b>${t.thuNhap ? vnd(t.thuNhap / 1000) + 'k' : '0'}</b><span>thu nhập (đ)</span></div>` : `<div><b>${fmt(t.gioDaTang)}</b><span>giờ đã tặng</span></div>`}</div></div>
+  return `<div class="bal"><div style="display:flex;justify-content:space-between;align-items:flex-end;gap:10px"><div><small>Chào ${esc(r.toi.ten)}</small><b class="big">${fmt(r.soDu)} GTT</b></div><button class="mini-badges" data-act="dauMoc" aria-label="Xem dấu mốc">${r.huyHieu.map(x => `<i class="${x.dat ? 'dat' : ''}">${x.dat ? ICON[x.id] || '★' : '·'}</i>`).join('')}<small>${dat}/${r.huyHieu.length} dấu mốc</small></button></div>
+<div class="stat3"><div><b>${fmt(t.gioDaGiup)}</b><span>giờ đã giúp</span></div><div><b>${t.soNguoi}</b><span>người được giúp</span></div>${t.thuNhap || r.toi.muonThuNhap ? `<div><b>${t.thuNhap ? vnd(t.thuNhap / 1000) + 'k' : '0'}</b><span>thu nhập từ sàn (đ)</span></div>` : `<div><b>${fmt(t.gioDaTang)}</b><span>giờ đã tặng</span></div>`}</div></div>
 ${theCai()}
 ${td.length ? `<div class="card"><b>Việc cần bạn · ${td.length}</b>${td.join('')}</div>` : ''}
-<button class="cta" data-act="tab" data-t="ghi"><span>✎</span>Ghi nhận việc vừa làm</button>
-<button class="btn alt" data-act="hoatdong" style="margin-top:10px">📋 Hoạt động của tôi${hoatDongDem() ? ` · ${hoatDongDem()}` : ''}</button>
-<button class="btn ghost" data-act="go" data-m="xacnhan" style="margin-top:2px">✅ Xác nhận được giúp</button>
+<div class="row"><button class="cta" data-act="tab" data-t="ghi" style="flex:1"><span>✎</span>Ghi nhận việc tử tế</button><button class="cta" data-act="go" data-m="xacnhan" style="flex:1">✅ Xác nhận việc tử tế</button></div>
+<button class="btn alt" data-act="hoatdong" style="margin-top:10px">📋 Hoạt động của tôi trên Sàn năng lực 55+${hoatDongDem() ? ` · ${hoatDongDem()}` : ''}</button>
 
 <div class="qa" style="margin-top:18px">
 <button data-act="mo" data-t="gtt"><span>${ICON_GTT}</span>Giờ Tử Tế<small>Tương trợ → GTT</small></button>
