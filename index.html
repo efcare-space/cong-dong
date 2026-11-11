@@ -1376,7 +1376,8 @@ VIEW.home = () => {
 ${theCai()}
 ${td.length ? `<div class="card"><b>Việc cần bạn · ${td.length}</b>${td.join('')}</div>` : ''}
 <button class="cta" data-act="tab" data-t="ghi"><span>✎</span>Ghi nhận việc vừa làm</button>
-<div class="row" style="margin-top:10px"><button class="btn alt" data-act="hoatdong" style="flex:1">📋 Hoạt động của tôi${hoatDongDem() ? ` · ${hoatDongDem()}` : ''}</button><button class="btn ghost" data-act="go" data-m="xacnhan" style="flex:0 0 auto">✅ Xác nhận được giúp</button></div>
+<button class="btn alt" data-act="hoatdong" style="margin-top:10px">📋 Hoạt động của tôi${hoatDongDem() ? ` · ${hoatDongDem()}` : ''}</button>
+<button class="btn ghost" data-act="go" data-m="xacnhan" style="margin-top:2px">✅ Xác nhận được giúp</button>
 
 <h3 style="margin-top:18px">🤝 Giờ Tử Tế</h3>
 <p class="sub">Tương trợ không qua tiền, ghi vào Sổ giờ chung.</p>
