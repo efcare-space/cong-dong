@@ -1370,6 +1370,7 @@ function todos() {
   (v.nhoNhan || []).filter(x => x.loai === 'hoc' && x.trangThai === 'xong' && !x.xacNhanKN).forEach(x => out.push(`<div class="todo"><div class="ic">🎓</div><div class="tx"><b>Xác nhận kỹ năng cho ${esc(x.nguoiCan)}</b>Họ đã tự làm được: ${esc(x.viec)}?</div><button class="btn sm" data-act="xnkn" data-ma="${x.ma}">Xác nhận</button></div>`));
   (v.ycLam || []).filter(x => x.trangThai === 'da_nhan').forEach(x => out.push(`<div class="todo"><div class="ic">${LOI[x.hinhThuc][0]}</div><div class="tx"><b>Bạn đang làm cho ${esc(x.nguoiCan)}</b>${esc(x.moTa)} · ${LOI[x.hinhThuc][1]}${x.lienHe ? ` · <a href="tel:${esc(x.lienHe)}">${esc(x.lienHe)}</a>` : ''}</div><button class="btn sm alt" data-act="doiloi" data-ma="${x.ma}">Đổi lối</button></div>`));
   (v.caCho || []).forEach(x => out.push(`<div class="todo"><div class="ic">⏱</div><div class="tx"><b>Chờ ${esc(x.nguoiNhan)} xác nhận</b>Ca ${esc(x.ma)} · ${fmt(x.gio)} giờ</div></div>`));
+  (v.nhoDang || []).filter(x => x.trangThai === 'mo').forEach(x => out.push(`<div class="todo"><div class="ic">📣</div><div class="tx"><b>${x.loai === 'hoc' ? 'Muốn học' : 'Nhờ giúp'}: ${esc(x.viec)}</b>Đang chờ người nhận · cho ${esc(x.nguoiCan)}</div></div>`));
   return out;
 }
 ACT.mo = b => { S.man = 'app'; S.tab = b.dataset.t; if (b.dataset.v) S.viSeg = b.dataset.v; render(); };
@@ -1469,7 +1470,7 @@ VIEW.congdong5t = () => `<button class="link" data-act="tab" data-t="home">‹ T
 <p style="margin-top:8px"><b>Bạn không cần phải thật giỏi mới có thể tham gia.</b> Chỉ cần sẵn lòng đóng góp một điều có ích, bạn đã có thể bắt đầu.</p></div>
 <h3>Năm giá trị Ngũ Tâm</h3><div class="card">${DAT_5T.map(v => `<div class="li" style="display:block;border-top:1px solid var(--line);padding:8px 0"><b>${esc(v[0])}</b><p class="note" style="margin:2px 0 0">${esc(v[1])}</p></div>`).join('')}</div>
 <h3>Thành viên có thể đóng góp những gì?</h3><div class="card">${MUON.filter(m => m[0] !== 'thu_nhap').map(m => `<div class="li"><span class="l">${m[1]} ${esc(m[2])}<br><span class="note">${esc(m[3])}</span></span></div>`).join('')}</div>
-<h3>Giờ Tử Tế (GTT) ghi nhận đóng góp thế nào?</h3><div class="card"><p class="note">Mỗi lần một việc tử tế được người nhận xác nhận, bạn được ghi thêm giờ vào Sổ giờ của mình. GTT không phải tiền, không mua bán, không rút ra tiền mặt.</p><button class="btn sm alt" data-act="mo" data-t="vi" data-v="giai" style="margin-top:8px">Xem thêm ở Ví</button></div>
+<h3>Giờ Tử Tế (GTT) ghi nhận đóng góp thế nào?</h3><div class="card"><p class="note">Mỗi lần một việc tử tế được người nhận xác nhận, bạn được ghi thêm giờ vào Sổ giờ của mình. GTT không phải tiền, không mua bán, không rút ra tiền mặt.</p><button class="btn sm alt" data-act="mo" data-t="gtt" style="margin-top:8px">Xem thêm ở Giờ Tử Tế</button></div>
 <h3>Đại sứ Ngũ Tâm</h3><div class="card"><p class="note">Là người lan tỏa tinh thần 5T trong khu vực của mình: giới thiệu cộng đồng, đồng hành cùng thành viên mới, kết nối với Trạm Ngũ Tâm gần nhất.</p></div>
 <h3>Trạm Ngũ Tâm</h3><div class="card"><p class="note">Điểm sinh hoạt cộng đồng tại địa phương, nơi diễn ra các hoạt động trực tiếp của 5T. Muốn mở hoặc kết nối một Trạm, đăng ký ở mục "Tôi muốn" tại Trang chủ.</p></div>
 <h3>Cách tham gia</h3><div class="card"><p class="note">Giúp một việc, học một kỹ năng, hoặc chia sẻ điều bạn biết — mỗi đóng góp đều có ý nghĩa, không cần đứng đầu bảng vinh danh mới là người tử tế.</p><button class="btn" data-act="tab" data-t="home" style="margin-top:10px">Về Trang chủ bắt đầu</button></div>`;
@@ -1513,10 +1514,29 @@ ${mine ? '<p class="note">Việc bạn đăng.</p>' : `<button class="btn ok" da
   const mine = (v.nhoDang || []).map(x => ({ t: (x.loai === 'hoc' ? 'Muốn học: ' : 'Nhờ giúp: ') + x.viec + ' · cho ' + x.nguoiCan, s: x.trangThai, extra: x.nguoiNhan ? 'Người nhận: ' + x.nguoiNhan + (x.lienHe ? ' · ' + x.lienHe : '') : '' }));
   const hocKH = seg === 'hoc' ? `<h3>Khoá của Học viện EFCARE</h3><p class="note" style="margin-bottom:8px">Học phí do quỹ tài trợ trả khi còn suất. Học xong, kỹ năng vào hồ sơ của bạn.</p>${(S.cfg.khoaHoc || []).map(k => { const da = S.toi.ghiDanh.some(g => g.khoa === k.ten); return `<div class="job">${pill(k.soBuoi + ' buổi', 'p-hoc')} ${k.tang === 'B' ? pill('Mở việc tầng B', 'p-san') : ''}<h4>${esc(k.ten)}</h4><p style="font-size:15px;margin-bottom:10px">${esc(k.moTa)}</p>${da ? '<p class="note">✓ Bạn đã ghi danh</p>' : `<button class="btn alt" data-act="ghidanh" data-ma="${k.ma}"><span class="sp"></span><span>Ghi danh</span></button>`}</div>`; }).join('')}` : '';
   return `<button class="link" data-act="tab" data-t="home">‹ Trang chủ</button><h2>Giờ Tử Tế</h2><div class="seg" role="tablist">${[['giup', 'Cần giúp'], ['hoc', 'Muốn học']].map(x => `<button class="${seg === x[0] ? 'on' : ''}" data-act="seg" data-s="${x[0]}" role="tab" aria-selected="${seg === x[0]}">${x[1]}</button>`).join('')}</div>
-<div class="row"><button class="btn" data-act="danggtt">＋ Đăng ${seg === 'hoc' ? 'điều tôi muốn học' : 'nhu cầu'}</button><button class="btn alt" data-act="gantoi" style="flex:0 0 auto">📍 Gần tôi</button></div>
+<div class="row"><button class="btn" data-act="danggtt">＋ Đăng ${seg === 'hoc' ? 'điều tôi muốn học' : 'nhu cầu'}</button><button class="btn alt" data-act="gantoi" style="flex:0 0 auto;width:auto">📍 Gần tôi</button></div>
 <div class="safe"><b>Giữ an toàn:</b> lần đầu gặp ở nơi đông người hoặc có người thân. Không nhận tiền, không giữ giấy tờ. Việc y tế chỉ nhắc nhở, không làm thay chuyên môn.</div>
 <div style="margin-top:12px">${items.length ? items.map(card).join('') : '<div class="empty"><i>🌤️</i>Chưa có việc nào ở mục này.<br>Bạn có thể là người đăng đầu tiên.</div>'}</div>${hocKH}
-${mine.length ? `<h3>Việc tôi đã đăng</h3><div class="card">${mine.map(x => `<div class="li"><span class="l">${esc(x.t)}${x.extra ? `<br><span class="note">${esc(x.extra)}</span>` : ''}</span>${pill((TT_VIEC[x.s] || [x.s])[0], (TT_VIEC[x.s] || ['', 'p-mut'])[1])}</div>`).join('')}</div>` : ''}`;
+${mine.length ? `<h3>Việc tôi đã đăng</h3><div class="card">${mine.map(x => `<div class="li"><span class="l">${esc(x.t)}${x.extra ? `<br><span class="note">${esc(x.extra)}</span>` : ''}</span>${pill((TT_VIEC[x.s] || [x.s])[0], (TT_VIEC[x.s] || ['', 'p-mut'])[1])}</div>`).join('')}</div>` : ''}
+<h3 style="margin-top:18px">Về Giờ Tử Tế</h3>
+<div class="seg" role="tablist">${[['chuyen', 'Câu chuyện GTT'], ['quytac', 'Quy tắc GTT']].map(x => `<button class="${(S.gttInfo || 'chuyen') === x[0] ? 'on' : ''}" data-act="gttinfo" data-s="${x[0]}" role="tab">${x[1]}</button>`).join('')}</div>
+${(S.gttInfo || 'chuyen') === 'chuyen' ? `<div class="card">
+<p><b>EFCARE bắt đầu từ mong muốn chăm sóc gia đình liên thế hệ.</b></p>
+<p class="note">Để mong muốn đó thành việc làm được mỗi ngày, EFCARE giữ 5 giá trị Ngũ Tâm: Thiện Tâm, Tử Tế, Tinh Tấn, Tận Tâm, Thành Tựu.</p>
+<p style="margin-top:10px"><b>Tử Tế là gì?</b></p>
+<p class="note">Là lúc một người sẵn lòng giúp người khác mà không cần được trả công — rõ vai trò, rõ giới hạn, và có người xác nhận ở cả hai phía.</p>
+<p style="margin-top:10px"><b>Giờ Tử Tế (GTT) ra đời từ đó.</b></p>
+<p class="note">GTT là cách EFCommunity ghi lại đúng từng việc tử tế bằng số giờ thật, để không việc tốt nào bị quên, và để lòng tốt của bạn được nhìn thấy.</p>
+</div>` : `<div class="card">
+<p><b>GTT (Giờ Tử Tế) không phải tiền.</b></p>
+<p class="note">GTT ghi lại việc tử tế bạn đã làm hoặc được giúp, tính bằng giờ. Không mua bán, không chuyển nhượng cho người lạ, không đổi ngược lại thành tiền mặt.</p>
+<p style="margin-top:10px"><b>GTT dùng để làm gì?</b></p>
+<p class="note">Đổi quà, ưu đãi do đối tác tài trợ ở mục "Đổi hàng & Ưu đãi". Tặng cho người thân. Để lại cho người thừa kế bạn chọn ở mục Tôi.</p>
+<p style="margin-top:10px"><b>GTT đến từ đâu?</b></p>
+<p class="note">Mỗi lần một việc tử tế được người nhận xác nhận, bạn được ghi thêm giờ vào Sổ giờ của mình. Việc có thù lao trên Sàn năng lực là tiền, không phải GTT, trừ khi bạn chọn lối nhận "ghi giờ".</p>
+<p style="margin-top:10px"><b>Vì sao không rút ra tiền?</b></p>
+<p class="note">GTT ghi nhận lòng tốt, giữ cho mọi người bình đẳng khi đổi quà, không ai dùng tiền để mua được nhiều GTT hơn người khác.</p>
+</div>`}`;
 };
 ACT.gantoi = async b => {
   busy(b, true); const g = await geoP(); busy(b, false);
@@ -1645,21 +1665,12 @@ ${goiY.length ? `<h3 style="margin-top:16px">Có thể đổi ngay</h3><div clas
 <h3 style="margin-top:14px">Phiếu đổi quà</h3><p class="note" style="margin-bottom:8px">Riêng với Sổ giờ, không gộp chung.</p>${r.phieu.length ? `<div class="card">${r.phieu.map(p => `<div class="li"><span class="l"><b>${esc(p.ma)}</b> · ${esc(p.ten)}<br><span class="note">${esc(p.doiTac)} · ${fmt(p.gio)} giờ · ${dt(p.tao)}</span></span>${p.trangThai === 'chua_dung' ? pill('Đưa mã cho cửa hàng', 'p-warn') : pill('Đã dùng', 'p-gtt')}</div>`).join('')}</div>` : '<div class="empty"><i>🧾</i>Chưa có phiếu.</div>'}
 <p class="note" style="margin-top:10px">Không xoá lịch sử giao dịch.</p>`;
   }
-  if (s === 'giai') body = `<div class="card">
-<p><b>GTT (Giờ Tử Tế) không phải tiền.</b></p>
-<p class="note">GTT ghi lại việc tử tế bạn đã làm hoặc được giúp, tính bằng giờ. Không mua bán, không chuyển nhượng cho người lạ, không đổi ngược lại thành tiền mặt.</p>
-<p style="margin-top:10px"><b>GTT dùng để làm gì?</b></p>
-<p class="note">Đổi quà, ưu đãi do đối tác tài trợ ở mục "Đổi hàng & Ưu đãi". Tặng cho người thân. Để lại cho người thừa kế bạn chọn ở mục Tôi.</p>
-<p style="margin-top:10px"><b>GTT đến từ đâu?</b></p>
-<p class="note">Mỗi lần một việc tử tế được người nhận xác nhận, bạn được ghi thêm giờ vào Sổ giờ của mình. Việc có thù lao trên Sàn năng lực là tiền, không phải GTT, trừ khi bạn chọn lối nhận "ghi giờ".</p>
-<p style="margin-top:10px"><b>Vì sao không rút ra tiền?</b></p>
-<p class="note">GTT ghi nhận lòng tốt, giữ cho mọi người bình đẳng khi đổi quà, không ai dùng tiền để mua được nhiều GTT hơn người khác.</p>
-</div>`;
   return `<div class="bal"><small>Ví GTT của ${esc(r.toi.ten)}</small><b class="big">${fmt(r.soDu)} giờ</b><small>${r.giaQuyDoi ? `Khi đổi quà quỹ bảo chứng: 1 giờ ≈ ${vnd(r.giaQuyDoi)} đ hàng hoá` : 'Quỹ đang chờ tài trợ để bảo chứng quà'}</small></div>
-<div class="seg" style="overflow-x:auto">${[['tong', 'Tổng quan'], ['doi', 'Đổi hàng & Ưu đãi'], ['ls', 'Lịch sử GTT'], ['giai', 'Giải thích GTT']].map(x => `<button class="${s === x[0] ? 'on' : ''}" data-act="viseg" data-s="${x[0]}">${x[1]}</button>`).join('')}</div>${body}
+<div class="seg" style="overflow-x:auto">${[['tong', 'Tổng quan'], ['doi', 'Đổi hàng & Ưu đãi'], ['ls', 'Lịch sử GTT']].map(x => `<button class="${s === x[0] ? 'on' : ''}" data-act="viseg" data-s="${x[0]}">${x[1]}</button>`).join('')}</div>${body}
 <p class="note" style="margin-top:12px">Giờ không rút ra tiền mặt, không trả lãi, không đổi ngược. Giờ còn lại có thể để thừa kế cho người thân (đặt ở mục Tôi).</p>`;
 };
 ACT.viseg = b => { S.viSeg = b.dataset.s; render(); };
+ACT.gttinfo = b => { S.gttInfo = b.dataset.s; render(); };
 ACT.doiqua = b => { const u = S.cfg.uuDai.find(x => x.ma === b.dataset.ma); confirmBox(`Đổi ${fmt(u.gio)} giờ lấy "${u.ten}" (giá trị ${vnd(u.giaTri)} đ, ${u.quyTra ? u.doiTac + ' bán, quỹ trả' : 'do ' + u.doiTac + ' tài trợ'})?`, () => run(b, 'uuDaiDoi', [S.phien, u.ma], async r => { await refresh(); celebrate('Đã đổi quà', `Mã phiếu: ${r.maPhieu}. Đưa mã này cho ${r.doiTac} khi đến nhận.`); })); };
 ACT.tangsheet = () => {
   const r = S.toi, gd = r.giaDinh, mem = gd ? gd.thanhVien.filter(m => m.efc !== r.toi.efc && m.trangThai !== 'da_mat') : [];
