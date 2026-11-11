@@ -1367,18 +1367,35 @@ function todos() {
   (v.caCho || []).forEach(x => out.push(`<div class="todo"><div class="ic">⏱</div><div class="tx"><b>Chờ ${esc(x.nguoiNhan)} xác nhận</b>Ca ${esc(x.ma)} · ${fmt(x.gio)} giờ</div></div>`));
   return out;
 }
-const FA = [['seg', 's', 'giup', '', '🤝', 'Ai đang cần giúp'], ['seg', 's', 'hoc', '', '📚', 'Học kỹ năng'], ['mo', 't', 'viec', '', '💼', 'Sàn năng lực'], ['mo', 't', 'vi', 'doi', '🎁', 'Đổi quà'], ['mo', 't', 'vi', 'tong', '💝', 'Tặng giờ'], ['mo', 't', 'vi', 'ls', '🧾', 'Phiếu của tôi'], ['go', 'm', 'xacnhan', '', '✅', 'Xác nhận được giúp'], ['mo', 't', 'toi', '', '👨‍👩‍👧', 'Gia đình'], ['mo', 't', 'toptute', '', '🏅', 'Top Tử Tế'], ['mo', 't', 'congdong5t', '', '💚', 'Cộng đồng 5T'], ['dhmo', '', '', '', '🏪', 'Đối tác, hảo tâm']];
 ACT.mo = b => { S.man = 'app'; S.tab = b.dataset.t; if (b.dataset.v) S.viSeg = b.dataset.v; render(); };
 VIEW.home = () => {
   const r = S.toi, t = r.thongKe, td = todos(), dat = r.huyHieu.filter(x => x.dat).length;
+  const uu = (S.cfg.uuDai || []).slice(0, 3);
   return `<div class="bal"><div style="display:flex;justify-content:space-between;align-items:flex-end;gap:10px"><div><small>Chào ${esc(r.toi.ten)}</small><b class="big">${fmt(r.soDu)} giờ</b></div><button class="mini-badges" data-act="dauMoc" aria-label="Xem dấu mốc">${r.huyHieu.map(x => `<i class="${x.dat ? 'dat' : ''}">${x.dat ? ICON[x.id] || '★' : '·'}</i>`).join('')}<small>${dat}/${r.huyHieu.length} dấu mốc</small></button></div>
 <div class="stat3"><div><b>${fmt(t.gioDaGiup)}</b><span>giờ đã giúp</span></div><div><b>${t.soNguoi}</b><span>người được giúp</span></div>${t.thuNhap || r.toi.muonThuNhap ? `<div><b>${t.thuNhap ? vnd(t.thuNhap / 1000) + 'k' : '0'}</b><span>thu nhập (đ)</span></div>` : `<div><b>${fmt(t.gioDaTang)}</b><span>giờ đã tặng</span></div>`}</div></div>
-${gioiThieu5T()}
 ${theCai()}
 ${td.length ? `<div class="card"><b>Việc cần bạn · ${td.length}</b>${td.join('')}</div>` : ''}
 <button class="cta" data-act="tab" data-t="ghi"><span>✎</span>Ghi nhận việc vừa làm</button>
-<button class="btn alt" data-act="hoatdong" style="margin-top:10px">📋 Hoạt động của tôi${hoatDongDem() ? ` · ${hoatDongDem()}` : ''}</button>
-<div class="fa" role="list" aria-label="Chức năng">${FA.map(f => `<button role="listitem" data-act="${f[0]}"${f[1] ? ` data-${f[1]}="${f[2]}"` : ''}${f[3] ? ` data-v="${f[3]}"` : ''}><span aria-hidden="true">${f[4]}</span>${f[5]}</button>`).join('')}</div>
+<div class="row" style="margin-top:10px"><button class="btn alt" data-act="hoatdong" style="flex:1">📋 Hoạt động của tôi${hoatDongDem() ? ` · ${hoatDongDem()}` : ''}</button><button class="btn ghost" data-act="go" data-m="xacnhan" style="flex:0 0 auto">✅ Xác nhận được giúp</button></div>
+
+<h3 style="margin-top:18px">🤝 Giờ Tử Tế</h3>
+<p class="sub">Tương trợ không qua tiền, ghi vào Sổ giờ chung.</p>
+<div class="row"><button class="btn" data-act="seg" data-s="giup" style="flex:1">🤝 Ai đang cần giúp</button><button class="btn alt" data-act="seg" data-s="hoc" style="flex:1">📚 Học kỹ năng</button></div>
+<button class="btn ghost" data-act="mo" data-t="vi" data-v="tong" style="margin-top:8px">💝 Tặng giờ cho người khác</button>
+
+<h3 style="margin-top:18px">💚 Hoạt động cộng đồng</h3>
+${gioiThieu5T()}
+<div class="row" style="margin-top:8px"><button class="btn sm alt" data-act="mo" data-t="toptute" style="flex:1">🏅 Top Tử Tế</button><button class="btn sm alt" data-act="mo" data-t="toi" style="flex:1">👨‍👩‍👧 Gia đình</button></div>
+
+<h3 style="margin-top:18px">🛍️ Sản phẩm nổi bật</h3>
+${uu.length ? `<div class="row" style="overflow-x:auto;padding-bottom:4px">${uu.map(u => `<div class="job" style="flex:0 0 160px">${phAnh(u.anh, 90, quaIcon(u.loaiQua))}<b style="font-size:14px">${esc(u.ten)}</b><div class="note">${fmt(u.gio)} giờ</div></div>`).join('')}</div>` : '<p class="note">Chưa có ưu đãi nào, đang mời đối tác.</p>'}
+<div class="row" style="margin-top:8px"><button class="btn sm alt" data-act="mo" data-t="vi" data-v="doi" style="flex:1">🎁 Xem Đổi quà</button><button class="btn sm alt" data-act="mo" data-t="vi" data-v="ls" style="flex:1">🧾 Phiếu của tôi</button></div>
+<button class="btn ghost" data-act="mo" data-t="viec" style="margin-top:8px">💼 Việc có thù lao (Sàn năng lực)</button>
+
+<h3 style="margin-top:18px">🏪 Thông tin đối tác</h3>
+${dongHanh() || '<p class="note">Chưa có đối tác đồng hành.</p>'}
+<button class="btn ghost" data-act="dhchao" style="margin-top:8px">Cửa hàng, doanh nghiệp, nhà hảo tâm muốn đồng hành ›</button>
+
 ${goiYCua()}`;
 };
 ACT.dauMoc = () => { const r = S.toi; sheet(`<button class="x" data-act="close" aria-label="Đóng">×</button><h2>Dấu mốc của bạn</h2><p class="note" style="margin-bottom:10px">Không xếp hạng ai hơn ai. Mỗi dấu mốc là một chặng của chính bạn.</p><div class="bdg">${r.huyHieu.map(x => `<div class="${x.dat ? 'dat' : ''}"><i>${x.dat ? ICON[x.id] || '★' : '○'}</i>${esc(x.ten)}</div>`).join('')}</div>${r.thongKe.soCa ? '<button class="btn alt" data-act="cert" style="margin-top:14px">Lưu giấy ghi nhận của tôi</button>' : ''}`); };
