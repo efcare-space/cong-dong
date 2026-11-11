@@ -1666,7 +1666,7 @@ VIEW.vi = () => {
 <p class="note" style="margin:10px 0">Đây chỉ là giờ của riêng bạn trong Sổ giờ chung. GTT do đối tác tài trợ cho chương trình không tính vào ví cá nhân. GTT không phải tiền.</p>
 <div class="row"><button class="btn alt" data-act="tangsheet">🎁 Tặng giờ</button><button class="btn alt" data-act="viseg" data-s="doi">🛍️ Đổi hàng & Ưu đãi</button></div>
 ${goiY.length ? `<h3 style="margin-top:16px">Có thể đổi ngay</h3><div class="card">${goiY.map(u => `<div class="li"><span class="l">${esc(u.ten)}<br><span class="note">${esc(u.doiTac)}</span></span><b>${fmt(u.gio)} giờ</b></div>`).join('')}</div>` : ''}
-<h3 style="margin-top:20px">💼 Thu nhập từ sàn (tiền thật)</h3>
+<div class="bal" style="margin-top:20px"><small>💼 Thu nhập từ sàn của ${esc(r.toi.ten)}</small><b class="big">${vnd(S.toi.thongKe.thuNhap + S.toi.thongKe.daGop)} đ</b><small>Tiền công đã nhận + đã góp vào quỹ · tiền thật, khác GTT</small></div>
 <div class="card"><div class="li"><span class="l">Tiền công đã nhận</span><b>${vnd(S.toi.thongKe.thuNhap)} đ</b></div><div class="li"><span class="l">Tiền công đã góp vào quỹ</span><b>${vnd(S.toi.thongKe.daGop)} đ</b></div></div>
 <p class="note" style="margin:8px 0 10px">EFCARE không giữ tiền. Người thuê trả thẳng cho bạn, hoặc chuyển thẳng vào tài khoản quỹ nếu bạn chọn góp. Đây là tiền thật, khác với GTT ở trên.</p>
 ${xong.length ? `<div class="card">${xong.map(x => `<div class="li"><span class="l">${esc(x.moTa)}<br><span class="note">${esc(x.nguoiCan)} · ${LOI[x.hinhThuc][1]}</span></span><b>${x.hinhThuc === 'gio' ? fmt(gtt(x.soGio * 60)) + ' giờ' : vnd(x.gia) + ' đ'}</b></div>`).join('')}</div>` : '<div class="empty"><i>💼</i>Chưa có việc có thù lao nào xong.</div>'}`;
