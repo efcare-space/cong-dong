@@ -1376,7 +1376,8 @@ function todos() {
 ACT.mo = b => { S.man = 'app'; S.tab = b.dataset.t; if (b.dataset.v) S.viSeg = b.dataset.v; render(); };
 VIEW.home = async () => {
   const r = S.toi, t = r.thongKe, td = todos(), dat = r.huyHieu.filter(x => x.dat).length;
-  const lb = await api('topTuTe', S.ldbKy);
+  const lb0 = await api('topTuTe', S.ldbKy).catch(() => null);
+  const lb = { top: (lb0 && lb0.top) || [], nhan: (lb0 && lb0.nhan) || '' };
   const medal = ['🥇', '🥈', '🥉'];
   return `<div class="bal"><div style="display:flex;justify-content:space-between;align-items:flex-end;gap:10px"><div><small>Chào ${esc(r.toi.ten)}</small><b class="big">${fmt(r.soDu)} GTT</b></div><button class="mini-badges" data-act="dauMoc" aria-label="Xem dấu mốc">${r.huyHieu.map(x => `<i class="${x.dat ? 'dat' : ''}">${x.dat ? ICON[x.id] || '★' : '·'}</i>`).join('')}<small>${dat}/${r.huyHieu.length} dấu mốc</small></button></div>
 <div class="stat3"><div><b>${fmt(t.gioDaGiup)}</b><span>giờ đã giúp</span></div><div><b>${t.soNguoi}</b><span>người được giúp</span></div>${t.thuNhap || r.toi.muonThuNhap ? `<div><b>${t.thuNhap ? vnd(t.thuNhap / 1000) + 'k' : '0'}</b><span>thu nhập từ sàn (đ)</span></div>` : `<div><b>${fmt(t.gioDaTang)}</b><span>giờ đã tặng</span></div>`}</div></div>
@@ -1505,7 +1506,7 @@ ${mine ? '<p class="note">Việc bạn đăng.</p>' : `<button class="btn sm" da
 <p class="note" style="margin:10px 0">Mỗi việc có ba lối nhận: tiền công, góp tiền công vào quỹ, hoặc ghi Giờ Tử Tế.${S.toi.toi.xm.C === 'dat' ? '' : ' <b>Cần kỹ năng đã có người xác nhận để nhận việc.</b>'}${S.toi.toi.du55 ? '' : ' <b>Sàn năng lực ưu tiên cơ hội nhận việc cho thành viên từ 55 tuổi — cập nhật ngày sinh ở mục Tôi.</b>'}</p>
 <div style="margin-top:12px;${items.length ? 'display:grid;grid-template-columns:1fr 1fr;gap:10px' : ''}">${items.length ? items.map(card).join('') : '<div class="empty"><i>🌤️</i>Chưa có việc nào.<br>Bạn có thể là người đăng đầu tiên.</div>'}</div>
 ${mine.length ? `<h3>Việc tôi đã đăng</h3><div class="card">${mine.map(x => `<div class="li"><span class="l">${esc(x.t)}${x.extra ? `<br><span class="note">${esc(x.extra)}</span>` : ''}</span>${pill((TT_VIEC[x.s] || [x.s])[0], (TT_VIEC[x.s] || ['', 'p-mut'])[1])}</div>`).join('')}</div>` : ''}
-<h3>Thu nhập của tôi</h3><div class="kpis"><div class="kpi"><b>${vnd(S.toi.thongKe.thuNhap)} đ</b><span>Tiền công đã nhận</span></div><div class="kpi"><b>${vnd(S.toi.thongKe.daGop)} đ</b><span>Tiền công đã góp vào quỹ</span></div></div><p class="note" style="margin:8px 0 10px">EFCARE không giữ tiền. Người thuê trả thẳng cho bạn, hoặc chuyển thẳng vào tài khoản quỹ nếu bạn chọn góp. Đây là tiền thật, khác với GTT — xem GTT ở Ví.</p>${(v.ycLam || []).filter(x => x.trangThai === 'xong').length ? `<div class="card">${v.ycLam.filter(x => x.trangThai === 'xong').map(x => `<div class="li"><span class="l">${esc(x.moTa)}<br><span class="note">${esc(x.nguoiCan)} · ${LOI[x.hinhThuc][1]}</span></span><b>${x.hinhThuc === 'gio' ? fmt(gtt(x.soGio * 60)) + ' giờ' : vnd(x.gia) + ' đ'}</b></div>`).join('')}</div>` : '<div class="empty"><i>💼</i>Chưa có việc có thù lao nào xong.</div>'}`;
+<button class="btn ghost" data-act="mo" data-t="vi" data-v="tong" style="margin-top:14px">💼 Xem thu nhập từ sàn ở Ví ›</button>`;
 };
 /* ---------- GIỜ TỬ TẾ (cần giúp / muốn học, không qua tiền) — vào từ Trang chủ ---------- */
 VIEW.gtt = async () => {
@@ -1518,12 +1519,7 @@ ${mine ? '<p class="note">Việc bạn đăng.</p>' : `<button class="btn ok" da
   const v = S.viec || {};
   const mine = (v.nhoDang || []).map(x => ({ t: (x.loai === 'hoc' ? 'Muốn học: ' : 'Nhờ giúp: ') + x.viec + ' · cho ' + x.nguoiCan, s: x.trangThai, extra: x.nguoiNhan ? 'Người nhận: ' + x.nguoiNhan + (x.lienHe ? ' · ' + x.lienHe : '') : '' }));
   const hocKH = seg === 'hoc' ? `<h3>Khoá của Học viện EFCARE</h3><p class="note" style="margin-bottom:8px">Học phí do quỹ tài trợ trả khi còn suất. Học xong, kỹ năng vào hồ sơ của bạn.</p>${(S.cfg.khoaHoc || []).map(k => { const da = S.toi.ghiDanh.some(g => g.khoa === k.ten); return `<div class="job">${pill(k.soBuoi + ' buổi', 'p-hoc')} ${k.tang === 'B' ? pill('Mở việc tầng B', 'p-san') : ''}<h4>${esc(k.ten)}</h4><p style="font-size:15px;margin-bottom:10px">${esc(k.moTa)}</p>${da ? '<p class="note">✓ Bạn đã ghi danh</p>' : `<button class="btn alt" data-act="ghidanh" data-ma="${k.ma}"><span class="sp"></span><span>Ghi danh</span></button>`}</div>`; }).join('')}` : '';
-  return `<button class="link" data-act="tab" data-t="home">‹ Trang chủ</button><h2>Giờ Tử Tế</h2><div class="seg" role="tablist">${[['giup', 'Cần giúp'], ['hoc', 'Muốn học']].map(x => `<button class="${seg === x[0] ? 'on' : ''}" data-act="seg" data-s="${x[0]}" role="tab" aria-selected="${seg === x[0]}">${x[1]}</button>`).join('')}</div>
-<div class="row"><button class="btn" data-act="danggtt">＋ Đăng ${seg === 'hoc' ? 'điều tôi muốn học' : 'nhu cầu'}</button><button class="btn alt" data-act="gantoi" style="flex:0 0 auto;width:auto">📍 Gần tôi</button></div>
-<div class="safe"><b>Giữ an toàn:</b> lần đầu gặp ở nơi đông người hoặc có người thân. Không nhận tiền, không giữ giấy tờ. Việc y tế chỉ nhắc nhở, không làm thay chuyên môn.</div>
-<div style="margin-top:12px">${items.length ? items.map(card).join('') : '<div class="empty"><i>🌤️</i>Chưa có việc nào ở mục này.<br>Bạn có thể là người đăng đầu tiên.</div>'}</div>${hocKH}
-${mine.length ? `<h3>Việc tôi đã đăng</h3><div class="card">${mine.map(x => `<div class="li"><span class="l">${esc(x.t)}${x.extra ? `<br><span class="note">${esc(x.extra)}</span>` : ''}</span>${pill((TT_VIEC[x.s] || [x.s])[0], (TT_VIEC[x.s] || ['', 'p-mut'])[1])}</div>`).join('')}</div>` : ''}
-<h3 style="margin-top:18px">Về Giờ Tử Tế</h3>
+  const veGtt = `<h3 style="margin-top:4px">Về Giờ Tử Tế</h3>
 <div class="seg" role="tablist">${[['chuyen', 'Câu chuyện GTT'], ['quytac', 'Quy tắc GTT']].map(x => `<button class="${(S.gttInfo || 'chuyen') === x[0] ? 'on' : ''}" data-act="gttinfo" data-s="${x[0]}" role="tab">${x[1]}</button>`).join('')}</div>
 ${(S.gttInfo || 'chuyen') === 'chuyen' ? `<div class="card">
 <p><b>EFCARE bắt đầu từ mong muốn chăm sóc gia đình liên thế hệ.</b></p>
@@ -1542,6 +1538,14 @@ ${(S.gttInfo || 'chuyen') === 'chuyen' ? `<div class="card">
 <p style="margin-top:10px"><b>Vì sao không rút ra tiền?</b></p>
 <p class="note">GTT ghi nhận lòng tốt, giữ cho mọi người bình đẳng khi đổi quà, không ai dùng tiền để mua được nhiều GTT hơn người khác.</p>
 </div>`}`;
+  return `<button class="link" data-act="tab" data-t="home">‹ Trang chủ</button><h2>Giờ Tử Tế</h2>
+${veGtt}
+<h3 style="margin-top:18px">Việc cần giúp hoặc muốn học</h3>
+<div class="seg" role="tablist">${[['giup', 'Cần giúp'], ['hoc', 'Muốn học']].map(x => `<button class="${seg === x[0] ? 'on' : ''}" data-act="seg" data-s="${x[0]}" role="tab" aria-selected="${seg === x[0]}">${x[1]}</button>`).join('')}</div>
+<div class="row"><button class="btn" data-act="danggtt">＋ Đăng ${seg === 'hoc' ? 'điều tôi muốn học' : 'nhu cầu'}</button><button class="btn alt" data-act="gantoi" style="flex:0 0 auto;width:auto">📍 Gần tôi</button></div>
+<div class="safe"><b>Giữ an toàn:</b> lần đầu gặp ở nơi đông người hoặc có người thân. Không nhận tiền, không giữ giấy tờ. Việc y tế chỉ nhắc nhở, không làm thay chuyên môn.</div>
+<div style="margin-top:12px">${items.length ? items.map(card).join('') : '<div class="empty"><i>🌤️</i>Chưa có việc nào ở mục này.<br>Bạn có thể là người đăng đầu tiên.</div>'}</div>${hocKH}
+${mine.length ? `<h3>Việc tôi đã đăng</h3><div class="card">${mine.map(x => `<div class="li"><span class="l">${esc(x.t)}${x.extra ? `<br><span class="note">${esc(x.extra)}</span>` : ''}</span>${pill((TT_VIEC[x.s] || [x.s])[0], (TT_VIEC[x.s] || ['', 'p-mut'])[1])}</div>`).join('')}</div>` : ''}`;
 };
 ACT.gantoi = async b => {
   busy(b, true); const g = await geoP(); busy(b, false);
@@ -1656,10 +1660,16 @@ VIEW.vi = () => {
   if (s === 'tong') {
     const ghiNhan = soGhiNhan_(r.lichSu), suDung = soSuDung_(r.lichSu);
     const goiY = (S.cfg.uuDai || []).filter(u => u.doiDuoc && !u.choQuy && r.soDu >= u.gio).slice(0, 2);
-    body = `<div class="card"><div class="li"><span class="l">GTT có thể đổi</span><b>${fmt(r.soDu)} giờ</b></div><div class="li"><span class="l">Tổng đã ghi nhận</span><span class="pos">+${fmt(ghiNhan)}</span></div><div class="li"><span class="l">Đã sử dụng</span><span class="neg">−${fmt(suDung)}</span></div><div class="li"><span class="l">Giờ đóng góp thực tế (đã xác nhận)</span><b>${fmt(r.thongKe.gioDaGiup)} giờ</b></div></div>
-<p class="note" style="margin:10px 0">Đây chỉ là giờ của riêng bạn trong Sổ giờ chung. GTT do đối tác tài trợ cho chương trình không tính vào ví cá nhân.</p>
+    const v = S.viec || {}, xong = (v.ycLam || []).filter(x => x.trangThai === 'xong');
+    body = `<h3 style="margin-top:0">💝 Giờ Tử Tế (GTT)</h3>
+<div class="card"><div class="li"><span class="l">GTT có thể đổi</span><b>${fmt(r.soDu)} giờ</b></div><div class="li"><span class="l">Tổng đã ghi nhận</span><span class="pos">+${fmt(ghiNhan)}</span></div><div class="li"><span class="l">Đã sử dụng</span><span class="neg">−${fmt(suDung)}</span></div><div class="li"><span class="l">Giờ đóng góp thực tế (đã xác nhận)</span><b>${fmt(r.thongKe.gioDaGiup)} giờ</b></div></div>
+<p class="note" style="margin:10px 0">Đây chỉ là giờ của riêng bạn trong Sổ giờ chung. GTT do đối tác tài trợ cho chương trình không tính vào ví cá nhân. GTT không phải tiền.</p>
 <div class="row"><button class="btn alt" data-act="tangsheet">🎁 Tặng giờ</button><button class="btn alt" data-act="viseg" data-s="doi">🛍️ Đổi hàng & Ưu đãi</button></div>
-${goiY.length ? `<h3 style="margin-top:16px">Có thể đổi ngay</h3><div class="card">${goiY.map(u => `<div class="li"><span class="l">${esc(u.ten)}<br><span class="note">${esc(u.doiTac)}</span></span><b>${fmt(u.gio)} giờ</b></div>`).join('')}</div>` : ''}`;
+${goiY.length ? `<h3 style="margin-top:16px">Có thể đổi ngay</h3><div class="card">${goiY.map(u => `<div class="li"><span class="l">${esc(u.ten)}<br><span class="note">${esc(u.doiTac)}</span></span><b>${fmt(u.gio)} giờ</b></div>`).join('')}</div>` : ''}
+<h3 style="margin-top:20px">💼 Thu nhập từ sàn (tiền thật)</h3>
+<div class="kpis"><div class="kpi"><b>${vnd(S.toi.thongKe.thuNhap)} đ</b><span>Tiền công đã nhận</span></div><div class="kpi"><b>${vnd(S.toi.thongKe.daGop)} đ</b><span>Tiền công đã góp vào quỹ</span></div></div>
+<p class="note" style="margin:8px 0 10px">EFCARE không giữ tiền. Người thuê trả thẳng cho bạn, hoặc chuyển thẳng vào tài khoản quỹ nếu bạn chọn góp. Đây là tiền thật, khác với GTT ở trên.</p>
+${xong.length ? `<div class="card">${xong.map(x => `<div class="li"><span class="l">${esc(x.moTa)}<br><span class="note">${esc(x.nguoiCan)} · ${LOI[x.hinhThuc][1]}</span></span><b>${x.hinhThuc === 'gio' ? fmt(gtt(x.soGio * 60)) + ' giờ' : vnd(x.gia) + ' đ'}</b></div>`).join('')}</div>` : '<div class="empty"><i>💼</i>Chưa có việc có thù lao nào xong.</div>'}`;
   }
   if (s === 'doi') body = (S.cfg.uuDai || []).length ? S.cfg.uuDai.map(u => `<div class="job">${phAnh(u.anh, 160, quaIcon(u.loaiQua))}${u.quyTra ? pill('Đối tác bán · Quỹ trả thay bạn', 'p-gtt') : pill('Đối tác tài trợ', 'p-san')} ${pill(esc(u.tenLoai || 'Hàng hoá'), 'p-mut')}<h4>${esc(u.ten)}</h4><div class="meta">${u.quyTra ? '<b>' + esc(u.doiTac) + '</b> bán, quỹ thanh toán cho đối tác' : 'Do <b>' + esc(u.doiTac) + '</b> tài trợ, quỹ không trả tiền'}</div><div class="meta">Giá trị <b>${vnd(u.giaTri)} đ</b> · đổi bằng <b>${fmt(u.gio)} giờ</b>${u.conLai !== null ? ' · còn ' + u.conLai + ' suất' : ''}</div><p class="note" style="margin-bottom:10px">${esc(u.moTa)}</p><button class="btn alt" data-act="doiqua" data-ma="${u.ma}"${r.soDu < u.gio || !u.doiDuoc ? ' disabled' : ''}><span class="sp"></span><span>${u.choQuy ? 'Mở khi có quỹ' : !u.doiDuoc ? 'Tạm chưa đổi được' : r.soDu < u.gio ? 'Chưa đủ giờ' : 'Đổi ' + fmt(u.gio) + ' giờ'}</span></button></div>`).join('') : '<div class="empty"><i>🎁</i>Chưa có ưu đãi.</div>';
   if (s === 'ls') {
